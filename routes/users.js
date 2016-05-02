@@ -4,9 +4,11 @@ var User = require('../models/user');
 
 router.get('/:username', function(req, res, next) {
   var username = req.params.username;
-  User.findOne({ username: username}, function(err, user) {
+  console.log('username woooo', username);
+  User.findOne({ 'local.username': username}, function(err, user) {
     if (err) console.log(err);
-    res.render('user', {username: user.username, email: user.email});
+    console.log('entire user', user);
+    res.render('user', {username: user.local.username, email: user.local.email});
   })
 });
 

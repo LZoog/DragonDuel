@@ -36,8 +36,6 @@ app.use(ejsLayouts);
 //AUTHENTICATION
 //we want every view to automatically use flash
 app.use(flash());
-//every view automatically use ejsLayouts, reusable headers & footers
-app.use(ejsLayouts);
 // use express.session() before passport.session() to ensure that the login session is restored in the correct order
 app.use(session({ secret: 'DD-PASSPORT-AUTH' }));
 // passport.initialize() middleware is required to initialize Passport.
@@ -60,8 +58,8 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/battlefield', battlefields);
 app.use('/users', users);
+app.use('/battlefield', battlefields);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,15 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="apple-touch-icon-precomposed" href="favicon-152.png">
-    <link rel="icon" href="favicon.ico?" type="image/x-icon">
-    <link rel="icon" href="favicon.png">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.png">
     <title>Dragonduel | Node.JS App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="/css/styles.css" type="text/css" />
   </head>
   <body>
     <header>
     <% if(global.currentUser){ %>
+      <a href="/users/<%=global.currentUser.local.username%>">@<%= global.currentUser.local.username %></a>
       <a href="/logout">Log out</a>
     <% } else { %>
       <a href="/signup">Signup</a>
