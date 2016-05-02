@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
   </head>
   <body>
+    <header>
+    <% if(global.currentUser){ %>
+      <a href="/logout">Log out</a>
+    <% } else { %>
+      <a href="/signup">Signup</a>
+      <a href="login">Login</a>
+    <% } %>
+    </header>
 
     <%- body %>
 

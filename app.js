@@ -4,13 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var expressLayouts = require('express-ejs-layouts');
+var ejsLayouts = require('express-ejs-layouts');
+var session = require('express-session');
+var methodOverride = require('method-override');
+
+var flash = require('connect-flash');
+var passport = require('passport');
 
 var mongoose = require('mongoose');
 mongoose.connect(process.env.DB_CONN_DRAGON_DUEL);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var battlefields = require('./routes/battlefields');
 
 var app = express();
 
@@ -18,16 +24,43 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(expressLayouts);
+app.use(ejsLayouts);
+
+
+//AUTHENTICATION
+//we want every view to automatically use flash
+app.use(flash());
+//every view automatically use ejsLayouts, reusable headers & footers
+app.use(ejsLayouts);
+// use express.session() before passport.session() to ensure that the login session is restored in the correct order
+app.use(session({ secret: 'DD-PASSPORT-AUTH' }));
+// passport.initialize() middleware is required to initialize Passport.
+app.use(passport.initialize());
+// If your application uses persistent login sessions, passport.session()
+app.use(passport.session());
+// Set Passport configuration
+require('./config/passport')(passport);
+app.use(methodOverride(function(request, response) {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body) {
+    var method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}));
+// Custom middleware to allow global access to currentUser variable
+app.use(function(req, res, next) {
+  global.currentUser = req.user;
+  next();
+});
 
 app.use('/', routes);
+app.use('/battlefield', battlefields);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

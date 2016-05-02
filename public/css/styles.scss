@@ -1,4 +1,31 @@
 
+$blue-white: #cfe1ea;
+$blue-sky: #78bcd2;
+$blue-dark: #13313d;
+$blue-grey-dark: #406979;
+$blue-black: #021215;
+
+@mixin castle($url) {
+  height: 100%;
+  background: url($url);
+  background-size: cover;
+}
+
+@mixin light-gradient($percent) {
+  background: $blue-white;
+  background: -webkit-linear-gradient($blue-sky, $blue-white $percent);
+  background: -o-linear-gradient($blue-sky, $blue-white $percent);
+  background: -moz-linear-gradient($blue-sky, $blue-white $percent);
+  background: linear-gradient($blue-sky, $blue-white $percent);
+}
+@mixin dark-gradient($percent, $percent2) {
+  background: $blue-black;
+  background: -webkit-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
+  background: -o-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
+  background: -moz-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
+  background: linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
+}
+
 html, body {
   min-height: 100%;
   height: 100%;
@@ -10,21 +37,44 @@ html, body {
   display: none;
 }
 
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  a {
+    float: right;
+  }
+}
+
 #town {
   min-height: 100%;
   height: 100%;
-  background: url('../img/castles/town.png');
-  background-size: cover;
 
-  &-dark {
-    min-height: 100%;
-    height: 100%;
-    background: url('../img/castles/town-dark.png');
-    background-size: cover;
+  &.light {
+    @include light-gradient(40%);
   }
-  &-light {
-    min-height: 100%;
-    background: url('../img/castles/town-light.png');
-    background-size: cover;
+  &.dark {
+    @include dark-gradient(35%, 60%);
+  }
+
+  &-main {
+    @include castle('../img/castles/town.png');
+
+    .light {
+      @include castle('../img/castles/town-light.png');
+    }
+    .dark {
+      @include castle('../img/castles/town-dark.png');
+    }
+  }
+}
+
+#instructions {
+  min-height: 100%;
+  height: 100%;
+
+  .scroll {
+    height: 100%;
   }
 }

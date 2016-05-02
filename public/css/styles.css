@@ -7,19 +7,45 @@ html, body {
 .hide {
   display: none; }
 
+header {
+  position: fixed;
+  top: 0;
+  width: 100%; }
+  header a {
+    float: right; }
+
 #town {
   min-height: 100%;
-  height: 100%;
-  background: url("../img/castles/town.png");
-  background-size: cover; }
-  #town-dark {
-    min-height: 100%;
+  height: 100%; }
+  #town.light {
+    background: #cfe1ea;
+    background: -webkit-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: -o-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: -moz-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: linear-gradient(#78bcd2, #cfe1ea 40%); }
+  #town.dark {
+    background: #021215;
+    background: -webkit-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
+    background: -o-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
+    background: -moz-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
+    background: linear-gradient(#021215, #406979 35%, #cfe1ea 60%); }
+  #town-main {
     height: 100%;
-    background: url("../img/castles/town-dark.png");
+    background: url("../img/castles/town.png");
     background-size: cover; }
-  #town-light {
-    min-height: 100%;
-    background: url("../img/castles/town-light.png");
-    background-size: cover; }
+    #town-main .light {
+      height: 100%;
+      background: url("../img/castles/town-light.png");
+      background-size: cover; }
+    #town-main .dark {
+      height: 100%;
+      background: url("../img/castles/town-dark.png");
+      background-size: cover; }
+
+#instructions {
+  min-height: 100%;
+  height: 100%; }
+  #instructions .scroll {
+    height: 100%; }
 
 /*# sourceMappingURL=styles.css.map */
