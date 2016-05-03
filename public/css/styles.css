@@ -19,61 +19,89 @@ header {
   height: 100%; }
   #town.light {
     background: #cfe1ea;
-    background: -webkit-linear-gradient(#78bcd2, #cfe1ea "40%");
-    background: -o-linear-gradient(#78bcd2, #cfe1ea "40%");
-    background: -moz-linear-gradient(#78bcd2, #cfe1ea "40%");
-    background: linear-gradient(#78bcd2, #cfe1ea "40%"); }
+    background: -webkit-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: -o-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: -moz-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: linear-gradient(#78bcd2, #cfe1ea 40%); }
   #town.dark {
     background: #021215;
-    background: -webkit-linear-gradient(#021215, #406979 "35%", #cfe1ea "60%");
-    background: -o-linear-gradient(#021215, #406979 "35%", #cfe1ea "60%");
-    background: -moz-linear-gradient(#021215, #406979 "35%", #cfe1ea "60%");
-    background: linear-gradient(#021215, #406979 "35%", #cfe1ea "60%"); }
+    background: -webkit-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
+    background: -o-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
+    background: -moz-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
+    background: linear-gradient(#021215, #406979 35%, #cfe1ea 60%); }
   #town-main {
     height: 100%;
     background: url("../img/castles/town.png");
-    background-size: cover; }
+    background-size: cover;
+    background-position: center center; }
     #town-main .light {
       height: 100%;
       background: url("../img/castles/town-light.png");
-      background-size: cover; }
+      background-size: cover;
+      background-position: center center; }
     #town-main .dark {
       height: 100%;
       background: url("../img/castles/town-dark.png");
-      background-size: cover; }
-
-#dwelling {
-  min-height: 100%;
-  height: 100%; }
-  #dwelling.light {
-    background: #cfe1ea;
-    background: -webkit-linear-gradient(#78bcd2, #cfe1ea "40%");
-    background: -o-linear-gradient(#78bcd2, #cfe1ea "40%");
-    background: -moz-linear-gradient(#78bcd2, #cfe1ea "40%");
-    background: linear-gradient(#78bcd2, #cfe1ea "40%"); }
-  #dwelling.dark {
-    background: #021215;
-    background: -webkit-linear-gradient(#021215, #406979 "35%", #cfe1ea "60%");
-    background: -o-linear-gradient(#021215, #406979 "35%", #cfe1ea "60%");
-    background: -moz-linear-gradient(#021215, #406979 "35%", #cfe1ea "60%");
-    background: linear-gradient(#021215, #406979 "35%", #cfe1ea "60%"); }
-  #dwelling-main {
-    height: 100%;
-    background: url("../img/castles/c.png");
-    background-size: cover; }
-    #dwelling-main .light {
-      height: 100%;
-      background: url("../img/castles/c-light.png");
-      background-size: cover; }
-    #dwelling-main .dark {
-      height: 100%;
-      background: url("../img/castles/c-dark.png");
-      background-size: cover; }
+      background-size: cover;
+      background-position: center center; }
 
 #instructions {
   min-height: 100%;
   height: 100%; }
   #instructions .scroll {
     height: 100%; }
+
+#dwelling {
+  min-height: 100%;
+  height: 100%; }
+  #dwelling.light {
+    background: #cfe1ea;
+    background: -webkit-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: -o-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: -moz-linear-gradient(#78bcd2, #cfe1ea 40%);
+    background: linear-gradient(#78bcd2, #cfe1ea 40%); }
+  #dwelling.dark {
+    background: #021215;
+    background: -webkit-linear-gradient(#021215, #406979 40%, #cfe1ea 80%);
+    background: -o-linear-gradient(#021215, #406979 40%, #cfe1ea 80%);
+    background: -moz-linear-gradient(#021215, #406979 40%, #cfe1ea 80%);
+    background: linear-gradient(#021215, #406979 40%, #cfe1ea 80%); }
+  #dwelling-main {
+    height: 100%;
+    background: url("../img/castles/c.png");
+    background-size: cover;
+    background-position: center center; }
+    #dwelling-main .light {
+      height: 100%;
+      background: url("../img/castles/c-light.png");
+      background-size: cover;
+      background-position: center center; }
+    #dwelling-main .dark {
+      height: 100%;
+      background: url("../img/castles/c-dark.png");
+      background-size: cover;
+      background-position: center center; }
+
+#user-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  height: 100%;
+  min-width: 100%;
+  width: 100%; }
+  #user-info .username {
+    position: absolute;
+    top: 85%;
+    left: 47%; }
+
+.avatar {
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 3%; }
+  .avatar .head, .avatar .dress {
+    position: absolute;
+    width: 100px;
+    height: auto; }
 
 /*# sourceMappingURL=styles.css.map */

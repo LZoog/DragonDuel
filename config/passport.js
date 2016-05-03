@@ -50,15 +50,15 @@ module.exports = function(passport) {
             var rand = Math.floor(Math.random()*3);
 
             if (light > dark) {
-              team = 'Light';
-              var powers = ['Lightning', 'Fire', 'Mind Reading'];
-              var colors = ['Yellow', 'Orange', 'Green'];
+              team = 'light';
+              var powers = ['lightning', 'fire', 'mind reading'];
+              var colors = ['yellow', 'orange', 'green'];
               power = powers[rand];
               color = colors[rand];
             } else {
-              team = 'Dark';
-              var powers = ['Darkness', 'Ice', 'Psychic'];
-              var colors = ['Red', 'Blue', 'Purple']
+              team = 'dark';
+              var powers = ['darkness', 'ice', 'psychic'];
+              var colors = ['red', 'blue', 'purple']
               power = powers[rand];
               color = colors[rand];
             }

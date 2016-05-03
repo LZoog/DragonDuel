@@ -1,8 +1,16 @@
-<section id="dwelling" class="light">
+<section id="dwelling" class="<%=team%>">
   <div id="dwelling-main">
-    <div class="light"></div>
+    <div class="<%=team%>"></div>
   </div>
 </section>
 
-<h1>@<%= username %></h1>
-<p><%= email %></p>
+<section id="user-info">
+  <div class="avatar">
+    <img src="/img/peeps/<%=gender%>.png" class="head" />
+    <img src="/img/peeps/<%=gender%>-<%=color%>.png" class="dress" />
+  </div>
+  <div class="username">
+    <h1>@<%= username %></h1>
+  </div>
+
+</section>
