@@ -25,10 +25,10 @@ header {
     background: linear-gradient(#78bcd2, #cfe1ea 40%); }
   #town.dark {
     background: #021215;
-    background: -webkit-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
-    background: -o-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
-    background: -moz-linear-gradient(#021215, #406979 35%, #cfe1ea 60%);
-    background: linear-gradient(#021215, #406979 35%, #cfe1ea 60%); }
+    background: -webkit-linear-gradient(#cfe1ea, #41757a 35%, #021215 60%);
+    background: -o-linear-gradient(#cfe1ea, #41757a 35%, #021215 60%);
+    background: -moz-linear-gradient(#cfe1ea, #41757a 35%, #021215 60%);
+    background: linear-gradient(#cfe1ea, #41757a 35%, #021215 60%); }
   #town-main {
     height: 100%;
     background: url("../img/castles/town.png");
@@ -62,10 +62,10 @@ header {
     background: linear-gradient(#78bcd2, #cfe1ea 40%); }
   #dwelling.dark {
     background: #021215;
-    background: -webkit-linear-gradient(#021215, #406979 40%, #cfe1ea 80%);
-    background: -o-linear-gradient(#021215, #406979 40%, #cfe1ea 80%);
-    background: -moz-linear-gradient(#021215, #406979 40%, #cfe1ea 80%);
-    background: linear-gradient(#021215, #406979 40%, #cfe1ea 80%); }
+    background: -webkit-linear-gradient(#cfe1ea, #41757a 30%, #021215 70%);
+    background: -o-linear-gradient(#cfe1ea, #41757a 30%, #021215 70%);
+    background: -moz-linear-gradient(#cfe1ea, #41757a 30%, #021215 70%);
+    background: linear-gradient(#cfe1ea, #41757a 30%, #021215 70%); }
   #dwelling-main {
     height: 100%;
     background: url("../img/castles/c.png");

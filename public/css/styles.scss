@@ -2,7 +2,7 @@
 $blue-white: #cfe1ea;
 $blue-sky: #78bcd2;
 $blue-dark: #13313d;
-$blue-grey-dark: #406979;
+$blue-grey-dark: #41757a;
 $blue-black: #021215;
 
 @mixin backgrounds($perc1, $perc2, $perc3, $url) {
@@ -34,10 +34,10 @@ $blue-black: #021215;
 }
 @mixin dark-gradient($percent, $percent2) {
   background: $blue-black;
-  background: -webkit-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
-  background: -o-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
-  background: -moz-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
-  background: linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
+  background: -webkit-linear-gradient($blue-white, $blue-grey-dark $percent, $blue-black $percent2);
+  background: -o-linear-gradient($blue-white, $blue-grey-dark $percent, $blue-black $percent2);
+  background: -moz-linear-gradient($blue-white, $blue-grey-dark $percent, $blue-black $percent2);
+  background: linear-gradient($blue-white, $blue-grey-dark $percent, $blue-black $percent2);
 }
 
 @mixin castle($url) {
@@ -88,7 +88,7 @@ header {
   min-height: 100%;
   height: 100%;
 
-  @include backgrounds(40%, 40%, 80%, 'c');
+  @include backgrounds(40%, 30%, 70%, 'c');
 }
 
 #user-info {
