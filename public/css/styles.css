@@ -29,19 +29,19 @@ header {
     background: -o-linear-gradient(#cfe1ea, #41757a 35%, #021215 60%);
     background: -moz-linear-gradient(#cfe1ea, #41757a 35%, #021215 60%);
     background: linear-gradient(#cfe1ea, #41757a 35%, #021215 60%); }
-  #town-main {
+  #town-1 {
     height: 100%;
-    background: url("../img/castles/town.png");
+    background: url("../img/castles/town1.png");
     background-size: cover;
     background-position: center center; }
-    #town-main .light {
+    #town-1 .light {
       height: 100%;
-      background: url("../img/castles/town-light.png");
+      background: url("../img/castles/town1-light.png");
       background-size: cover;
       background-position: center center; }
-    #town-main .dark {
+    #town-1 .dark {
       height: 100%;
-      background: url("../img/castles/town-dark.png");
+      background: url("../img/castles/town1-dark.png");
       background-size: cover;
       background-position: center center; }
 
@@ -66,19 +66,34 @@ header {
     background: -o-linear-gradient(#cfe1ea, #41757a 30%, #021215 70%);
     background: -moz-linear-gradient(#cfe1ea, #41757a 30%, #021215 70%);
     background: linear-gradient(#cfe1ea, #41757a 30%, #021215 70%); }
-  #dwelling-main {
+  #dwelling-1 {
     height: 100%;
-    background: url("../img/castles/c.png");
+    background: url("../img/castles/dwelling1.png");
     background-size: cover;
     background-position: center center; }
-    #dwelling-main .light {
+    #dwelling-1 .light {
       height: 100%;
-      background: url("../img/castles/c-light.png");
+      background: url("../img/castles/dwelling1-light.png");
       background-size: cover;
       background-position: center center; }
-    #dwelling-main .dark {
+    #dwelling-1 .dark {
       height: 100%;
-      background: url("../img/castles/c-dark.png");
+      background: url("../img/castles/dwelling1-dark.png");
+      background-size: cover;
+      background-position: center center; }
+  #dwelling-2 {
+    height: 100%;
+    background: url("../img/castles/dwelling2.png");
+    background-size: cover;
+    background-position: center center; }
+    #dwelling-2 .light {
+      height: 100%;
+      background: url("../img/castles/dwelling2-light.png");
+      background-size: cover;
+      background-position: center center; }
+    #dwelling-2 .dark {
+      height: 100%;
+      background: url("../img/castles/dwelling2-dark.png");
       background-size: cover;
       background-position: center center; }
 
