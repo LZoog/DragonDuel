@@ -20,12 +20,12 @@ module.exports = function(passport) {
     passReqToCallback: true,
   }, function(req, email, password, done) {
 
-    // Find a user with this email
+    //{ $or: [{ 'local.email': email }, { 'local.username': req.body.username }]}
     User.findOne({ 'local.email' : email }, function(err, user) {
       if (err) return done(err);
       // If there is a user with this email
       if (user) {
-        return done(null, false, req.flash('errorMessage', 'This email is already used!'));
+        return done(null, false, req.flash('errorMessage', 'This email is already being used!'));
       } else {
         User.findOne({ 'local.username' : req.body.username }, function(err, user) {
           if (err) return done(err);
@@ -36,21 +36,16 @@ module.exports = function(passport) {
             var light = 0, dark = 0;
             var team, power, color;
 
-            var q1 = req.body.q1;
-            if (q1 == 'sun') { light++;
-            } else { dark++; }
-            var q2 = req.body.q2;
-            if (q2 == 'fairy' || q2 == 'unicorn') { light++;
-            } else { dark++; }
-            var q3 = req.body.q3;
-            if (q3 == 'opal' || q3 == 'diamond' || q3 == 'pearl') { light ++;
-            } else { dark++; }
-            var q4 = req.body.q4;
-            if (q4 == 'fame' || q4 == 'achievement') { light++;
-            } else { dark++; }
-            var q5 = req.body.q5;
-            if (q5 == 'no') { light++;
-            } else { dark++; }
+            if (req.body.q1 == 'sun')
+              { light++; } else { dark++; }
+            if (req.body.q2 == 'fairy' || req.body.q2 == 'unicorn')
+              { light++; } else { dark++; }
+            if (req.body.q3 == 'opal' || req.body.q3 == 'diamond' || req.body.q3 == 'pearl')
+              { light ++; } else { dark++; }
+            if (req.body.q4 == 'fame' || req.body.q4 == 'achievement')
+              { light++; } else { dark++; }
+            if (req.body.q5 == 'no')
+              { light++; } else { dark++; }
 
             var rand = Math.floor(Math.random()*3);
 

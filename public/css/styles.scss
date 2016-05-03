@@ -5,10 +5,24 @@ $blue-dark: #13313d;
 $blue-grey-dark: #406979;
 $blue-black: #021215;
 
-@mixin castle($url) {
-  height: 100%;
-  background: url($url);
-  background-size: cover;
+@mixin backgrounds($perc1, $perc2, $perc3, $url) {
+  &.light {
+    @include light-gradient($perc1);
+  }
+  &.dark {
+    @include dark-gradient($perc2, $perc3);
+  }
+
+  &-main {
+    @include castle('../img/castles/'+$url+'.png');
+
+    .light {
+      @include castle('../img/castles/'+$url+'-light.png');
+    }
+    .dark {
+      @include castle('../img/castles/'+$url+'-dark.png');
+    }
+  }
 }
 
 @mixin light-gradient($percent) {
@@ -24,6 +38,12 @@ $blue-black: #021215;
   background: -o-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
   background: -moz-linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
   background: linear-gradient($blue-black, $blue-grey-dark $percent, $blue-white $percent2);
+}
+
+@mixin castle($url) {
+  height: 100%;
+  background: url($url);
+  background-size: cover;
 }
 
 html, body {
@@ -51,23 +71,14 @@ header {
   min-height: 100%;
   height: 100%;
 
-  &.light {
-    @include light-gradient(40%);
-  }
-  &.dark {
-    @include dark-gradient(35%, 60%);
-  }
+  @include backgrounds('40%', '35%', '60%', 'town');
+}
 
-  &-main {
-    @include castle('../img/castles/town.png');
+#dwelling {
+  min-height: 100%;
+  height: 100%;
 
-    .light {
-      @include castle('../img/castles/town-light.png');
-    }
-    .dark {
-      @include castle('../img/castles/town-dark.png');
-    }
-  }
+  @include backgrounds('40%', '35%', '60%', 'c');
 }
 
 #instructions {
