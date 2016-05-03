@@ -5,12 +5,21 @@
 </section>
 
 <section id="user-info">
-  <div class="avatar">
-    <img src="/img/peeps/<%=gender%>.png" class="head" />
-    <img src="/img/peeps/<%=gender%>-<%=color%>.png" class="dress" />
+  <div class="avatar level<%=level%>">
+    <img src="/img/peeps/<%=gender%>.png" class="avatar-part" />
+    <img src="/img/peeps/<%=gender%>-<%=color%>.png" class="avatar-part" />
+    <% if (level == 2) { %>
+    <img src="/img/peeps/<%=gender%>-crown.png" class="avatar-part">
+    <% } %>
   </div>
   <div class="username">
     <h1>@<%= username %></h1>
   </div>
-
 </section>
+
+<% if (level == 2) { %>
+<div class="cover <%=team%>"></div>
+<% } %>
+
+
+<img src="/img/peeps/cover-<%=team%>.png" class="cover">

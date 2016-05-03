@@ -111,12 +111,38 @@ header {
     left: 47%; }
 
 .avatar {
-  position: absolute;
-  left: calc(50% - 50px);
-  top: 3%; }
-  .avatar .head, .avatar .dress {
+  position: absolute; }
+  .avatar-part {
     position: absolute;
-    width: 100px;
     height: auto; }
+  .avatar.level1 {
+    left: calc(50% - 50px);
+    top: 3%; }
+    .avatar.level1 .avatar-part {
+      width: 100px; }
+  .avatar.level2 {
+    left: calc(50% - 30px);
+    top: 26.5%; }
+    .avatar.level2 .avatar-part {
+      width: 60px; }
+
+.cover.light {
+  min-height: 100%;
+  height: 100%;
+  background: url("../img/castles/cover-light.png");
+  background-size: cover;
+  background-position: center center; }
+
+.cover.dark {
+  position: absolute;
+  top: 0;
+  min-height: 100%;
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  height: 100%;
+  background: url("../img/castles/cover-dark.png");
+  background-size: cover;
+  background-position: center center; }
 
 /*# sourceMappingURL=styles.css.map */
