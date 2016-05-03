@@ -1,0 +1,14 @@
+<% if (level == 1) { %>
+<form action="/duel" method="post">
+  <input type="hidden" name="leave" id="leave" value="false" />
+  <input type="submit" id="leave-btn" value="Leave Battlefield" />
+</form>
+<% } %>
+
+<h1>YOU ARE ON THE BATTLEFIELD</h1>
+
+<% users.forEach(function(user) { %>
+  <div class="duel">
+    <%= user.local.username %>
+  </div>
+<% }); %>

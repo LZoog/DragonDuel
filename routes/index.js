@@ -1,12 +1,7 @@
 var express = require('express');
-var passport = require("passport")
+var passport = require("passport");
 var router = express.Router();
 
-function authenticatedUser(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  req.flash('errorMessage', 'Login to access!');
-  return res.redirect('/login');
-}
 function unAuthenticatedUser(req, res, next) {
   if (!req.isAuthenticated()) return next();
   req.flash('errorMessage', 'You are already logged in!');
@@ -14,7 +9,7 @@ function unAuthenticatedUser(req, res, next) {
 }
 
 /* GET home page. */
-router.get('/', authenticatedUser, function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index');
 });
 

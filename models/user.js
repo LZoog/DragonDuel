@@ -11,6 +11,7 @@ var userSchema = new mongoose.Schema({
     power: {type: String},
     team: {type: String},
     dragon_name: {type: String},
+    battlefield: {type: Boolean, default: false},
     level: {type: Number, default: 1},
     highest_lvl_total: {type: Number, default: 0},
     highest_lvl_temp: {type: Date},
