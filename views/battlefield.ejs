@@ -1,10 +1,9 @@
 
-<section id="battlefront">
+<div id="battlefront">
+  <a href="#" id="enter">ENTER</a>
+</div>
 
-</section>
-
-
-<section id="battlefield hide">
+<section id="battlefield" class="hide">
   <% if (level == 1) { %>
   <form action="/duel" method="post">
     <input type="hidden" name="leave" id="leave" value="false" />
@@ -14,9 +13,13 @@
 
   <h1>YOU ARE ON THE BATTLEFIELD</h1>
 
-  <% users.forEach(function(user) { %>
-    <div class="duel">
+  <div id="new-connect"></div>
+
+  <div id="connected">
+    <% users.forEach(function(user) { %>
+    <div class="user">
       <%= user.local.username %>
     </div>
-  <% }); %>
+    <% }); %>
+  </div>
 </section>
