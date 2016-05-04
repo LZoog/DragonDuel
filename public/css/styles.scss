@@ -5,6 +5,36 @@ $blue-dark: #13313d;
 $blue-grey-dark: #41757a;
 $blue-black: #021215;
 
+@mixin dragonsAvatars($obj, $width1, $top1, $width2, $top2) {
+  $halfWidth1: $width1 / 2;
+  $halfWidth2: $width2 / 2;
+  $calc1: calc(50% - #{$halfWidth1});
+  $calc2: calc(50% - #{$halfWidth2});
+
+    &-part {
+      position: absolute;
+      height: auto;
+    }
+
+    &.level1 {
+      left: calc(50% - #{$halfWidth1});
+      top: $top1;
+
+      .#{$obj}-part {
+        width: $width1;
+      }
+    }
+
+    &.level2 {
+      left: calc(50% - #{$halfWidth2});
+      top: $top2;
+
+      .#{$obj}-part {
+        width: $width2;
+    }
+  }
+}
+
 @mixin castles($level, $img) {
   &-#{$level} {
     @include castle('../img/castles/#{$img}#{$level}.png');
@@ -67,10 +97,13 @@ header {
   min-height: 100%;
   height: 100%;
 
-  //% for light gradient stop, next two for dark stops
-  @include gradient(40%, 35%, 60%);
+  //first for light gradient stop, next two for dark stops
+  //third one what % upward does the dark go
+  @include gradient(40%, 20%, 46%);
   //level, img name
   @include castles(1, town);
+
+
 }
 
 .sky-light {
@@ -116,29 +149,41 @@ header {
   }
 }
 
+.dragon-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  height: 100%;
+  min-width: 100%;
+  width: 100%;
+
+  .username {
+    position: absolute;
+    top: 85%;
+    left: 47%;
+  }
+}
+
+
 .avatar {
   position: absolute;
 
-  &-part {
-    position: absolute;
-    height: auto;
-  }
+  //object, level 1 width, lvl1 top, lvl2 width, lvl2 top
+  @include dragonsAvatars(avatar, 100px, 3%, 60px, 26.5%);
+}
 
-  &.level1 {
-    left: calc(50% - 50px);
-    top: 3%;
+.dragon {
+  position: absolute;
 
-    .avatar-part {
-      width: 100px;
-    }
-  }
+  //object, level 1 width, lvl1 top, lvl2 width, lvl2 top
+  @include dragonsAvatars(dragon, 100px, 3%, 100px, 26.5%);
 
-  &.level2 {
-    left: calc(50% - 30px);
-    top: 26.5%;
-
-    .avatar-part {
-      width: 60px;
+  &.level2.town {
+    left: 29.5%;
+    top: 21%;
+    .dragon-part {
+      width: 220px;
     }
   }
 }

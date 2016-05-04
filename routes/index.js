@@ -1,6 +1,8 @@
 var express = require('express');
 var passport = require("passport");
 var router = express.Router();
+var passport = require("passport");
+var User = require('../models/user');
 
 function unAuthenticatedUser(req, res, next) {
   if (!req.isAuthenticated()) return next();
@@ -10,7 +12,10 @@ function unAuthenticatedUser(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  User.findOne({ 'local.level': 2 }, function(err, user) {
+    if (err) console.log(err);
+    res.render('index', {username: user.local.username, dragon: user.local.dragon_name, team: user.local.team, color: user.local.color, level: user.local.level});
+  });
 });
 
 /* GET /signup */

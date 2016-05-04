@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema({
     color: {type: String},
     power: {type: String},
     team: {type: String},
-    dragon_name: {type: String},
+    dragon_name: {type: String, default: 'Drogon'},
     battlefield: {type: Boolean, default: false},
     level: {type: Number, default: 1},
     highest_lvl_total: {type: Number, default: 0},
