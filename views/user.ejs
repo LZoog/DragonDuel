@@ -6,7 +6,7 @@
   </div>
 </section>
 
-<section id="user-info">
+<section class="user-info">
   <div class="avatar level<%=level%>">
     <img src="/img/peeps/<%=gender%>.png" class="avatar-part" />
     <img src="/img/peeps/<%=gender%>-<%=color%>.png" class="avatar-part" />
@@ -22,3 +22,9 @@
 <% if (level == 2) { %>
 <div class="cover <%=team%>"></div>
 <% } %>
+
+<section class="dragon-info">
+  <div class="dragon level<%=level%> <%=team%>">
+    <img src="/img/dragons/<%=color%>.png" class="dragon-part" />
+  </div>
+</section>

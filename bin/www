@@ -29,23 +29,6 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-//Socket.IO
-var io = require('socket.io')(server);
-
-//when this event fires, execute this callback function
-// io.on('connect', function(socket) {
-//   var user = global.currentUser.local;
-//   console.log('hits',user);
-//   User.findOne({ 'local.username': user.username }, { 'local.battlefield': true }, function(err, user) {
-//     if (err) console.log(err);
-//     var data = {};
-//     data.username = user.username;
-//
-//     socket.emit('newUser', data);
-//   });
-// });
-
-
 /**
  * Normalize a port into a number, string, or false.
  */
