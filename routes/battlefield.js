@@ -32,12 +32,12 @@ var returnRouter = function(io) {
     });
   });
 
+  /*GET next level users */
   router.get('/get', function (req, res, next) {
     var currentUser = req.user.local;
 
-    User.find({'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color', function(err, users) {
+    User.find({'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color local.level', function(err, users) {
       if (err) console.log(err);
-      console.log(users);
       res.json({users: users, power: currentUser.power});
     });
   });
@@ -56,21 +56,33 @@ var returnRouter = function(io) {
       var connUsername = req.body.connUsername;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
+      var currentLevel = req.body.currentLevel;
 
       function win() {
-        User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': 1 }, function(err, user) {
+        console.log('got to win()');
+        //you go up a level
+        var upLevel = ++currentLevel;
+        User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
           if (err) console.log(err);
         });
-        User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': 2 }, function(err, user) {
-          if (err) console.log(err);
-        });
+        // if opponent is on level 1, remove them from battlefield
+        if (currentLevel == 1) {
+          User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
+            if (err) console.log(err);
+          });
+        } else {
+          var downLevel = --currentLevel;
+          //find opposing user & make them go down a level
+          User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
+            if (err) console.log(err);
+          });
+        }
         res.send('win');
       }
 
       if (yourPower == 'lightning' && connPower == 'psychic') {
         win();
       } else if (yourPower == 'fire' && connPower == 'darkness') {
-        console.log('your power is fire & theirs is darkness');
         win();
       } else if (yourPower == 'mind reading' && connPower == 'ice') {
         win();

@@ -21,6 +21,7 @@ $(function() {
     var connUsername = $(this).siblings('.conn-username').val();
     var yourPower = $(this).siblings('.your-power').val();
     var connPower = $(this).siblings('.conn-power').val();
+    var currentLevel = $(this).siblings('.current-level').val();
 
     $.ajax({
       url: '/duel',
@@ -28,12 +29,15 @@ $(function() {
       data: {
         connUsername: connUsername,
         yourPower: yourPower,
-        connPower: connPower
+        connPower: connPower,
+        currentLevel: currentLevel
       }
     })
     .done(function(status) {
+      if (!status) {
+        return;
+      }
       if (status == 'win') {
-        self.parent().parent().remove();
         $.ajax({
           url: '/duel/get',
           method: 'GET',
@@ -43,25 +47,20 @@ $(function() {
         .done(function(data) {
           if (!data) {
             return;
-          } else {
-            console.log('data',data);
-            console.log('data.users',data.users);
-            console.log('data.power', data.power);
-            //loop through dragons & display
-            $('#connected').empty();
-            data.users.forEach(function(user){
-              $('#connected').prepend(`<div class="conn-user">
-                    <form action="/duel" method="post">
-                      <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
-                      <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
-                      <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
-                      <input type="submit" class="duel-user ${user.local.color}" value="" />
-                    <a href="/users/${user.local.username}">@${user.local.username}</a>
-                    </form>
-                  </div>`);
-            })
-
           }
+          $('#connected').empty();
+          data.users.forEach(function(user){
+            $('#connected').prepend(`<div class="conn-user">
+                  <form action="/duel" method="post">
+                    <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
+                    <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+                    <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+                    <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+                    <input type="submit" class="duel-user ${user.local.color}" value="" />
+                  <a href="/users/${user.local.username}">@${user.local.username}</a>
+                  </form>
+                </div>`);
+          })
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
           console.log(jqXHR, textStatus, errorThrown);

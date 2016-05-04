@@ -19,9 +19,10 @@
     <% users.forEach(function(user) { %>
     <div class="conn-user">
       <form action="/duel" method="post">
-        <input type="hidden" class="conn-username" name="username" value="<%=user.local.username%>" />
+        <input type="hidden" class="current-level" name="level" value="<%=level%>" />
         <input type="hidden" class="your-power" name="yourPower" value="<%=power%>" />
         <input type="hidden" class="conn-power" name="connPower" value="<%=user.local.power%>" />
+        <input type="hidden" class="conn-username" name="username" value="<%=user.local.username%>" />
         <input type="submit" class="duel-user <%=user.local.color%>" value="" />
       <a href="/users/<%=user.local.username%>">@<%= user.local.username %></a>
       </form>
