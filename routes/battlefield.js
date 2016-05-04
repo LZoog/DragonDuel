@@ -17,10 +17,7 @@ var returnRouter = function(io) {
 
   /* GET battlefield */
   router.get('/', authenticatedUser, function(req, res, next) {
-
-    //req.currentUser.local
-    var currentUser = global.currentUser.local;
-
+    var currentUser = req.user.local;
     //find all users in the battlefield & on the same level
     User.find({ 'local.battlefield': true, 'local.level': currentUser.level }, 'local.username local.level local.power local.color', function(err, users) {
       if (err) console.log(err);
@@ -35,30 +32,36 @@ var returnRouter = function(io) {
     });
   });
 
+  router.get('/get', function (req, res, next) {
+    var currentUser = req.user.local;
+
+    User.find({'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color', function(err, users) {
+      if (err) console.log(err);
+      console.log(users);
+      res.json({users: users, power: currentUser.power});
+    });
+  });
+
   /* POST battlefield */
   router.post('/', function(req, res, next) {
-    var user = global.currentUser.local;
+    var currentUser = req.user.local;
     /* User is leaving the battlefield */
     if (req.body.leave) {
-      User.findOneAndUpdate({ 'local.username': user.username }, { 'local.battlefield': false }, function(err, user) {
+      User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
         if (err) console.log(err);
       });
-      res.redirect(`/users/${user.username}`);
+      res.redirect(`/users/${currentUser.username}`);
       /* Else, user has clicked on another user */
     } else {
       var connUsername = req.body.connUsername;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
 
-      console.log('connUsername',connUsername);
-      console.log('yourPower',yourPower);
-      console.log('connPower',connPower);
-
       function win() {
         User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': 1 }, function(err, user) {
           if (err) console.log(err);
         });
-        User.findOneAndUpdate({ 'local.username': user.username }, { 'local.level': 2 }, function(err, user) {
+        User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': 2 }, function(err, user) {
           if (err) console.log(err);
         });
         res.send('win');

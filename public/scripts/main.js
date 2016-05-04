@@ -7,10 +7,8 @@ $(function() {
       console.log('Client connected!');
     });
     socket.on('newUser', function(user) {
-      console.log('socket user',user);
 
       var newConnect = '<h1>'+user.username+'</h1>';
-      console.log('new connection user',newConnect);
 
       $('#new-connect').prepend(newConnect);
       $('#new-connect').prepend('WHY YOU NO WORK');
@@ -36,8 +34,41 @@ $(function() {
     .done(function(status) {
       if (status == 'win') {
         self.parent().parent().remove();
+        $.ajax({
+          url: '/duel/get',
+          method: 'GET',
+          data: {},
+          dataType: 'json'
+        })
+        .done(function(data) {
+          if (!data) {
+            return;
+          } else {
+            console.log('data',data);
+            console.log('data.users',data.users);
+            console.log('data.power', data.power);
+            //loop through dragons & display
+            $('#connected').empty();
+            data.users.forEach(function(user){
+              $('#connected').prepend(`<div class="conn-user">
+                    <form action="/duel" method="post">
+                      <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+                      <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+                      <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+                      <input type="submit" class="duel-user ${user.local.color}" value="" />
+                    <a href="/users/${user.local.username}">@${user.local.username}</a>
+                    </form>
+                  </div>`);
+            })
+
+          }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR, textStatus, errorThrown);
+        })
       }
     })
+    //for first AJAX
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log(jqXHR, textStatus, errorThrown);
     })
