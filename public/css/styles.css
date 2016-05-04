@@ -7,6 +7,14 @@ html, body {
 .hide {
   display: none; }
 
+.sky-light {
+  height: 100%;
+  background: url("../img/castles/sky-light.png"); }
+
+.sky-dark {
+  height: 100%;
+  background: url("../img/castles/sky-dark.png"); }
+
 header {
   position: fixed;
   top: 0;
@@ -45,13 +53,43 @@ header {
       background-size: cover;
       background-position: center center; }
 
-.sky-light {
+.dragon {
+  min-height: 100%;
   height: 100%;
-  background: url("../img/castles/sky-light.png"); }
-
-.sky-dark {
-  height: 100%;
-  background: url("../img/castles/sky-dark.png"); }
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+  .dragon.red {
+    height: 100%;
+    background: url("../img/dragons/town-red.png");
+    background-size: cover;
+    background-position: center center; }
+  .dragon.orange {
+    height: 100%;
+    background: url("../img/dragons/town-orange.png");
+    background-size: cover;
+    background-position: center center; }
+  .dragon.yellow {
+    height: 100%;
+    background: url("../img/dragons/town-yellow.png");
+    background-size: cover;
+    background-position: center center; }
+  .dragon.green {
+    height: 100%;
+    background: url("../img/dragons/town-green.png");
+    background-size: cover;
+    background-position: center center; }
+  .dragon.blue {
+    height: 100%;
+    background: url("../img/dragons/town-blue.png");
+    background-size: cover;
+    background-position: center center; }
+  .dragon.purple {
+    height: 100%;
+    background: url("../img/dragons/town-purple.png");
+    background-size: cover;
+    background-position: center center; }
 
 #instructions {
   min-height: 100%;
@@ -118,19 +156,6 @@ header {
     top: 85%;
     left: 47%; }
 
-.dragon-info {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-height: 100%;
-  height: 100%;
-  min-width: 100%;
-  width: 100%; }
-  .dragon-info .username {
-    position: absolute;
-    top: 85%;
-    left: 47%; }
-
 .avatar {
   position: absolute; }
   .avatar-part {
@@ -146,27 +171,6 @@ header {
     top: 26.5%; }
     .avatar.level2 .avatar-part {
       width: 60px; }
-
-.dragon {
-  position: absolute; }
-  .dragon-part {
-    position: absolute;
-    height: auto; }
-  .dragon.level1 {
-    left: calc(50% - 50px);
-    top: 3%; }
-    .dragon.level1 .dragon-part {
-      width: 100px; }
-  .dragon.level2 {
-    left: calc(50% - 50px);
-    top: 26.5%; }
-    .dragon.level2 .dragon-part {
-      width: 100px; }
-  .dragon.level2.town {
-    left: 29.5%;
-    top: 21%; }
-    .dragon.level2.town .dragon-part {
-      width: 220px; }
 
 .cover.light {
   position: absolute;

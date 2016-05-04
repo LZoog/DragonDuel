@@ -5,54 +5,33 @@ $blue-dark: #13313d;
 $blue-grey-dark: #41757a;
 $blue-black: #021215;
 
-@mixin dragonsAvatars($obj, $width1, $top1, $width2, $top2) {
-  $halfWidth1: $width1 / 2;
-  $halfWidth2: $width2 / 2;
-  $calc1: calc(50% - #{$halfWidth1});
-  $calc2: calc(50% - #{$halfWidth2});
-
-    &-part {
-      position: absolute;
-      height: auto;
-    }
-
-    &.level1 {
-      left: calc(50% - #{$halfWidth1});
-      top: $top1;
-
-      .#{$obj}-part {
-        width: $width1;
-      }
-    }
-
-    &.level2 {
-      left: calc(50% - #{$halfWidth2});
-      top: $top2;
-
-      .#{$obj}-part {
-        width: $width2;
-    }
-  }
-}
-
-@mixin castles($level, $img) {
-  &-#{$level} {
-    @include castle('../img/castles/#{$img}#{$level}.png');
-
-    .light {
-      @include castle('../img/castles/#{$img}#{$level}-light.png');
-    }
-    .dark {
-      @include castle('../img/castles/#{$img}#{$level}-dark.png');
-    }
-  }
-}
-
-@mixin castle($url) {
+@mixin castleDragon($url) {
   height: 100%;
   background: url($url);
   background-size: cover;
   background-position: center center;
+}
+
+@mixin castles($level, $img) {
+  &-#{$level} {
+    @include castleDragon('../img/castles/#{$img}#{$level}.png');
+
+    .light {
+      @include castleDragon('../img/castles/#{$img}#{$level}-light.png');
+    }
+    .dark {
+      @include castleDragon('../img/castles/#{$img}#{$level}-dark.png');
+    }
+  }
+}
+
+@mixin dragons($location) {
+  &.red { @include castleDragon('../img/dragons/#{$location}-red.png'); }
+  &.orange { @include castleDragon('../img/dragons/#{$location}-orange.png'); }
+  &.yellow { @include castleDragon('../img/dragons/#{$location}-yellow.png') }
+  &.green { @include castleDragon('../img/dragons/#{$location}-green.png'); }
+  &.blue { @include castleDragon('../img/dragons/#{$location}-blue.png'); }
+  &.purple { @include castleDragon('../img/dragons/#{$location}-purple.png'); }
 }
 
 @mixin gradient($perc1, $perc2, $perc3) {
@@ -83,6 +62,15 @@ html, body {
   display: none;
 }
 
+.sky-light {
+  height: 100%;
+  background: url('../img/castles/sky-light.png');
+}
+.sky-dark {
+  height: 100%;
+  background: url('../img/castles/sky-dark.png');
+}
+
 header {
   position: fixed;
   top: 0;
@@ -102,17 +90,17 @@ header {
   @include gradient(40%, 20%, 46%);
   //level, img name
   @include castles(1, town);
-
-
 }
 
-.sky-light {
+.dragon {
+  min-height: 100%;
   height: 100%;
-  background: url('../img/castles/sky-light.png');
-}
-.sky-dark {
-  height: 100%;
-  background: url('../img/castles/sky-dark.png');
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  @include dragons(town);
 }
 
 #instructions {
@@ -149,41 +137,30 @@ header {
   }
 }
 
-.dragon-info {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-height: 100%;
-  height: 100%;
-  min-width: 100%;
-  width: 100%;
-
-  .username {
-    position: absolute;
-    top: 85%;
-    left: 47%;
-  }
-}
-
 
 .avatar {
   position: absolute;
 
-  //object, level 1 width, lvl1 top, lvl2 width, lvl2 top
-  @include dragonsAvatars(avatar, 100px, 3%, 60px, 26.5%);
-}
+  &-part {
+    position: absolute;
+    height: auto;
+  }
 
-.dragon {
-  position: absolute;
+  &.level1 {
+    left: calc(50% - 50px);
+    top: 3%;
 
-  //object, level 1 width, lvl1 top, lvl2 width, lvl2 top
-  @include dragonsAvatars(dragon, 100px, 3%, 100px, 26.5%);
+    .avatar-part {
+      width: 100px;
+    }
+  }
 
-  &.level2.town {
-    left: 29.5%;
-    top: 21%;
-    .dragon-part {
-      width: 220px;
+  &.level2 {
+    left: calc(50% - 30px);
+    top: 26.5%;
+
+    .avatar-part {
+      width: 60px
     }
   }
 }
@@ -193,14 +170,14 @@ header {
   top: 0;
   min-height: 100%;
   min-width: 100%;
-  @include castle('../img/castles/cover-light.png');
+  @include castleDragon('../img/castles/cover-light.png');
 }
 .cover.dark {
   position: absolute;
   top: 0;
   min-height: 100%;
   min-width: 100%;
-  @include castle('../img/castles/cover-dark.png');
+  @include castleDragon('../img/castles/cover-dark.png');
 }
 
 #battlefront  {
