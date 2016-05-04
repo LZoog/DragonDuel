@@ -15,29 +15,21 @@ var mongoose = require('mongoose');
 mongoose.connect(process.env.DB_CONN_DRAGON_DUEL);
 
 var app = express();
-
-// var server = http.createServer(app);
-// var io = socketio.listen(server);
-// // next lines are the money
-// app.set('socketio', io);
-// app.set('server', server);
-// app.get('server').listen(config.port);
-
 var http = require('http').Server(app);
 http.listen(3000);
 var io = require('socket.io')(http);
 
 //when this event fires, execute this callback function
-io.on('connect', function(socket) {
-  console.log('connected from app.js');
-  // var user = global.currentUser.local;
-  // console.log('hits',user);
-  // User.findOne({ 'local.username': user.username }, { 'local.battlefield': true }, function(err, user) {
-  //   if (err) console.log(err);
-  //   var data = {};
-  //   data.username = user.username;
-  // });
-});
+// io.on('connect', function(socket) {
+//   console.log('connected from app.js');
+//   // var user = global.currentUser.local;
+//   // console.log('hits',user);
+//   // User.findOne({ 'local.username': user.username }, { 'local.battlefield': true }, function(err, user) {
+//   //   if (err) console.log(err);
+//   //   var data = {};
+//   //   data.username = user.username;
+//   // });
+// });
 app.set('socketio', io);
 
 var routes = require('./routes/index');

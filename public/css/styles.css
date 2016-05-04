@@ -187,14 +187,13 @@ header {
     position: absolute;
     height: auto; }
   .dragon.level1 {
-    left: calc(50% - 140px);
     top: 23%; }
     .dragon.level1 .dragon-part {
       width: 275px; }
     .dragon.level1.dark {
-      left: calc(50% - 20px); }
+      left: calc(50% - 15px); }
     .dragon.level1.light {
-      left: calc(50% - 200px); }
+      left: calc(50% - 260px); }
   .dragon.level2 {
     top: 50%; }
     .dragon.level2 .dragon-part {
@@ -227,5 +226,31 @@ header {
 #battlefront {
   padding: 50px;
   font-size: 5em; }
+
+.conn-user input[type=submit] {
+  width: 220px;
+  height: 200px;
+  border: 0;
+  display: block; }
+  .conn-user input[type=submit].red {
+    background: url("../img/dragons/red.png");
+    background-size: cover; }
+  .conn-user input[type=submit].orange {
+    background: url("../img/dragons/orange.png");
+    background-size: cover; }
+  .conn-user input[type=submit].yellow {
+    background: url("../img/dragons/yellow.png");
+    background-size: cover; }
+  .conn-user input[type=submit].green {
+    background: url("../img/dragons/green.png");
+    background-size: cover; }
+  .conn-user input[type=submit].blue {
+    background: url("../img/dragons/blue.png");
+    background-size: cover; }
+  .conn-user input[type=submit].purple {
+    background: url("../img/dragons/purple.png");
+    background-size: cover; }
+  .conn-user input[type=submit]:hover {
+    cursor: pointer; }
 
 /*# sourceMappingURL=styles.css.map */
