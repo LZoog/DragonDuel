@@ -1,57 +1,71 @@
 $(function() {
-  // $('#enter').click(function(){
-    // $('#battlefront').toggleClass('hide');
-    // $('#battlefield').toggleClass('hide');
-    var socket = io();
-    socket.on('connect', function() {
-      console.log('Client connected!');
-    });
-    // New user joined battlefield
-    socket.on('newUser', function(user) {
-      var currentLevel = $('.current-level').val();
-      var currentPower = $('.your-power').val();
-      //on header
-      var currentUsername = $('#current-username').val();
+  var socket = io();
+  socket.on('connect', function() {
+    console.log('Client connected!');
+  });
+  // New user joined battlefield
+  socket.on('newUser', function(user) {
+    var currentLevel = $('.current-level').val();
+    var currentPower = $('.your-power').val();
+    //on header
+    var currentUsername = $('#current-username').val();
 
-      //only append if the user is not already on the field, new user's level matches yours, and it is not you
-      if (!input[value='${user.username}'] && user.level == currentLevel && user.username != currentUsername) {
-        var newUser = (
-        `<div class="conn-user">
-          <form action="/duel" method="post">
-            <input type="hidden" class="current-level" name="level" value="${user.level}" />
-            <input type="hidden" class="your-power" name="yourPower" value="${currentPower}" />
-            <input type="hidden" class="conn-power" name="connPower" value="${user.power}" />
-            <input type="hidden" class="conn-username" name="username" value="${user.username}" />
-            <input type="submit" class="duel-user ${user.color}" value="" />
-          <a href="/users/${user.username}">@${user.username}</a>
-          </form>
-        </div>`
-        );
-        $('#new-user').prepend(newUser);
+    function userNotOnField() {
+      var usersOnField = [];
+      $('.conn-username').each(function() {
+        usersOnField.push(($(this).val()));
+      });
+      console.log(usersOnField);
+
+      if (usersOnField.length !== 0) {
+       for (var i = 0; i < usersOnField.length; i++) {
+          if (usersOnField[i] == user.username) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      } else {
+        return true;
       }
-    });
-    // User removed from battlefield because they lost to another user
-    socket.on('removeFromField', function(username) {
-      //on header
-      var currentUsername = $('#current-username').val();
+    }
 
-      if (currentUsername == username) {
-        window.location.replace(`/users/${currentUsername}`);
-      }
-    });
+    //only append if the user is not already on the field, new user's level matches yours, and it is not you
+    if (userNotOnField() && user.level == currentLevel && user.username != currentUsername) {
+      var newUser = (
+      `<div class="conn-user">
+        <form action="/duel" method="post">
+          <input type="hidden" class="current-level" name="level" value="${user.level}" />
+          <input type="hidden" class="your-power" name="yourPower" value="${currentPower}" />
+          <input type="hidden" class="conn-power" name="connPower" value="${user.power}" />
+          <input type="hidden" class="conn-username" name="username" value="${user.username}" />
+          <input type="submit" class="duel-user ${user.color}" value="" />
+        <a href="/users/${user.username}">@${user.username}</a>
+        </form>
+      </div>`
+      );
+      $('#new-user').prepend(newUser);
+    }
+  });
+  // User removed from battlefield because they lost on level 1
+  // NEED TO TEST
+  socket.on('removeFromField', function(username) {
+    //on header
+    var currentUsername = $('#current-username').val();
 
-    //User left battlefield manually
-    socket.on('leftField', function(user) {
-      var currentLevel = $('.current-level').val();
-      console.log(user);
-      console.log(user.level);
+    if (currentUsername == username) {
+      window.location.replace(`/users/${currentUsername}`);
+    }
+  });
 
-      // (has to be level 1)
-      if (currentLevel == user.level) {
-        $(`input[value='${user.username}']`).parent().parent().remove();
-      }
-    })
-  // })
+  //User left battlefield manually
+  socket.on('leftField', function(user) {
+    var currentLevel = $('.current-level').val();
+    // (has to be level 1)
+    if (currentLevel == user.level) {
+      $(`input[value='${user.username}']`).parent().parent().remove();
+    }
+  });
 
   $('.duel-user').on('click', function(e) {
     e.preventDefault();
@@ -78,9 +92,9 @@ $(function() {
       if (!status) {
         return;
       }
-      if (status == 'win') {
+      if (status == 'win' || status == 'lose' || status == 'tie') {
         $.ajax({
-          url: '/duel/get',
+          url: '/duel/update',
           method: 'GET',
           data: {},
           dataType: 'json'
