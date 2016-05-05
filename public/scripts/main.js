@@ -18,15 +18,16 @@ $(function() {
         usersOnField.push(($(this).val()));
       });
       console.log(usersOnField);
+      console.log(user.username);
 
       if (usersOnField.length !== 0) {
        for (var i = 0; i < usersOnField.length; i++) {
           if (usersOnField[i] == user.username) {
             return false;
-          } else {
-            return true;
           }
         }
+        //after for loop
+        return true;
       } else {
         return true;
       }
@@ -91,7 +92,7 @@ $(function() {
       if (!status) {
         return;
       }
-      if (status == 'win' || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
+      if ((status == 'win') || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
         $.ajax({
           url: '/duel/update',
           method: 'GET',

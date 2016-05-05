@@ -117,11 +117,16 @@ var returnRouter = function(io) {
         //you go up a level
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
           if (err) console.log(err);
-          // if opponent is on level 1, remove them from battlefield, emit event to that user (jQuery)
+          io.sockets.emit('leftField', user);
+          console.log('emitted leftfield event');
+          // if opponent is on level 1, remove them from battlefield, emit event
           if (currentLevel == 1) {
+            console.log('inside if statement');
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
+              console.log('inside if statement, before emitting event');
               io.sockets.emit('removeFromField', connUsername);
+              console.log('emitted removeFromField event');
               res.send('win');
             });
           } else {
@@ -142,11 +147,9 @@ var returnRouter = function(io) {
         // if you're level 1 you're removed from field
         if (currentLevel == 1) {
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
-            console.log('got to findoneandupdate');
             if (err) console.log(err);
             io.sockets.emit('removeFromField', currentUser.username);
             io.sockets.emit('leftField', user.local);
-            console.log('did websocketshit');
             res.send('lose');
           });
         } else {
