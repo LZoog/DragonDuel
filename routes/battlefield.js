@@ -26,7 +26,7 @@ var returnRouter = function(io) {
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
         if (err) console.log(err);
           res.render('battlefield', {level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users});
-          setTimeout(function(){io.sockets.emit('newUser', user.local)}, 2000);
+          setTimeout(function(){io.sockets.emit('newUser', user.local)}, 100);
       });
     });
   });
@@ -48,6 +48,8 @@ var returnRouter = function(io) {
     if (req.body.leave) {
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
         if (err) console.log(err);
+        //
+        io.sockets.emit('leftField', user.local);
       });
       res.redirect(`/users/${currentUser.username}`);
       /* Else, user has clicked on another user */
@@ -56,29 +58,33 @@ var returnRouter = function(io) {
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
       var currentLevel = parseInt(req.body.currentLevel);
+      var upLevel = currentLevel + 1;
+      var downLevel = currentLevel - 1;
+
+      console.log(currentLevel);
+      console.log('req.body.currentLevel',req.body.currentLevel);
 
       function win() {
         console.log('got to win()');
         //you go up a level
-        //req.body.currentLevel
-        var upLevel = currentLevel + 1;
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
           if (err) console.log(err);
         });
-        // if opponent is on level 1, remove them from battlefield
+        // if opponent is on level 1, remove them from battlefield, emit event to that user (jQuery)
         if (currentLevel == 1) {
           User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
             if (err) console.log(err);
+            io.sockets.emit('removeFromField', connUsername);
+            res.send('win');
           });
         } else {
-          var downLevel = currentLevel - 1;
-          console.log(downLevel);
+          console.log('downLevel',downLevel);
           //find opposing user & make them go down a level
           User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
             if (err) console.log(err);
+            res.send('win');
           });
         }
-        res.send('win');
       }
 
       if (yourPower == 'lightning' && connPower == 'psychic') {

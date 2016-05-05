@@ -6,6 +6,7 @@ $(function() {
     socket.on('connect', function() {
       console.log('Client connected!');
     });
+    // New user joined battlefield
     socket.on('newUser', function(user) {
       var currentLevel = $('.current-level').val();
       var currentPower = $('.your-power').val();
@@ -28,6 +29,27 @@ $(function() {
         $('#new-user').prepend(newUser);
       }
     });
+    // User removed from battlefield because they lost to another user
+    socket.on('removeFromField', function(username) {
+      //on header
+      var currentUsername = $('#current-username').val();
+
+      if (currentUsername == username) {
+        window.location.replace(`/users/${currentUsername}`);
+      }
+    });
+
+    //User left battlefield manually
+    socket.on('leftField', function(user) {
+      var currentLevel = $('.current-level').val();
+      console.log(user);
+      console.log(user.level);
+
+      // (has to be level 1)
+      if (currentLevel == user.level) {
+        $(`input[value='${user.username}']`).parent().parent().remove();
+      }
+    })
   // })
 
   $('.duel-user').on('click', function(e) {
@@ -37,6 +59,9 @@ $(function() {
     var yourPower = $(this).siblings('.your-power').val();
     var connPower = $(this).siblings('.conn-power').val();
     var currentLevel = $(this).siblings('.current-level').val();
+
+    console.log(currentLevel);
+    console.log(parseInt(currentLevel));
 
     $.ajax({
       url: '/duel',
