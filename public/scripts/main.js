@@ -13,7 +13,8 @@ $(function() {
       //on header
       var currentUsername = $('#current-username').val();
 
-      if (user.level == currentLevel && user.username != currentUsername) {
+      //only append if the user is not already on the field, new user's level matches yours, and it is not you
+      if (!input[value='${user.username}'] && user.level == currentLevel && user.username != currentUsername) {
         var newUser = (
         `<div class="conn-user">
           <form action="/duel" method="post">
