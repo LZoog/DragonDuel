@@ -48,7 +48,6 @@ var returnRouter = function(io) {
     if (req.body.leave) {
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
         if (err) console.log(err);
-        //
         io.sockets.emit('leftField', user.local);
       });
       res.redirect(`/users/${currentUser.username}`);
@@ -57,7 +56,9 @@ var returnRouter = function(io) {
       var connUsername = req.body.connUsername;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
-      var currentLevel = parseInt(req.body.currentLevel);
+      var currentLevel = currentUser.level;
+      console.log(currentLevel);
+      //var currentLevel = parseInt(req.body.currentLevel);
       var upLevel = currentLevel + 1;
       var downLevel = currentLevel - 1;
 
@@ -141,15 +142,18 @@ var returnRouter = function(io) {
         // if you're level 1 you're removed from field
         if (currentLevel == 1) {
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
+            console.log('got to findoneandupdate');
             if (err) console.log(err);
-            io.sockets.emit('removeFromField', connUsername);
+            io.sockets.emit('removeFromField', currentUser.username);
+            io.sockets.emit('leftField', user.local);
+            console.log('did websocketshit');
             res.send('lose');
           });
         } else {
           //otherwise you go down a level
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, function(err, user) {
             if (err) console.log(err);
-            io.sockets.emit('newUser', user);
+            io.sockets.emit('newUser', user.local);
             res.send('lose');
           });
         }
@@ -167,7 +171,7 @@ var returnRouter = function(io) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
               io.sockets.emit('removeFromField', connUsername);
-              res.send('lose');
+              res.send('tie');
             });
           });
         } else {
@@ -180,7 +184,7 @@ var returnRouter = function(io) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
               if (err) console.log(err);
               io.sockets.emit('newUser', user);
-              res.send('lose');
+              res.send('tie');
             });
           })
         }

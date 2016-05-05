@@ -1,4 +1,6 @@
 $(function() {
+
+  /*** SOCKETS ***/
   var socket = io();
   socket.on('connect', function() {
     console.log('Client connected!');
@@ -28,7 +30,7 @@ $(function() {
       } else {
         return true;
       }
-    }
+    };
 
     //only append if the user is not already on the field, new user's level matches yours, and it is not you
     if (userNotOnField() && user.level == currentLevel && user.username != currentUsername) {
@@ -47,25 +49,26 @@ $(function() {
       $('#new-user').prepend(newUser);
     }
   });
+
   // User removed from battlefield because they lost on level 1
-  // NEED TO TEST
   socket.on('removeFromField', function(username) {
     //on header
     var currentUsername = $('#current-username').val();
-
     if (currentUsername == username) {
       window.location.replace(`/users/${currentUsername}`);
     }
   });
 
-  //User left battlefield manually
+  // User left battlefield manually OR user lost & is moved down a level
   socket.on('leftField', function(user) {
     var currentLevel = $('.current-level').val();
-    // (has to be level 1)
+    console.log('currentLevel',currentLevel);
+    console.log('user.level', user.level);
     if (currentLevel == user.level) {
       $(`input[value='${user.username}']`).parent().parent().remove();
     }
   });
+  /*** /SOCKETS ***/
 
   $('.duel-user').on('click', function(e) {
     e.preventDefault();
@@ -75,24 +78,20 @@ $(function() {
     var connPower = $(this).siblings('.conn-power').val();
     var currentLevel = $(this).siblings('.current-level').val();
 
-    console.log(currentLevel);
-    console.log(parseInt(currentLevel));
-
     $.ajax({
       url: '/duel',
       method: 'POST',
       data: {
         connUsername: connUsername,
         yourPower: yourPower,
-        connPower: connPower,
-        currentLevel: currentLevel
+        connPower: connPower
       }
     })
     .done(function(status) {
       if (!status) {
         return;
       }
-      if (status == 'win' || status == 'lose' || status == 'tie') {
+      if (status == 'win' || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
         $.ajax({
           url: '/duel/update',
           method: 'GET',
