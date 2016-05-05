@@ -19,14 +19,13 @@ var returnRouter = function(io) {
   router.get('/', authenticatedUser, function(req, res, next) {
     var currentUser = req.user.local;
     //find all users in the battlefield & on the same level
-    User.find({ 'local.battlefield': true, 'local.level': currentUser.level }, 'local.username local.level local.power local.color', function(err, users) {
+    User.find({ 'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.level local.power local.color', function(err, users) {
       if (err) console.log(err);
 
       //then set battlefield to true for current user, emit event to all connected
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
         if (err) console.log(err);
-          io.sockets.emit('newUser', user.local);
-          res.render('battlefield', {level: currentUser.level, power: currentUser.power, users: users});
+          res.render('battlefield', {level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users});
           setTimeout(function(){io.sockets.emit('newUser', user.local)}, 2000);
       });
     });
@@ -56,12 +55,15 @@ var returnRouter = function(io) {
       var connUsername = req.body.connUsername;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
+      
       var currentLevel = req.body.currentLevel;
+      console.log(currentLevel);
 
       function win() {
         console.log('got to win()');
         //you go up a level
-        var upLevel = ++currentLevel;
+        //req.body.currentLevel
+        var upLevel = currentLevel + 1;
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
           if (err) console.log(err);
         });
@@ -71,7 +73,8 @@ var returnRouter = function(io) {
             if (err) console.log(err);
           });
         } else {
-          var downLevel = --currentLevel;
+          var downLevel = currentLevel - 1;
+          console.log(downLevel);
           //find opposing user & make them go down a level
           User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
             if (err) console.log(err);

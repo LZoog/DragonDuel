@@ -7,11 +7,26 @@ $(function() {
       console.log('Client connected!');
     });
     socket.on('newUser', function(user) {
+      var currentLevel = $('.current-level').val();
+      var currentPower = $('.your-power').val();
+      //on header
+      var currentUsername = $('#current-username').val();
 
-      var newConnect = '<h1>'+user.username+'</h1>';
-
-      $('#new-connect').prepend(newConnect);
-      $('#new-connect').prepend('WHY YOU NO WORK');
+      if (user.level == currentLevel && user.username != currentUsername) {
+        var newUser = (
+        `<div class="conn-user">
+          <form action="/duel" method="post">
+            <input type="hidden" class="current-level" name="level" value="${user.level}" />
+            <input type="hidden" class="your-power" name="yourPower" value="${currentPower}" />
+            <input type="hidden" class="conn-power" name="connPower" value="${user.power}" />
+            <input type="hidden" class="conn-username" name="username" value="${user.username}" />
+            <input type="submit" class="duel-user ${user.color}" value="" />
+          <a href="/users/${user.username}">@${user.username}</a>
+          </form>
+        </div>`
+        );
+        $('#new-user').prepend(newUser);
+      }
     });
   // })
 

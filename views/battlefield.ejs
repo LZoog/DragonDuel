@@ -1,5 +1,5 @@
 
-<div id="battlefront">
+<div id="battlefront class="hide"">
   <a href="#" id="enter">ENTER</a>
 </div>
 
@@ -13,7 +13,7 @@
 
   <h1>YOU ARE ON THE BATTLEFIELD</h1>
 
-  <div id="new-connect"></div>
+  <div id="new-user"></div>
 
   <div id="connected">
     <% users.forEach(function(user) { %>
@@ -29,4 +29,7 @@
     </div>
     <% }); %>
   </div>
+
+  <input type="hidden" class="current-level" name="level" value="<%=level%>" />
+  <input type="hidden" class="your-power" name="yourPower" value="<%=power%>" />
 </section>
