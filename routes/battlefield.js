@@ -55,9 +55,7 @@ var returnRouter = function(io) {
       var connUsername = req.body.connUsername;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
-      
-      var currentLevel = req.body.currentLevel;
-      console.log(currentLevel);
+      var currentLevel = parseInt(req.body.currentLevel);
 
       function win() {
         console.log('got to win()');
