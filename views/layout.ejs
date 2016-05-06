@@ -18,8 +18,8 @@
     <% if(global.currentUser){ %>
       <a href="/duel/">Duel</a>
       <!-- input for websockets, remove if you can get socket.broadcast to work -->
-      <input type="hidden" id="current-username" value="<%=global.currentUser.local.username%>" />
-      <a href="/users/<%=global.currentUser.local.username%>" id="<%=global.currentUser.local.username%>">@<%= global.currentUser.local.username %></a>
+      <input type="hidden" id="current-username" value="<%=req.user.local.username%>" />
+      <a href="/users/<%=req.user.local.username%>" id="<%=req.user.local.username%>">@<%= req.user.local.username %></a>
       <a href="/logout">Log out</a>
     <% } else { %>
       <a href="/signup">Signup</a>

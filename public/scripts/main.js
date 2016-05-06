@@ -1,5 +1,8 @@
 $(function() {
 
+  //on header
+  var currentUsername = $('#current-username').val();
+
   /*** SOCKETS ***/
   var socket = io();
   socket.on('connect', function() {
@@ -55,9 +58,13 @@ $(function() {
   socket.on('removeFromField', function(username) {
     //on header
     var currentUsername = $('#current-username').val();
+
+    console.log('first currentUsername', currentUsername);
+
     if (currentUsername == username) {
-      window.location.replace(`/users/${currentUsername}`);
+      window.location.replace(`/users/${username}`);
     }
+    // }
   });
 
   // User left battlefield manually OR user lost & is moved down a level
@@ -71,12 +78,50 @@ $(function() {
   });
   /*** /SOCKETS ***/
 
+
+
+
+
+
+
+
+  // function win() {
+  //   console.log('got to win()');
+  //   //you go up a level
+  //   User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
+  //     if (err) console.log(err);
+  //     io.sockets.emit('leftField', user.local);
+  //     console.log('emitted leftfield event');
+  //     // if opponent is on level 1, remove them from battlefield, emit event
+  //     if (currentLevel == 1) {
+  //       console.log('inside if statement');
+  //       User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
+  //         if (err) console.log(err);
+  //         io.sockets.emit('removeFromField', connUsername);
+  //         console.log('connUsername', connUsername);
+  //         res.send('isthisworking');
+  //       });
+  //     } else {
+  //       console.log('downLevel',downLevel);
+  //       //find opposing user & make them go down a level
+  //       User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
+  //         if (err) console.log(err);
+  //         io.sockets.emit('newUser', user.local);
+  //         //io.sockets.emit('getLevel', user.local.username);
+  //         res.send('win');
+  //       });
+  //     }
+  //   });
+  // };
+
+
+
   $('.duel-user').on('click', function(e) {
     e.preventDefault();
-    var self = $(this);
     var connUsername = $(this).siblings('.conn-username').val();
     var yourPower = $(this).siblings('.your-power').val();
     var connPower = $(this).siblings('.conn-power').val();
+    //for 2nd ajax
     var currentLevel = $(this).siblings('.current-level').val();
 
     $.ajax({
@@ -89,10 +134,10 @@ $(function() {
       }
     })
     .done(function(status) {
-      if (!status) {
-        return;
-      }
-      if ((status == 'win') || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
+
+      console.log(status);
+      if (status == 'win' || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
+        console.log('inside loop');
         $.ajax({
           url: '/duel/update',
           method: 'GET',
@@ -100,11 +145,18 @@ $(function() {
           dataType: 'json'
         })
         .done(function(data) {
-          if (!data) {
-            return;
-          }
+          // if (!data) {
+          //   return;
+          // }
+          console.log('data', data);
+          console.log('data.users',data.users);
+          console.log('data.power',data.power);
+          console.log('data.users[0]', data.users[0]);
+          console.log('data.users[0].local', data.users[0].local);
+          console.log('data.users[0].local.username', data.users[0].local.username);
           $('#connected').empty();
           data.users.forEach(function(user){
+            console.log(user);
             $('#connected').prepend(`<div class="conn-user">
                   <form action="/duel" method="post">
                     <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
@@ -118,13 +170,13 @@ $(function() {
           })
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR, textStatus, errorThrown);
+          console.log('ajax failed',jqXHR, textStatus, errorThrown);
         })
       }
     })
     //for first AJAX
     .fail(function(jqXHR, textStatus, errorThrown) {
-      console.log(jqXHR, textStatus, errorThrown);
+      console.log('2ajax failed',jqXHR, textStatus, errorThrown);
     })
   });
 

@@ -25,8 +25,8 @@ var returnRouter = function(io) {
       //then set battlefield to true for current user, emit event to all connected
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
         if (err) console.log(err);
-          res.render('battlefield', {level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users});
-          setTimeout(function(){io.sockets.emit('newUser', user.local)}, 100);
+          res.render('battlefield', {req: req, level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
+          setTimeout(function(){io.sockets.emit('newUser', user.local)}, 200);
       });
     });
   });
@@ -44,6 +44,7 @@ var returnRouter = function(io) {
   /* POST battlefield */
   router.post('/', function(req, res, next) {
     var currentUser = req.user.local;
+
     /* User is leaving the battlefield */
     if (req.body.leave) {
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
@@ -51,16 +52,17 @@ var returnRouter = function(io) {
         io.sockets.emit('leftField', user.local);
       });
       res.redirect(`/users/${currentUser.username}`);
+
       /* Else, user has clicked on another user */
     } else {
-      var connUsername = req.body.connUsername;
+      console.log(req.body);
+      console.log('.connUsername', req.body.connUsername);
+      console.log('.username', req.body.username);
+      console.log('.level', req.body.level);
+      var connUsername = req.body.connUsername || req.body.username;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
       var currentLevel = currentUser.level;
-      console.log(currentLevel);
-      //var currentLevel = parseInt(req.body.currentLevel);
-      var upLevel = currentLevel + 1;
-      var downLevel = currentLevel - 1;
 
       if (yourPower == 'lightning') {
         if (connPower == 'psychic') {
@@ -72,6 +74,7 @@ var returnRouter = function(io) {
         }
       } else if (yourPower == 'fire') {
         if (connPower == 'darkness') {
+          console.log('fire, darkness');
           win();
         } else if (connPower == 'psychic') {
           lose();
@@ -115,31 +118,38 @@ var returnRouter = function(io) {
       function win() {
         console.log('got to win()');
         //you go up a level
+
+        var upLevel = currentLevel + 1;
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
           if (err) console.log(err);
-          io.sockets.emit('leftField', user);
-          console.log('emitted leftfield event');
-          // if opponent is on level 1, remove them from battlefield, emit event
+          //io.sockets.emit('leftField', user.local);
+
+          // if opponent is on level 1, remove them from battlefield
           if (currentLevel == 1) {
-            console.log('inside if statement');
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              console.log('inside if statement, before emitting event');
-              io.sockets.emit('removeFromField', connUsername);
-              console.log('emitted removeFromField event');
+              console.log('connUsername',connUsername);
+              console.log('currentUser.username',currentUser.username);
+                console.log('before emit');
+                /* setTimeout(function(){*/
+                io.sockets.emit('removeFromField', connUsername)
+              /*}, 2000);*/
               res.send('win');
             });
           } else {
-            console.log('downLevel',downLevel);
             //find opposing user & make them go down a level
+            var downLevel = currentLevel - 1;
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
               if (err) console.log(err);
-              io.sockets.emit('newUser', user);
+              io.sockets.emit('newUser', user.local);
+              //io.sockets.emit('getLevel', user.local.username);
               res.send('win');
             });
           }
         });
-      };
+
+      }
+
 
       function lose() {
         console.log('got to lose()');
@@ -182,11 +192,14 @@ var returnRouter = function(io) {
           //current user
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, function(err, user) {
             if (err) console.log(err);
-            io.sockets.emit('newUser', user);
+            io.sockets.emit('newUser', user.local);
+            io.sockets.emit('leftField', user.local);
             //opponent
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
               if (err) console.log(err);
-              io.sockets.emit('newUser', user);
+              io.sockets.emit('newUser', user.local);
+              io.sockets.emit('leftField', user.local);
+              //io.sockets.emit('getLevel', user.local.username);
               res.send('tie');
             });
           })
