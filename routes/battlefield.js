@@ -53,7 +53,7 @@ var returnRouter = function(io) {
       });
       res.redirect(`/users/${currentUser.username}`);
 
-      /* Else, user has clicked on another user */
+      /* Else, user has clicked on another user & will win, lose, or tie */
     } else {
       console.log(req.body);
       console.log('.connUsername', req.body.connUsername);
@@ -74,7 +74,6 @@ var returnRouter = function(io) {
         }
       } else if (yourPower == 'fire') {
         if (connPower == 'darkness') {
-          console.log('fire, darkness');
           win();
         } else if (connPower == 'psychic') {
           lose();
@@ -117,12 +116,16 @@ var returnRouter = function(io) {
 
       function win() {
         console.log('got to win()');
-        //you go up a level
 
+        //you go up a level
         var upLevel = currentLevel + 1;
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
           if (err) console.log(err);
-          //io.sockets.emit('leftField', user.local);
+          //test this
+          console.log('updated user, about to emit');
+          console.log('user.local',user.local);
+          //fix this, is not sending correct user.local.level
+          //io.sockets.emit('newUser', user.local);
 
           // if opponent is on level 1, remove them from battlefield
           if (currentLevel == 1) {

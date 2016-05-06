@@ -15,13 +15,15 @@ $(function() {
     //on header
     var currentUsername = $('#current-username').val();
 
+    console.log('currentUsername', currentUsername);
+
     function userNotOnField() {
       var usersOnField = [];
       $('.conn-username').each(function() {
         usersOnField.push(($(this).val()));
       });
-      console.log(usersOnField);
-      console.log(user.username);
+
+      console.log('usersOnField',usersOnField);
 
       if (usersOnField.length !== 0) {
        for (var i = 0; i < usersOnField.length; i++) {
@@ -35,6 +37,9 @@ $(function() {
         return true;
       }
     };
+
+    console.log('user.level',user.level);
+    console.log('user.username', user.username);
 
     //only append if the user is not already on the field, new user's level matches yours, and it is not you
     if (userNotOnField() && user.level == currentLevel && user.username != currentUsername) {
