@@ -25,7 +25,7 @@ var returnRouter = function(io) {
       //then set battlefield to true for current user, emit event to all connected
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
         if (err) console.log(err);
-          res.render('battlefield', {req: req, level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
+          res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
           setTimeout(function(){io.sockets.emit('newUser', user.local)}, 200);
       });
     });

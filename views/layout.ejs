@@ -16,14 +16,14 @@
 
     <header>
     <% if(global.currentUser){ %>
-      <a href="/duel/">Duel</a>
+      <a href="/duel/" id="duel" class="hide">battlefield☠️</a>
       <!-- input for websockets, remove if you can get socket.broadcast to work -->
       <input type="hidden" id="current-username" value="<%=req.user.local.username%>" />
-      <a href="/users/<%=req.user.local.username%>" id="<%=req.user.local.username%>">@<%= req.user.local.username %></a>
-      <a href="/logout">Log out</a>
+      <a href="/users/<%=req.user.local.username%>" id="userShow">@<%= req.user.local.username %></a>
+      <a href="/logout" id="logout">Log out</a>
     <% } else { %>
-      <a href="/signup">Signup</a>
-      <a href="login">Login</a>
+      <a href="login" class="auth">Login</a>
+      <a href="/signup" class="auth">join</a>
     <% } %>
     </header>
 

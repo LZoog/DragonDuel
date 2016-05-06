@@ -7,7 +7,7 @@
   </form>
   <% } %>
 
-  <h1>YOU ARE ON THE BATTLEFIELD</h1>
+  <h1>THE BATTLEFIELD</h1>
 
   <div id="new-user"></div>
 
@@ -20,7 +20,7 @@
         <input type="hidden" class="conn-power" name="connPower" value="<%=user.local.power%>" />
         <input type="hidden" class="conn-username" name="username" value="<%=user.local.username%>" />
         <input type="submit" class="duel-user <%=user.local.color%>" value="" />
-      <a href="/users/<%=user.local.username%>">@<%= user.local.username %></a>
+      <a href="/users/<%=user.local.username%>" class="<%=user.local.color%>">@<%= user.local.username %></a>
       </form>
     </div>
     <% }); %>

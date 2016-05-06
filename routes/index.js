@@ -14,7 +14,7 @@ function unAuthenticatedUser(req, res, next) {
 router.get('/', function(req, res, next) {
   User.findOne({ 'local.level': 2 }, function(err, user) {
     if (err) console.log(err);
-    res.render('index', {req: req, username: user.local.username, dragon: user.local.dragon_name, team: user.local.team, color: user.local.color, level: user.local.level, req: req});
+    res.render('index', {req: req, username: user.local.username, dragon: user.local.dragon_name, team: user.local.team, color: user.local.color, level: user.local.level});
   });
 });
 

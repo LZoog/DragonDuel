@@ -5,7 +5,7 @@ html, body {
   padding: 0; }
 
 .hide {
-  display: none; }
+  display: none !important; }
 
 .sky-light {
   height: 100%;
@@ -15,12 +15,85 @@ html, body {
   height: 100%;
   background: url("../img/castles/sky-dark.png"); }
 
+.link-red a {
+  color: red;
+  text-decoration: none; }
+
+.link-orange a {
+  color: orange;
+  text-decoration: none; }
+
+.link-yellow a {
+  color: yellow;
+  text-decoration: none; }
+
+.link-green a {
+  color: green;
+  text-decoration: none; }
+
+.link-blue a {
+  color: blue;
+  text-decoration: none; }
+
+.link-purple a {
+  color: purple;
+  text-decoration: none; }
+
 header {
-  position: fixed;
+  position: absolute;
   top: 0;
-  width: 100%; }
-  header a {
-    float: right; }
+  width: 100%;
+  text-align: right; }
+
+.auth, #duel {
+  display: inline-block;
+  letter-spacing: 3px;
+  font-size: .9em;
+  text-transform: uppercase;
+  color: #cfe1ea;
+  background-color: #13313d;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 10px;
+  margin: 10px;
+  border: 2px solid #cfe1ea; }
+  .auth:hover, #duel:hover {
+    background-color: #021215;
+    color: #78bcd2; }
+  .auth:nth-of-type(2), #duel:nth-of-type(2) {
+    margin-left: 0px; }
+
+a#userShow {
+  text-decoration: none;
+  margin-right: 10px;
+  color: #021215;
+  position: relative;
+  top: 3px; }
+  a#userShow:hover {
+    color: #cfe1ea; }
+
+#duel {
+  padding: 10px 15px;
+  position: absolute;
+  top: 90vh;
+  right: 0;
+  margin: 15px; }
+
+#logout {
+  display: inline-block;
+  letter-spacing: 1px;
+  font-size: .5em;
+  text-transform: uppercase;
+  color: #cfe1ea;
+  background-color: #13313d;
+  padding: 5px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px;
+  border: 1px solid #cfe1ea; }
+  #logout:hover {
+    background-color: #021215;
+    color: #78bcd2; }
 
 #town {
   min-height: 100%;
@@ -52,6 +125,12 @@ header {
       background: url("../img/castles/town1-dark.png");
       background-size: cover;
       background-position: center center; }
+
+#connected, .conn-user, #new-user {
+  display: inline-block; }
+
+.conn-user {
+  margin: 10px; }
 
 .dragon-town {
   min-height: 100%;
@@ -90,6 +169,18 @@ header {
     background: url("../img/dragons/town-purple.png");
     background-size: cover;
     background-position: center center; }
+  .dragon-town h2 {
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    top: 34.5%;
+    font-size: 1.3em; }
+  .dragon-town h3 {
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    top: 40.5%;
+    font-size: 1.5em; }
 
 #instructions {
   min-height: 100%;
@@ -151,10 +242,15 @@ header {
   height: 100%;
   min-width: 100%;
   width: 100%; }
-  .user-info .username {
-    position: absolute;
+
+.username {
+  position: absolute; }
+  .username.level1 {
     top: 85%;
-    left: 47%; }
+    left: 46%; }
+  .username.level2 {
+    top: 34%;
+    left: 46%; }
 
 .avatar {
   position: absolute; }
@@ -188,6 +284,10 @@ header {
     height: auto; }
   .dragon.level1 {
     top: 23%; }
+    .dragon.level1 h4 {
+      position: relative;
+      top: 220px;
+      left: 100%; }
     .dragon.level1 .dragon-part {
       width: 275px; }
     .dragon.level1.dark {
@@ -196,6 +296,10 @@ header {
       left: calc(50% - 260px); }
   .dragon.level2 {
     top: 50%; }
+    .dragon.level2 h4 {
+      position: relative;
+      left: 80%;
+      top: 160px; }
     .dragon.level2 .dragon-part {
       width: 200px; }
     .dragon.level2.dark {
@@ -252,5 +356,9 @@ header {
     background-size: cover; }
   .conn-user input[type=submit]:hover {
     cursor: pointer; }
+
+#battlefield {
+  text-align: center;
+  margin-top: 75px; }
 
 /*# sourceMappingURL=styles.css.map */

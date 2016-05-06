@@ -60,7 +60,7 @@ html, body {
 }
 
 .hide {
-  display: none;
+  display: none!important;
 }
 
 .sky-light {
@@ -72,14 +72,100 @@ html, body {
   background: url('../img/castles/sky-dark.png');
 }
 
+.link-red a {
+   color: red;
+   text-decoration: none;
+ }
+.link-orange a {
+   color: orange;
+   text-decoration: none;
+ }
+.link-yellow a {
+   color: yellow;
+   text-decoration: none;
+ }
+.link-green a {
+   color: green;
+   text-decoration: none;
+ }
+.link-blue a {
+   color: blue;
+   text-decoration: none;
+ }
+.link-purple a {
+   color: purple;
+   text-decoration: none;
+ }
+
 header {
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
+  text-align: right;
+}
 
-  a {
-    float: right;
+.auth{
+  display: inline-block;
+  letter-spacing: 3px;
+  font-size: .9em;
+  text-transform: uppercase;
+  color: $blue-white;
+  background-color: $blue-dark;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 10px;
+  margin: 10px;
+  border: 2px solid $blue-white;
+
+  &:hover {
+    background-color: $blue-black;
+    color: $blue-sky;
   }
+
+  &:nth-of-type(2) {
+    margin-left: 0px;
+  }
+}
+
+a#userShow {
+  text-decoration: none;
+  margin-right: 10px;
+  color: $blue-black;
+  position: relative;
+  top: 3px;
+
+  &:hover {
+    color: $blue-white;
+  }
+}
+
+#duel {
+  @extend .auth;
+  padding: 10px 15px;
+  position: absolute;
+  top: 90vh;
+  right: 0;
+  margin: 15px;
+}
+
+#logout {
+  display: inline-block;
+  letter-spacing: 1px;
+  font-size: .5em;
+  text-transform: uppercase;
+  color: $blue-white;
+  background-color: $blue-dark;
+  padding: 5px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px;
+  border: 1px solid $blue-white;
+
+  &:hover {
+    background-color: $blue-black;
+    color: $blue-sky;
+  }
+
 }
 
 #town {
@@ -91,6 +177,14 @@ header {
   @include gradient(40%, 20%, 46%);
   //level, img name
   @include castles(1, town);
+}
+
+#connected, .conn-user, #new-user {
+  display: inline-block;
+}
+
+.conn-user {
+  margin: 10px;
 }
 
 .dragon-town {
@@ -107,6 +201,22 @@ header {
   &.green { @include castleDragon('../img/dragons/town-green.png'); }
   &.blue { @include castleDragon('../img/dragons/town-blue.png'); }
   &.purple { @include castleDragon('../img/dragons/town-purple.png'); }
+
+  h2 {
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    top: 34.5%;
+    font-size: 1.3em;
+
+  }
+  h3 {
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+    top: 40.5%;
+    font-size: 1.5em;
+  }
 }
 
 #instructions {
@@ -135,11 +245,19 @@ header {
   height: 100%;
   min-width: 100%;
   width: 100%;
+}
 
-  .username {
-    position: absolute;
+.username {
+  position: absolute;
+
+  &.level1 {
     top: 85%;
-    left: 47%;
+    left: 46%;
+  }
+
+  &.level2 {
+    top: 34%;
+    left: 46%;
   }
 }
 
@@ -192,6 +310,12 @@ header {
   &.level1 {
     top: 23%;
 
+    h4 {
+      position: relative;
+      top: 220px;
+      left: 100%;
+    }
+
     .dragon-part {
       width: 275px;
     }
@@ -206,6 +330,12 @@ header {
 
   &.level2 {
     top: 50%;
+
+    h4 {
+      position: relative;
+      left: 80%;
+      top: 160px;
+    }
 
     .dragon-part {
       width: 200px;
@@ -260,4 +390,9 @@ header {
     }
   }
 
+}
+
+#battlefield {
+  text-align: center;
+  margin-top: 75px;
 }

@@ -81,45 +81,21 @@ $(function() {
       $(`input[value='${user.username}']`).parent().parent().remove();
     }
   });
+
+  // socket.on('getLevel', function(username) {
+  //   //on header
+  //   var currentUsername = $('#current-username').val();
+  //   if (currentUsername == username) {
+  //     ajaxGetLevel();
+  //   }
+  // });
   /*** /SOCKETS ***/
 
-
-
-
-
-
-
-
-  // function win() {
-  //   console.log('got to win()');
-  //   //you go up a level
-  //   User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, function(err, user) {
-  //     if (err) console.log(err);
-  //     io.sockets.emit('leftField', user.local);
-  //     console.log('emitted leftfield event');
-  //     // if opponent is on level 1, remove them from battlefield, emit event
-  //     if (currentLevel == 1) {
-  //       console.log('inside if statement');
-  //       User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
-  //         if (err) console.log(err);
-  //         io.sockets.emit('removeFromField', connUsername);
-  //         console.log('connUsername', connUsername);
-  //         res.send('isthisworking');
-  //       });
-  //     } else {
-  //       console.log('downLevel',downLevel);
-  //       //find opposing user & make them go down a level
-  //       User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
-  //         if (err) console.log(err);
-  //         io.sockets.emit('newUser', user.local);
-  //         //io.sockets.emit('getLevel', user.local.username);
-  //         res.send('win');
-  //       });
-  //     }
-  //   });
-  // };
-
-
+  if (!$('.current-level').val()) {
+    $('#duel').removeClass('hide');
+  } else {
+    $('#duel').addClass('hide');
+  }
 
   $('.duel-user').on('click', function(e) {
     e.preventDefault();

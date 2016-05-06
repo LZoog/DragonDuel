@@ -14,9 +14,6 @@
     <img src="/img/peeps/<%=gender%>-crown.png" class="avatar-part">
     <% } %>
   </div>
-  <div class="username">
-    <h1>@<%= username %></h1>
-  </div>
 </section>
 
 <% if (level == 2) { %>
@@ -26,5 +23,10 @@
 <section class="dragon-info">
   <div class="dragon level<%=level%> <%=team%>">
     <img src="/img/dragons/<%=color%>.png" class="dragon-part" />
+    <h4><%=dragon%></h4>
   </div>
 </section>
+
+<div class="username level<%=level%>">
+  <h1>@<%= username %></h1>
+</div>
