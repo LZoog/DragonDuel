@@ -16,7 +16,9 @@ mongoose.connect(process.env.DB_CONN_DRAGON_DUEL);
 
 var app = express();
 var http = require('http').Server(app);
-http.listen(80);
+http.listen(process.env.PORT || 3000, function(){
+  console.log('listening on', http.address().port);
+});
 var io = require('socket.io')(http);
 
 //when this event fires, execute this callback function
