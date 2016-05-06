@@ -284,16 +284,20 @@ a#userShow {
     height: auto; }
   .dragon.level1 {
     top: 23%; }
-    .dragon.level1 h4 {
-      position: relative;
-      top: 225px;
-      left: 70px; }
     .dragon.level1 .dragon-part {
       width: 275px; }
     .dragon.level1.dark {
       left: calc(50% - 15px); }
+      .dragon.level1.dark h4 {
+        position: relative;
+        top: 225px;
+        left: 70px; }
     .dragon.level1.light {
       left: calc(50% - 260px); }
+      .dragon.level1.light h4 {
+        position: relative;
+        top: 222px;
+        left: 130px; }
   .dragon.level2 {
     top: 50%; }
     .dragon.level2 h4 {
