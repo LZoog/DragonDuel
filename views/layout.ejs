@@ -7,10 +7,35 @@
     <link rel="icon" href="/favicon.ico?" type="image/x-icon">
     <link rel="icon" href="/favicon.png">
     <title>Dragonduel | Node.JS App</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css" type="text/css" />
     <link rel="stylesheet" href="/css/styles.css" type="text/css" />
   </head>
   <body>
+
+    <section id="login" class="hide">
+      <h2>Login</h2>
+
+      <form method="post" action="/login">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" type="text" name="email" id="email">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Password</label>
+          <input class="form-control" type="password" name="password" id="password">
+        </div>
+
+        <input class="btn btn-default" type="submit">
+      </form>
+    </section>
+
+    <section id="join">
+      <!-- test -->
+    </section>
+
+
 
     <%- body %>
 
@@ -19,16 +44,20 @@
       <a href="/duel/" id="duel" class="hide">battlefield☠️</a>
       <!-- input for websockets, remove if you can get socket.broadcast to work -->
       <input type="hidden" id="current-username" value="<%=req.user.local.username%>" />
+
       <a href="/users/<%=req.user.local.username%>" id="userShow">@<%= req.user.local.username %></a>
-      <a href="/logout" id="logout">Log out</a>
+      <a href="/logout" id="logout-btn">Log out</a>
     <% } else { %>
-      <a href="login" class="auth">Login</a>
-      <a href="/signup" class="auth">join</a>
+      <a href="#" id="login-btn" class="auth">Login</a>
+      <a href="/signup" id="join-btn" class="auth">join</a>
     <% } %>
     </header>
 
+
+
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src="http://labs.voronianski.com/media/js/jquery.avgrund.js"></script>
     <script src="/scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>
   </body>
 </html>

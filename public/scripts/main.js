@@ -1,7 +1,23 @@
 $(function() {
 
+  //*** SIGN UP  ***//
+
+
+  var loginHTML = $('#login').html();
+  console.log(loginHTML);
+
+  $('#login-btn').avgrund({
+      height: 200,
+      holderClass: 'custom',
+      showClose: true,
+      showCloseText: 'close',
+      enableStackAnimation: true,
+      template: loginHTML
+  });
+
+
   //on header
-  var currentUsername = $('#current-username').val();
+  //var currentUsername = $('#current-username').val();
 
   /*** SOCKETS ***/
   var socket = io();
