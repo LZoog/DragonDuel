@@ -1,25 +1,37 @@
 $(function() {
 
-  //*** SIGN UP  ***//
-
-
+  //*** LOGIN/JOIN MODAL (core in avgrund.js)  ***//
   var loginHTML = $('#login').html();
-  console.log(loginHTML);
+  var joinHTML = $('#join').html();
 
   $('#login-btn').avgrund({
-      height: 200,
-      holderClass: 'custom',
-      showClose: true,
-      showCloseText: 'close',
-      enableStackAnimation: true,
-      template: loginHTML
+    holderClass: 'login-modal',
+    template: loginHTML
   });
 
+  $('#join-btn').avgrund({
+    holderClass: 'join-modal',
+    template: joinHTML
+  });
 
-  //on header
-  //var currentUsername = $('#current-username').val();
+  var loginHeight = $('.login-modal').height();
+  var loginWidth = $('.login-modal').width();
+  console.log(loginHeight);
 
-  /*** SOCKETS ***/
+  $('#login-btn').click(function() {
+    var loginHeight = $('.login-modal').height();
+    var loginWidth = $('.login-modal').width();
+    $('.avgrund-popin').css({
+      'margin-top': -(loginHeight)/2+'px',
+      'margin-left': -(loginWidth)/2+'px'
+    });
+    console.log(-(loginHeight)/2+'px');
+
+  })
+
+  //*** CLOSE LOGIN/JOIN MODAL ***/
+
+  //*** SOCKETS ***//
   var socket = io();
   socket.on('connect', function() {
     console.log('Client connected!');

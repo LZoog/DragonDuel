@@ -15,24 +15,84 @@
 
     <section id="login" class="hide">
       <h2>Login</h2>
-
       <form method="post" action="/login">
         <div class="form-group">
           <label for="email">Email</label>
           <input class="form-control" type="text" name="email" id="email">
         </div>
-
         <div class="form-group">
           <label for="email">Password</label>
           <input class="form-control" type="password" name="password" id="password">
         </div>
-
         <input class="btn btn-default" type="submit">
       </form>
     </section>
 
-    <section id="join">
-      <!-- test -->
+    <section id="join" class="hide">
+      <h2>Signup</h2>
+
+      <form method="post" action="/signup">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" type="text" name="email" id="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control" type="password" name="password" id="password" required />
+        </div>
+
+        <div>
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" required />
+        </div>
+
+        <div>
+          <label for="gender">Gender</label>
+          <input type="radio" name="gender" value="m" required /> Male
+          <input type="radio" name="gender" value="f" /> Female<br>
+        </div>
+
+        <div>
+          <label for="question1">You prefer the...</label>
+          <input type="radio" name="q1" value="sun" required /> Sun
+          <input type="radio" name="q1" value="moon" /> Moon
+        </div>
+
+        <div>
+          <label for="question2">Which mythological creature do you most relate to?</label>
+          <input type="radio" name="q2" value="fairy" required /> Fairy
+          <input type="radio" name="q2" value="mermaid" /> Mermaid
+          <input type="radio" name="q2" value="phoenix" /> Phoenix
+          <input type="radio" name="q2" value="unicorn" /> Unicorn
+        </div>
+
+        <div>
+          <label for="question3">The precious gem that best describes you is the...</label>
+          <input type="radio" name="q3" value="opal" required /> Opal
+          <input type="radio" name="q3" value="ruby" /> Ruby
+          <input type="radio" name="q3" value="diamond" /> Diamond
+          <input type="radio" name="q3" value="onyx" /> Onyx
+          <input type="radio" name="q3" value="pearl" /> Pearl
+        </div>
+
+        <div>
+          <label for="question4">You can have one and only one.</label>
+          <input type="radio" name="q4" value="money" required /> Money
+          <input type="radio" name="q4" value="power" /> Power
+          <input type="radio" name="q4" value="fame" /> Fame
+          <input type="radio" name="q4" value="achievement" /> Achievement
+          <input type="radio" name="q4" value="vanity" /> Vanity
+        </div>
+
+        <div>
+          <label for="question5">Would you choose to live forever?</label>
+          <input type="radio" name="q5" value="yes" required /> Yes
+          <input type="radio" name="q5" value="no" /> No
+        </div>
+
+        <input class="btn btn-default" type="submit">
+      </form>
     </section>
 
 
@@ -57,7 +117,7 @@
 
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <script src="http://labs.voronianski.com/media/js/jquery.avgrund.js"></script>
+    <script src="scripts/avgrund.js"></script>
     <script src="/scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>
   </body>
 </html>

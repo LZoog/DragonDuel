@@ -365,16 +365,19 @@ a#userShow {
   text-align: center;
   margin-top: 75px; }
 
+.login-modal {
+  width: 50%;
+  max-width: 600px;
+  top: 50%;
+  left: 50%; }
+
 .avgrund-popin {
   position: fixed;
   background: #fff;
   padding: 10px;
-  overflow: hidden;
   visibility: hidden;
   opacity: 0;
   filter: alpha(opacity=0);
-  top: 50%;
-  left: 50%;
   border-radius: 3px;
   box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.5); }
 
@@ -394,28 +397,21 @@ a#userShow {
   height: 100%;
   width: 100%; }
 
-body.avgrund-ready, .avgrund-ready .avgrund-popin, .avgrund-ready .avgrund-overlay {
-  -webkit-transform-origin: 50% 50%;
-  -moz-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  -o-transform-origin: 50% 50%;
-  transform-origin: 50% 50%;
-  -webkit-transition: 0.3s all ease-out;
-  -moz-transition: 0.3s all ease-out;
-  -ms-transition: 0.3s all ease-out;
-  -o-transition: 0.3s all ease-out;
-  transition: 0.3s all ease-out; }
-
 .avgrund-active .avgrund-popin {
   visibility: visible;
   opacity: 1;
   filter: alpha(opacity=100); }
   .avgrund-active .avgrund-popin.stack {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transform: scale(1.1); }
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s all ease-out;
+    -moz-transition: 0.3s all ease-out;
+    -ms-transition: 0.3s all ease-out;
+    -o-transition: 0.3s all ease-out;
+    transition: 0.3s all ease-out; }
 
 .avgrund-popin.stack {
   -webkit-transform: scale(1.5);
