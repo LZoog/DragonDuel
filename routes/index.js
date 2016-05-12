@@ -10,7 +10,7 @@ function unAuthenticatedUser(req, res, next) {
   return res.redirect('/');
 }
 
-/* GET home page. */
+/* GET home page */
 router.get('/', function(req, res, next) {
   User.findOne({ 'local.level': 2 }, function(err, user) {
     if (err) console.log(err);
@@ -22,6 +22,16 @@ router.get('/', function(req, res, next) {
 router.get('/signup', unAuthenticatedUser, function(req, res, next) {
   res.render('signup', { message: req.flash('errorMessage') });
 });
+
+/* GET taken e-mails */
+router.get('/registered', function (req, res, next) {
+  User.find({}, 'local.email local.username', function(err, users) {
+    if (err) console.log(err);
+    res.json(users);
+  });
+});
+
+/* GET taken usernames */
 
 /* POST /signup */
 router.post('/signup', function(req, res, next) {

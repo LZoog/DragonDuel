@@ -1,6 +1,6 @@
 $(function() {
 
-  //*** LOGIN/JOIN MODAL (core in avgrund.js)  ***//
+  /* LOGIN/JOIN MODAL (core in avgrund.js)  */
   var loginHTML = $('#login').html();
   var joinHTML = $('#join').html();
 
@@ -14,6 +14,7 @@ $(function() {
     template: joinHTML
   });
 
+  //always keep the modals centered
   function modalCSS(name) {
     var height = $(`.${name}-modal`).height();
     var width = $(`.${name}-modal`).width();
@@ -37,9 +38,72 @@ $(function() {
       modalCSS('join');
     }
   });
-  //*** CLOSE LOGIN/JOIN MODAL ***/
+  /* END LOGIN/JOIN MODAL */
 
-  //*** SOCKETS ***//
+
+  /* SIGN UP VALIDATIONS */
+  //password confirmation
+  var password = $('#password').val(),
+  confirm_password = $('#confirm_password').val();
+
+  function validatePassword(){
+    if (password != confirm_password) {
+      confirm_password.setCustomValidity("Passwords don't match!");
+    } else {
+      confirm_password.setCustomValidity('');
+    }
+  }
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
+
+  // check if e-mail is taken
+  $(document).on('blur', '#email', function() {
+    var typedEmail = $(this).val();
+    var self = this;
+    console.log('typedEmail',typedEmail);
+    // setTimeout(function() {
+      // if ($(this).val() == typedEmail) { // Check the value searched is the latest one or not. This will help in making the ajax call work when client stops writing.
+        $.ajax({
+          url: '/registered',
+          method: 'GET',
+          data: {},
+          dataType: 'json'
+        })
+        .done(function(users) {
+          console.log('inside done');
+          var check = 'available';
+          for (var i = 0; i < users.length; i++) {
+            console.log(users[i].local.email);
+            if (users[i].local.email == typedEmail) {
+              check = 'unavailable';
+              break;
+            }
+          }
+          console.log(check);
+          $(self).next().html(check);
+          console.log($('#email-check').html());
+          // if (available == false) {
+          //   $('#email-check').html('unavailable');
+          // } else {
+          //   console.log('yus available');
+          //   console.log($('#email-check').html());
+          //   $('#email-check').empty();
+          //   console.log('after emptying', $('#email-check').html());
+          //   $('#email-check').html('available');
+          //   console.log($('#email-check').html());
+          // }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          console.log('ajax failed',jqXHR, textStatus, errorThrown);
+        })
+      // }
+    // }, 1000);
+  });
+
+  /* END SIGN UP VALIDATIONS */
+
+
+  /* SOCKET IO */
   var socket = io();
   socket.on('connect', function() {
     console.log('Client connected!');
@@ -125,7 +189,8 @@ $(function() {
   //     ajaxGetLevel();
   //   }
   // });
-  /*** /SOCKETS ***/
+  /* END OF SOCKET.IO */
+
 
   if (!$('.current-level').val()) {
     $('#duel').removeClass('hide');
@@ -187,13 +252,13 @@ $(function() {
           })
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
-          console.log('ajax failed',jqXHR, textStatus, errorThrown);
+          console.log('Battlefield POST ajax failed',jqXHR, textStatus, errorThrown);
         })
       }
     })
     //for first AJAX
     .fail(function(jqXHR, textStatus, errorThrown) {
-      console.log('2ajax failed',jqXHR, textStatus, errorThrown);
+      console.log('Battlefield GET ajax failed',jqXHR, textStatus, errorThrown);
     })
   });
 
