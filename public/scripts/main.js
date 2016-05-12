@@ -56,7 +56,7 @@ $(function() {
   password.onchange = validatePassword;
   confirm_password.onkeyup = validatePassword;
 
-  // check if e-mail is taken
+  // check if e-mail is taken & validate
   checkAvailability('email');
 
   //check if username is taken
@@ -67,6 +67,23 @@ $(function() {
     $(document).on('blur', '#'+field, function() {
       var typedInput = $(this).val();
       var self = this;
+
+      // if it's the e-mail field, validate it
+      if (field == 'email') {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+
+        // if it's valid
+        if (re.test(typedInput)) {
+          $('.invalid').addClass('hide');
+          // empty available/unavailable
+          $(self).next().empty();
+        } else {
+          $('.invalid').removeClass('hide');
+          $(self).next().empty();
+          // no need to run AJAX request if e-mail is invalid
+          return;
+        }
+      }
       $.ajax({
         url: '/registered',
         method: 'GET',

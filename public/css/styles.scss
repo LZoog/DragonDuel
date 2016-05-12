@@ -127,12 +127,12 @@ header {
   }
 }
 
-#email-check {
+.availability {
   display: inline-block;
   color: green;
 }
 
-.taken {
+.taken, .invalid {
   color: red;
 }
 
