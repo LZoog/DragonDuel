@@ -14,21 +14,29 @@ $(function() {
     template: joinHTML
   });
 
-  var loginHeight = $('.login-modal').height();
-  var loginWidth = $('.login-modal').width();
-  console.log(loginHeight);
+  function modalCSS(name) {
+    var height = $(`.${name}-modal`).height();
+    var width = $(`.${name}-modal`).width();
+    $('.avgrund-popin').css({
+      'margin-top': -(height)/2+'px',
+      'margin-left': -(width)/2+'px'
+    });
+  }
 
   $('#login-btn').click(function() {
-    var loginHeight = $('.login-modal').height();
-    var loginWidth = $('.login-modal').width();
-    $('.avgrund-popin').css({
-      'margin-top': -(loginHeight)/2+'px',
-      'margin-left': -(loginWidth)/2+'px'
-    });
-    console.log(-(loginHeight)/2+'px');
-
+    modalCSS('login');
+  })
+  $('#join-btn').click(function() {
+    modalCSS('join');
   })
 
+  $(window).resize(function() {
+    if ($('.avgrund-popin').hasClass('login-modal')) {
+      modalCSS('login');
+    } else if ($('.avgrund-popin').hasClass('join-modal')) {
+      modalCSS('join');
+    }
+  });
   //*** CLOSE LOGIN/JOIN MODAL ***/
 
   //*** SOCKETS ***//
