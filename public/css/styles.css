@@ -63,6 +63,13 @@ header {
   .auth:nth-of-type(2), #duel:nth-of-type(2) {
     margin-left: 0px; }
 
+#email-check {
+  display: inline-block;
+  color: green; }
+
+.taken {
+  color: red; }
+
 a#userShow {
   text-decoration: none;
   margin-right: 10px;

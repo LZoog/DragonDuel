@@ -42,7 +42,7 @@ $(function() {
 
 
   /* SIGN UP VALIDATIONS */
-  //password confirmation
+  // password confirmation
   var password = $('#password').val(),
   confirm_password = $('#confirm_password').val();
 
@@ -57,49 +57,39 @@ $(function() {
   confirm_password.onkeyup = validatePassword;
 
   // check if e-mail is taken
-  $(document).on('blur', '#email', function() {
-    var typedEmail = $(this).val();
-    var self = this;
-    console.log('typedEmail',typedEmail);
-    // setTimeout(function() {
-      // if ($(this).val() == typedEmail) { // Check the value searched is the latest one or not. This will help in making the ajax call work when client stops writing.
-        $.ajax({
-          url: '/registered',
-          method: 'GET',
-          data: {},
-          dataType: 'json'
-        })
-        .done(function(users) {
-          console.log('inside done');
-          var check = 'available';
-          for (var i = 0; i < users.length; i++) {
-            console.log(users[i].local.email);
-            if (users[i].local.email == typedEmail) {
-              check = 'unavailable';
-              break;
-            }
-          }
-          console.log(check);
-          $(self).next().html(check);
-          console.log($('#email-check').html());
-          // if (available == false) {
-          //   $('#email-check').html('unavailable');
-          // } else {
-          //   console.log('yus available');
-          //   console.log($('#email-check').html());
-          //   $('#email-check').empty();
-          //   console.log('after emptying', $('#email-check').html());
-          //   $('#email-check').html('available');
-          //   console.log($('#email-check').html());
-          // }
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-          console.log('ajax failed',jqXHR, textStatus, errorThrown);
-        })
-      // }
-    // }, 1000);
-  });
+  checkAvailability('email');
 
+  //check if username is taken
+  checkAvailability('username');
+
+  function checkAvailability(field) {
+    // must use parent element & this/self because of modals
+    $(document).on('blur', '#'+field, function() {
+      var typedInput = $(this).val();
+      var self = this;
+      $.ajax({
+        url: '/registered',
+        method: 'GET',
+        data: {},
+        dataType: 'json'
+      })
+      .done(function(users) {
+        var check = '<span>available 😁</span>';
+
+        for (var i = 0; i < users.length; i++) {
+          if (users[i].local[field] == typedInput) {
+            console.log('got to unavailable');
+            check = '<span class="taken">unavailable 😢</span>';
+            break;
+          }
+        }
+        $(self).next().html(check);
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.log('ajax failed',jqXHR, textStatus, errorThrown);
+      })
+    });
+  };
   /* END SIGN UP VALIDATIONS */
 
 
