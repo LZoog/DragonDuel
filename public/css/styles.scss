@@ -405,22 +405,27 @@ a#userShow {
   margin-top: 75px;
 }
 
-
-
+//*** AVGRUND MODAL ***//
 .login-modal {
   width: 50%;
-  max-width: 600px;
-  top: 50%;
+  max-width: 450px;
+  top: 40%;
   left: 50%;
-  //margin-left and margin-top set in jQuery
+  //margin-left and margin-top for centering set in jQuery
 }
 
+.join-modal {
+  width: 50%;
+  max-width: 800px;
+  top: 40%;
+  left: 50%;
+  //margin-left and margin-top for centering set in jQuery
+}
 
-//*** AVGRUND MODAL ***//
 .avgrund-popin {
 	position: fixed;
 	background: #fff;
-	padding: 10px;
+	padding: 10px 20px 20px 20px;
 	visibility: hidden;
 	opacity: 0;
 	filter: alpha(opacity=0);
@@ -446,18 +451,12 @@ a#userShow {
   width: 100%;
 }
 
-.avgrund-ready .avgrund-popin {
-	// -webkit-transform-origin: 50% 50%;
-	// -moz-transform-origin: 50% 50%;
-	// -ms-transform-origin: 50% 50%;
-	// -o-transform-origin: 50% 50%;
-	// transform-origin: 50% 50%;
-
-	// -webkit-transition: 0.3s all ease-out;
-	// -moz-transition: 0.3s all ease-out;
-	// -ms-transition: 0.3s all ease-out;
-	// -o-transition: 0.3s all ease-out;
-	// transition: 0.3s all ease-out;
+.avgrund-popin.stack {
+	-webkit-transform: scale(1.5);
+	-moz-transform: scale(1.5);
+	-ms-transform: scale(1.5);
+	-o-transform: scale(1.5);
+	transform: scale(1.5);
 }
 
 .avgrund-active .avgrund-popin {
@@ -471,22 +470,15 @@ a#userShow {
   	-ms-transform: scale(1);
   	-o-transform: scale(1);
   	transform: scale(1);
-
-    -webkit-transition: 0.3s all ease-out;
-    -moz-transition: 0.3s all ease-out;
-    -ms-transition: 0.3s all ease-out;
-    -o-transition: 0.3s all ease-out;
-    transition: 0.3s all ease-out;
   }
 }
 
-.avgrund-popin.stack {
-	-webkit-transform: scale(1.5);
-	-moz-transform: scale(1.5);
-	-ms-transform: scale(1.5);
-	-o-transform: scale(1.5);
-	transform: scale(1.5);
-
+.avgrund-ready .avgrund-popin {
+	-webkit-transition: 0.3s all ease-out, margin-left 1ms, margin-top 1ms;
+	-moz-transition: 0.3s all ease-out, margin-left 1ms, margin-top 1ms;
+	-ms-transition: 0.3s all ease-out, margin-left 1ms, margin-top 1ms;
+	-o-transition: 0.3s all ease-out, margin-left 1ms, margin-top 1ms;
+	transition: 0.3s all ease-out, margin-left 1ms, margin-top 1ms;
 }
 
 .avgrund-close {
