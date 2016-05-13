@@ -67,7 +67,7 @@ header {
   display: inline-block;
   color: green; }
 
-.taken, .invalid {
+.taken, span[class^="invalid"] {
   color: red; }
 
 a#userShow {

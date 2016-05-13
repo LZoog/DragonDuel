@@ -31,8 +31,6 @@ router.get('/registered', function (req, res, next) {
   });
 });
 
-/* GET taken usernames */
-
 /* POST /signup */
 router.post('/signup', function(req, res, next) {
   var signupStrategy = passport.authenticate('local-signup', {

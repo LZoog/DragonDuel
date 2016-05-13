@@ -132,7 +132,7 @@ header {
   color: green;
 }
 
-.taken, .invalid {
+.taken, span[class^="invalid"] {
   color: red;
 }
 

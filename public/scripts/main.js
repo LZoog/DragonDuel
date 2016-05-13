@@ -56,56 +56,55 @@ $(function() {
   password.onchange = validatePassword;
   confirm_password.onkeyup = validatePassword;
 
-  // check if e-mail is taken & validate
-  checkAvailability('email');
+  // check if entered e-mail is valid and available
+  $(document).on('blur', '#email', function() {
+    var self = this;
+    validAndAvailable('email', self, /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm);
+  });
 
-  //check if username is taken
-  checkAvailability('username');
+  // check if entered username is valid and available
+  $(document).on('blur', '#username', function() {
+    var self = this;
+    validAndAvailable('username', self, /^[a-z0-9]+$/i);
+  });
 
-  function checkAvailability(field) {
-    // must use parent element & this/self because of modals
-    $(document).on('blur', '#'+field, function() {
-      var typedInput = $(this).val();
-      var self = this;
+  function validAndAvailable(field, self, regex) {
+    var userInput = $(self).val();
 
-      // if it's the e-mail field, validate it
-      if (field == 'email') {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm;
+    // if it's valid
+    if (regex.test(userInput)) {
+      $(`.invalid-${field}`).addClass('hide');
+      // empty available/unavailable
+      $(self).next().empty();
+    } else {
+      $(`.invalid-${field}`).removeClass('hide');
+      // empty available/unavailable
+      $(self).next().empty();
+      // no need to run AJAX if invalid, so return
+      return;
+    }
 
-        // if it's valid
-        if (re.test(typedInput)) {
-          $('.invalid').addClass('hide');
-          // empty available/unavailable
-          $(self).next().empty();
-        } else {
-          $('.invalid').removeClass('hide');
-          $(self).next().empty();
-          // no need to run AJAX request if e-mail is invalid
-          return;
+    $.ajax({
+      url: '/registered',
+      method: 'GET',
+      data: {},
+      dataType: 'json'
+    })
+    .done(function(users) {
+      console.log(users);
+      var check = '<span>available 😁</span>';
+
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].local[field] == userInput) {
+          check = '<span class="taken">unavailable 😢</span>';
+          break;
         }
       }
-      $.ajax({
-        url: '/registered',
-        method: 'GET',
-        data: {},
-        dataType: 'json'
-      })
-      .done(function(users) {
-        var check = '<span>available 😁</span>';
-
-        for (var i = 0; i < users.length; i++) {
-          if (users[i].local[field] == typedInput) {
-            console.log('got to unavailable');
-            check = '<span class="taken">unavailable 😢</span>';
-            break;
-          }
-        }
-        $(self).next().html(check);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        console.log('ajax failed',jqXHR, textStatus, errorThrown);
-      })
-    });
+      $(self).next().html(check);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      console.log('GET registered users ajax failed',jqXHR, textStatus, errorThrown);
+    })
   };
   /* END SIGN UP VALIDATIONS */
 
