@@ -43,7 +43,6 @@ $(function() {
 
   /* SIGN UP VALIDATIONS */
   // password confirmation
-
   var password;
   var pw_confirm;
   $(document).on('blur', '#password', function() {
@@ -149,9 +148,6 @@ $(function() {
       }
     };
 
-    console.log('user.level',user.level);
-    console.log('user.username', user.username);
-
     //only append if the user is not already on the field, new user's level matches yours, and it is not you
     if (userNotOnField() && user.level == currentLevel && user.username != currentUsername) {
       var newUser = (
@@ -238,15 +234,6 @@ $(function() {
           dataType: 'json'
         })
         .done(function(data) {
-          // if (!data) {
-          //   return;
-          // }
-          console.log('data', data);
-          console.log('data.users',data.users);
-          console.log('data.power',data.power);
-          console.log('data.users[0]', data.users[0]);
-          console.log('data.users[0].local', data.users[0].local);
-          console.log('data.users[0].local.username', data.users[0].local.username);
           $('#connected').empty();
           data.users.forEach(function(user){
             console.log(user);
