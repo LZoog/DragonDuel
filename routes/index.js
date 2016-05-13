@@ -18,17 +18,17 @@ router.get('/', function(req, res, next) {
   });
 });
 
-/* GET /signup */
-router.get('/signup', unAuthenticatedUser, function(req, res, next) {
-  res.render('signup', { message: req.flash('errorMessage') });
-});
-
 /* GET taken e-mails */
 router.get('/registered', function (req, res, next) {
   User.find({}, 'local.email local.username', function(err, users) {
     if (err) console.log(err);
     res.json(users);
   });
+});
+
+/* GET /signup */
+router.get('/signup', unAuthenticatedUser, function(req, res, next) {
+  res.render('signup', { message: req.flash('errorMessage') });
 });
 
 /* POST /signup */

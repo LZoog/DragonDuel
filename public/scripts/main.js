@@ -43,20 +43,25 @@ $(function() {
 
   /* SIGN UP VALIDATIONS */
   // password confirmation
-  var password = $('#password').val(),
-  confirm_password = $('#confirm_password').val();
 
-  function validatePassword(){
-    if (password != confirm_password) {
-      confirm_password.setCustomValidity("Passwords don't match!");
+  var password;
+  var pw_confirm;
+  $(document).on('blur', '#password', function() {
+    password = this.value;
+  });
+  $(document).on('blur', '#password-confirm', function() {
+    var pw_confirm = this;
+    console.log('pw',password);
+    console.log('pwconfirm', pw_confirm.value);
+    if (password !== pw_confirm.value) {
+      pw_confirm.setCustomValidity("Passwords don't match!");
     } else {
-      confirm_password.setCustomValidity('');
+      pw_confirm.setCustomValidity('');
     }
-  }
-  password.onchange = validatePassword;
-  confirm_password.onkeyup = validatePassword;
+  });
 
   // check if entered e-mail is valid and available
+  // must use document.on this way because it is in a modal
   $(document).on('blur', '#email', function() {
     var self = this;
     validAndAvailable('email', self, /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm);
