@@ -36,16 +36,21 @@
           <label for="email">Email</label>
           <input class="form-control" type="text" name="email" id="email" required />
           <div class="availability"></div>
-          <span class="invalid-email hide">Please enter a valid e-mail.</div>
+          <span class="invalid-email hide">Please enter a valid e-mail.</span>
         </div>
         <div>
           <label for="password">Password</label>
           <input class="form-control" type="password" name="password" id="password" required />
-        </div>
-        <div>
+
           <label for="password">Confirm password</label>
           <input class="form-control" type="password" id="password-confirm" required />
+          <span class="invalid-password hide">Passwords don't match!</span>
         </div>
+        <!-- <div>
+          <label for="password">Confirm password</label>
+          <input class="form-control" type="password" id="password-confirm" required />
+          <span class="invalid-password hide">Passwords don't match!</span>
+        </div> -->
         <div>
           <label for="username">Username</label>
           <input type="text" name="username" id="username" required />

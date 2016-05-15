@@ -43,20 +43,37 @@ $(function() {
 
   /* SIGN UP VALIDATIONS */
   // password confirmation
-  var password;
-  var pw_confirm;
-  $(document).on('blur', '#password', function() {
-    password = this.value;
-  });
+  // var password;
+  // var pw_confirm;
+  // $(document).on('blur', '#password', function() {
+  //   password = this.value;
+  // });
+  // $(document).on('blur', '#password-confirm', function() {
+  //   var pw_confirm = this;
+  //   console.log('pw',password);
+  //   console.log('pwconfirm', pw_confirm.value);
+  //   if (password !== pw_confirm.value) {
+  //     pw_confirm.setCustomValidity("Passwords don't match!");
+  //   } else {
+  //     pw_confirm.setCustomValidity('');
+  //   }
+  // });
+
   $(document).on('blur', '#password-confirm', function() {
-    var pw_confirm = this;
-    console.log('pw',password);
-    console.log('pwconfirm', pw_confirm.value);
-    if (password !== pw_confirm.value) {
-      pw_confirm.setCustomValidity("Passwords don't match!");
-    } else {
-      pw_confirm.setCustomValidity('');
-    }
+    var self = this;
+
+    var password = $(this).prev().val();
+    var pw_confirm = $(this).val();
+    console.log('pw', password);
+    console.log('confirm pw', pw_confirm);
+
+      if (password == pw_confirm && !($('.invalid-password').hasClass('hide'))) {
+        $('.invalid-password').addClass('hide');
+        console.log('inside if');
+      } else if (password != pw_confirm && $('.invalid-password').hasClass('hide')) {
+        $('.invalid-password').removeClass('hide');
+        console.log('inside else if');
+      }
   });
 
   // check if entered e-mail is valid and available
