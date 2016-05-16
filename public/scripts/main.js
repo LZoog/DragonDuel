@@ -59,15 +59,20 @@ $(function() {
   //   }
   // });
 
-  $(document).on('blur', '#password-confirm', function() {
-    //var self = this;
+  $(document).on('blur', '#password', function() {
+    var pw_confirm = $(this).next().next().val();
+    var password = $(this).val();
+    pwCheck(password, pw_confirm);
+  });
 
+  $(document).on('blur', '#password-confirm', function() {
     var password = $(this).prev().prev().val();
     var pw_confirm = $(this).val();
-    console.log('password', password);
-    console.log('confirm pw', pw_confirm);
+    pwCheck(password, pw_confirm);
+  });
 
-    // if (password && pw_confirm) {
+  function pwCheck(password, pw_confirm) {
+    if (password && pw_confirm) {
       if (password == pw_confirm && !($('.invalid-password').hasClass('hide'))) {
         $('.invalid-password').addClass('hide');
         console.log('inside if');
@@ -75,8 +80,8 @@ $(function() {
         $('.invalid-password').removeClass('hide');
         console.log('inside else if');
       }
-    // }
-  });
+    }
+  }
 
   // check if entered e-mail is valid and available
   // must use document.on this way because it is in a modal
