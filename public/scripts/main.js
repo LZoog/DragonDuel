@@ -60,13 +60,14 @@ $(function() {
   // });
 
   $(document).on('blur', '#password-confirm', function() {
-    var self = this;
+    //var self = this;
 
-    var password = $(this).prev().val();
+    var password = $(this).prev().prev().val();
     var pw_confirm = $(this).val();
-    console.log('pw', password);
+    console.log('password', password);
     console.log('confirm pw', pw_confirm);
 
+    // if (password && pw_confirm) {
       if (password == pw_confirm && !($('.invalid-password').hasClass('hide'))) {
         $('.invalid-password').addClass('hide');
         console.log('inside if');
@@ -74,6 +75,7 @@ $(function() {
         $('.invalid-password').removeClass('hide');
         console.log('inside else if');
       }
+    // }
   });
 
   // check if entered e-mail is valid and available
