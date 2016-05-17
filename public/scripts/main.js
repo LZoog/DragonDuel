@@ -4,15 +4,20 @@ $(function() {
   var loginHTML = $('#login').html();
   var joinHTML = $('#join').html();
 
-  $('#login-btn').avgrund({
-    holderClass: 'login-modal',
-    template: loginHTML
-  });
+  // only .avgrund it if it exists
+  if ($('#login-btn').length) {
+    $('#login-btn').avgrund({
+      holderClass: 'login-modal',
+      template: loginHTML
+    });
+  }
 
-  $('#join-btn').avgrund({
-    holderClass: 'join-modal',
-    template: joinHTML
-  });
+  if ($('#join-btn').length) {
+    $('#join-btn').avgrund({
+      holderClass: 'join-modal',
+      template: joinHTML
+    });
+  }
 
   //always keep the modals centered
   function modalCSS(name) {
@@ -39,26 +44,10 @@ $(function() {
     }
   });
   /* END LOGIN/JOIN MODAL */
-
+  
 
   /* SIGN UP VALIDATIONS */
-  // password confirmation
-  // var password;
-  // var pw_confirm;
-  // $(document).on('blur', '#password', function() {
-  //   password = this.value;
-  // });
-  // $(document).on('blur', '#password-confirm', function() {
-  //   var pw_confirm = this;
-  //   console.log('pw',password);
-  //   console.log('pwconfirm', pw_confirm.value);
-  //   if (password !== pw_confirm.value) {
-  //     pw_confirm.setCustomValidity("Passwords don't match!");
-  //   } else {
-  //     pw_confirm.setCustomValidity('');
-  //   }
-  // });
-
+  // must use on blur/this.next like this because it is in a modal
   $(document).on('blur', '#password', function() {
     var pw_confirm = $(this).next().next().val();
     var password = $(this).val();
@@ -91,39 +80,8 @@ $(function() {
       }
     }
   };
-  //
-  // // if passwords are the same & password is less than 8 characters
-  // if $('.invalid-password').hasClass('hide') && (password.length < 8) {
-  //   $('.invalid-length').removeClass('hide');
-  // }
-
-
-
-  // function pwCheck(password, pw_confirm) {
-  //   if (password && pw_confirm) {
-  //     // if passwords match & password confirmation is hidden
-  //     if ($('.invalid-password').hasClass('hide')) {
-  //       if (password.length < 8) {
-  //         //if password is less than 8 characters, display error
-  //         $('.invalid-length').removeClass('hide');
-  //         // if password is 8+ characters & error message is visible
-  //       } else if (!($('.invalid-length').hasClass('hide'))) {
-  //         $('.invalid-length').addClass('hide');
-  //       }
-  //     }
-  //     // if passwords match but password confirmation is shown, remove error
-  //     if (!($('.invalid-password').hasClass('hide'))) {
-  //       $('.invalid-password').addClass('hide');
-  //     }
-  //     // if passwords don't match and confirmation is hidden, display error
-  //   } else if (password != pw_confirm && $('.invalid-password').hasClass('hide')) {
-  //     $('.invalid-password').removeClass('hide');
-  //   }
-  // };
-
 
   // check if entered e-mail is valid and available
-  // must use document.on this way because it is in a modal
   $(document).on('blur', '#email', function() {
     var self = this;
     validAndAvailable('email', self, /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm);
