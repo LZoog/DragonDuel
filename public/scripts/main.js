@@ -86,7 +86,7 @@ $(function() {
       if ((password.length < 8 || pw_confirm.length < 8) && $('.invalid-length').hasClass('hide')) {
         $('.invalid-length').removeClass('hide');
         // if password is 8+ characters and length error message is shown, hide
-      } else if ((password.length >= 8 || pw_confirm.length >= 8) && (!$('.invalid-password').hasClass('hide'))) {
+      } else if ((password.length >= 8 && pw_confirm.length >= 8) && (!$('.invalid-password').hasClass('hide'))) {
         $('.invalid-length').addClass('hide');
       }
     }
