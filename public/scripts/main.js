@@ -72,16 +72,55 @@ $(function() {
   });
 
   function pwCheck(password, pw_confirm) {
+    // *confirm pw* if something has been entered in both fields
     if (password && pw_confirm) {
+
+      // if passwords match and matching error message is hidden, unhide
       if (password == pw_confirm && !($('.invalid-password').hasClass('hide'))) {
         $('.invalid-password').addClass('hide');
-        console.log('inside if');
+        // if passwords don't match and matching error message is hidden, show
       } else if (password != pw_confirm && $('.invalid-password').hasClass('hide')) {
         $('.invalid-password').removeClass('hide');
-        console.log('inside else if');
+      }
+      // *pw 8+ characters* if password is is <8 characters and length error message is hidden, unhide
+      if ((password.length < 8 || pw_confirm.length < 8) && $('.invalid-length').hasClass('hide')) {
+        $('.invalid-length').removeClass('hide');
+        // if password is 8+ characters and length error message is shown, hide
+      } else if ((password.length >= 8 || pw_confirm.length >= 8) && (!$('.invalid-password').hasClass('hide'))) {
+        $('.invalid-length').addClass('hide');
       }
     }
-  }
+  };
+  //
+  // // if passwords are the same & password is less than 8 characters
+  // if $('.invalid-password').hasClass('hide') && (password.length < 8) {
+  //   $('.invalid-length').removeClass('hide');
+  // }
+
+
+
+  // function pwCheck(password, pw_confirm) {
+  //   if (password && pw_confirm) {
+  //     // if passwords match & password confirmation is hidden
+  //     if ($('.invalid-password').hasClass('hide')) {
+  //       if (password.length < 8) {
+  //         //if password is less than 8 characters, display error
+  //         $('.invalid-length').removeClass('hide');
+  //         // if password is 8+ characters & error message is visible
+  //       } else if (!($('.invalid-length').hasClass('hide'))) {
+  //         $('.invalid-length').addClass('hide');
+  //       }
+  //     }
+  //     // if passwords match but password confirmation is shown, remove error
+  //     if (!($('.invalid-password').hasClass('hide'))) {
+  //       $('.invalid-password').addClass('hide');
+  //     }
+  //     // if passwords don't match and confirmation is hidden, display error
+  //   } else if (password != pw_confirm && $('.invalid-password').hasClass('hide')) {
+  //     $('.invalid-password').removeClass('hide');
+  //   }
+  // };
+
 
   // check if entered e-mail is valid and available
   // must use document.on this way because it is in a modal
