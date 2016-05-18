@@ -19,7 +19,7 @@ $(function() {
     });
   }
 
-  //always keep the modals centered
+  // always keep the modals centered
   function modalCSS(name) {
     var height = $(`.${name}-modal`).height();
     var width = $(`.${name}-modal`).width();
@@ -44,7 +44,7 @@ $(function() {
     }
   });
   /* END LOGIN/JOIN MODAL */
-  
+
 
   /* SIGN UP VALIDATIONS */
   // must use on blur/this.next like this because it is in a modal
@@ -99,12 +99,12 @@ $(function() {
     // if it's valid
     if (regex.test(userInput)) {
       $(`.invalid-${field}`).addClass('hide');
-      // empty available/unavailable
-      $(self).next().empty();
     } else {
       $(`.invalid-${field}`).removeClass('hide');
-      // empty available/unavailable
-      $(self).next().empty();
+      // hide .invalid-taken msg if .invalid-email msg is shown
+      if (!($(self).next().hasClass('hide'))) {
+        $(self).next().addClass('hide');
+      }
       // no need to run AJAX if invalid, so return
       return;
     }
@@ -116,16 +116,20 @@ $(function() {
       dataType: 'json'
     })
     .done(function(users) {
-      console.log(users);
-      var check = '<span>available 😁</span>';
+      //var check = '<span>available 😁</span>';
 
       for (var i = 0; i < users.length; i++) {
         if (users[i].local[field] == userInput) {
-          check = '<span class="taken">unavailable 😢</span>';
+          console.log('matched');
+          $(self).next().removeClass('hide');
+          //check = '<span class="invalid-taken">unavailable 😢</span>';
           break;
+        } else {
+          $(self).next().addClass('hide');
         }
       }
-      $(self).next().html(check);
+      // .availability
+      //$(self).next().html(check);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log('GET registered users ajax failed',jqXHR, textStatus, errorThrown);
@@ -133,6 +137,20 @@ $(function() {
   };
   /* END SIGN UP VALIDATIONS */
 
+
+  /* SIGN UP SHOW/HIDE SECTIONS */
+  $(document).on('click', '.next', function() {
+
+    // if any span in #q00 starting with 'invalid' (erorr msg) is shown
+    if (!($(this).siblings('span[class^="invalid"]').hasClass('hide'))) {
+      console.log('yaaas');
+    }
+
+    // $(this).parent().addClass('hide');
+    // $(this).parent().next().removeClass('hide');
+  });
+
+  /* END SIGN UP SHOW/HIDE SECTIONS */
 
   /* SOCKET IO */
   var socket = io();

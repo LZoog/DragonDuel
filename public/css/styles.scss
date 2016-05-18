@@ -132,7 +132,7 @@ header {
   color: green;
 }
 
-.taken, span[class^="invalid"] {
+span[class^="invalid"] {
   color: red;
 }
 
@@ -174,8 +174,9 @@ a#userShow {
     background-color: $blue-black;
     color: $blue-sky;
   }
-
 }
+
+
 
 #town {
   min-height: 100%;
