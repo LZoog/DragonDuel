@@ -116,20 +116,15 @@ $(function() {
       dataType: 'json'
     })
     .done(function(users) {
-      //var check = '<span>available 😁</span>';
-
       for (var i = 0; i < users.length; i++) {
         if (users[i].local[field] == userInput) {
-          console.log('matched');
+          // if entered username matches UN in DB, display error
           $(self).next().removeClass('hide');
-          //check = '<span class="invalid-taken">unavailable 😢</span>';
           break;
         } else {
           $(self).next().addClass('hide');
         }
       }
-      // .availability
-      //$(self).next().html(check);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log('GET registered users ajax failed',jqXHR, textStatus, errorThrown);
@@ -141,13 +136,11 @@ $(function() {
   /* SIGN UP SHOW/HIDE SECTIONS */
   $(document).on('click', '.next', function() {
 
-    // if any span in #q00 starting with 'invalid' (erorr msg) is shown
-    if (!($(this).siblings('span[class^="invalid"]').hasClass('hide'))) {
-      console.log('yaaas');
+    // all fields have input + no err msgs (there are 6 possible err msgs)
+    if ($(this).siblings('#email').val() && $(this).siblings('#password').val() && $(this).siblings('#password-confirm').val() && $(this).siblings('#username').val() && $(this).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6) {
+      $(this).parent().addClass('hide');
+      $(this).parent().next().removeClass('hide');
     }
-
-    // $(this).parent().addClass('hide');
-    // $(this).parent().next().removeClass('hide');
   });
 
   /* END SIGN UP SHOW/HIDE SECTIONS */
