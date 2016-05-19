@@ -83,8 +83,8 @@ label > input:checked + img {
   border: 2px solid #f00; }
 
 label img {
-  width: 25%;
-  height: auto; }
+  height: 200px;
+  width: auto; }
 
 a#userShow {
   text-decoration: none;
