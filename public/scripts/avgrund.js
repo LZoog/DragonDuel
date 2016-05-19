@@ -70,14 +70,17 @@
 
 			function onDocumentClick (e) {
 				if (options.closeByDocument) {
-					if ($(e.target).is('.avgrund-overlay, .avgrund-close')) {
+					// if (($(e.target).is('.avgrund-close') || ($(e.target).is('.avgrund-overlay') && $('#q00:visible')))
+
+					if (($(e.target).is('.avgrund-overlay')) && !($('.q00').hasClass('hide'))) {
 						e.preventDefault();
 						deactivate();
 					}
-				} else if ($(e.target).is('.avgrund-close')) {
+				  else if ($(e.target).is('.avgrund-close')) {
 						e.preventDefault();
 						deactivate();
 				}
+			}
 			}
 
 			function activate () {
