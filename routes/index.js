@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-/* GET taken e-mails */
+/* GET taken e-mails & usernames */
 router.get('/registered', function (req, res, next) {
   User.find({}, 'local.email local.username', function(err, users) {
     if (err) console.log(err);
