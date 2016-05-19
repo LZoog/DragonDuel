@@ -135,12 +135,22 @@ $(function() {
 
   /* SIGN UP SHOW/HIDE SECTIONS */
   $(document).on('click', '.next', function() {
-
     // all fields have input + no err msgs (there are 6 possible err msgs)
-    if ($(this).siblings('#email').val() && $(this).siblings('#password').val() && $(this).siblings('#password-confirm').val() && $(this).siblings('#username').val() && $(this).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6) {
+    // if ($(this).siblings('#email').val() && $(this).siblings('#password').val() && $(this).siblings('#password-confirm').val() && $(this).siblings('#username').val() && $(this).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6) {
+      // hide this div and show the next one
       $(this).parent().addClass('hide');
       $(this).parent().next().removeClass('hide');
-    }
+    // }
+  });
+
+  $(document).on('click', 'input[type="radio"]', function() {
+    $(this).parent().parent().addClass('hide');
+    $(this).parent().parent().next().removeClass('hide');
+  })
+
+  $(document).on('click', '.back', function() {
+    $(this).parent().addClass('hide');
+    $(this).parent().prev().removeClass('hide');
   });
 
   /* END SIGN UP SHOW/HIDE SECTIONS */
