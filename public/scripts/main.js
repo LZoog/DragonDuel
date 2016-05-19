@@ -51,16 +51,17 @@ $(function() {
   $(document).on('blur', '#password', function() {
     var pw_confirm = $(this).next().next().val();
     var password = $(this).val();
-    pwCheck(password, pw_confirm);
+    // this for clickableNextButton()
+    pwCheck(password, pw_confirm, this);
   });
 
   $(document).on('blur', '#password-confirm', function() {
     var password = $(this).prev().prev().val();
     var pw_confirm = $(this).val();
-    pwCheck(password, pw_confirm);
+    pwCheck(password, pw_confirm, this);
   });
 
-  function pwCheck(password, pw_confirm) {
+  function pwCheck(password, pw_confirm, self) {
     // *confirm pw* if something has been entered in both fields
     if (password && pw_confirm) {
 
@@ -79,18 +80,17 @@ $(function() {
         $('.invalid-length').addClass('hide');
       }
     }
+    clickableNextButton(self);
   };
 
   // check if entered e-mail is valid and available
   $(document).on('blur', '#email', function() {
-    var self = this;
-    validAndAvailable('email', self, /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm);
+    validAndAvailable('email', this, /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/igm);
   });
 
   // check if entered username is valid and available
   $(document).on('blur', '#username', function() {
-    var self = this;
-    validAndAvailable('username', self, /^[a-z0-9]+$/i);
+    validAndAvailable('username', this, /^[a-z0-9]+$/i);
   });
 
   function validAndAvailable(field, self, regex) {
@@ -99,12 +99,14 @@ $(function() {
     // if it's valid
     if (regex.test(userInput)) {
       $(`.invalid-${field}`).addClass('hide');
+      clickableNextButton(self);
     } else {
       $(`.invalid-${field}`).removeClass('hide');
       // hide .invalid-taken msg if .invalid-email msg is shown
       if (!($(self).next().hasClass('hide'))) {
         $(self).next().addClass('hide');
       }
+      clickableNextButton(self);
       // no need to run AJAX if invalid, so return
       return;
     }
@@ -125,10 +127,29 @@ $(function() {
           $(self).next().addClass('hide');
         }
       }
+      clickableNextButton(self);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log('GET registered users ajax failed',jqXHR, textStatus, errorThrown);
     })
+  };
+
+  // if everything is filled out without an error, show .next is clickable
+  function clickableNextButton(self) {
+    var validCount = 0;
+    var inputs = $(self).siblings('input');
+    for (var i = 0; i < inputs.length; i++) {
+      if ($(inputs[i]).val()) {
+        validCount++;
+      }
+    }
+    if (validCount == 3 && $(self).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6 && !($('.next').hasClass('clickable'))) {
+      console.log('add class clickable');
+      $(self).siblings('.next').addClass('clickable');
+    } else if ($('.next').hasClass('clickable')) {
+      console.log('remove class clickable');
+      $(self).siblings('.next').removeClass('clickable');
+    }
   };
   /* END SIGN UP VALIDATIONS */
 

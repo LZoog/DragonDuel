@@ -143,6 +143,21 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
   border:2px solid #f00;
 }
 
+.next {
+  border:1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+  background: grey;
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  float: right;
+  display: inline-block;
+
+  &.clickable {
+    background: #50c44b;
+  }
+}
+
 
 label img {
   height: 200px;
