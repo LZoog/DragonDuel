@@ -143,7 +143,7 @@ $(function() {
     // }
   });
 
-  $(document).on('click', 'input[type="radio"]', function() {
+  $(document).on('click', 'input[type="radio"]:not(.last)', function() {
     $(this).parent().parent().addClass('hide');
     $(this).parent().parent().next().removeClass('hide');
   })
