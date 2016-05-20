@@ -17,7 +17,7 @@ mongoose.connect(process.env.DB_CONN_DRAGON_DUEL);
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-server.listen(3000);
+server.listen(80);
 
 app.set('socketio', io);
 
