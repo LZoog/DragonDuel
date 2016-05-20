@@ -166,7 +166,7 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 }
 
 .fadeOut {
-  @include fade(fadeOut, 1s);
+  @include fade(fadeOut, 1s, '');
 }
 
 .fadeIn {
@@ -469,7 +469,7 @@ a#userShow {
 .join-modal {
   width: 50%;
   max-width: 800px;
-  top: 40%;
+  top: 47.5%;
   left: 50%;
   //margin-left and margin-top for centering set in jQuery
 }

@@ -94,6 +94,26 @@ label > input:checked + img {
   .next.clickable {
     background: #50c44b; }
 
+.fadeOut {
+  -webkit-animation: fadeOut 1s "";
+  /* Safari 4+ */
+  -moz-animation: fadeOut 1s "";
+  /* Fx 5+ */
+  -o-animation: fadeOut 1s "";
+  /* Opera 12+ */
+  animation: fadeOut 1s "";
+  /* IE 10+, Fx 29+ */ }
+
+.fadeIn {
+  -webkit-animation: fadeOut 1s reverse;
+  /* Safari 4+ */
+  -moz-animation: fadeOut 1s reverse;
+  /* Fx 5+ */
+  -o-animation: fadeOut 1s reverse;
+  /* Opera 12+ */
+  animation: fadeOut 1s reverse;
+  /* IE 10+, Fx 29+ */ }
+
 label img {
   height: 200px;
   width: auto; }
@@ -409,7 +429,7 @@ a#userShow {
 .join-modal {
   width: 50%;
   max-width: 800px;
-  top: 40%;
+  top: 47.5%;
   left: 50%; }
 
 .avgrund-popin {
@@ -472,5 +492,26 @@ a#userShow {
   position: absolute;
   top: 6px;
   right: 10px; }
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+@keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
 
 /*# sourceMappingURL=styles.css.map */

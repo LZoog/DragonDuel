@@ -171,7 +171,8 @@ $(function() {
       var self = this;
       setTimeout(function(){
         $(self).parent().next().fadeIn(300).removeClass('hide');
-      }, 299);
+        modalCSS('join');
+      }, 300);
     // }
   });
 
@@ -180,7 +181,8 @@ $(function() {
     $(this).parent().parent().fadeOut(300);
     setTimeout(function(){
       $(self).parent().parent().next().fadeIn(300).removeClass('hide');
-    }, 299);
+      modalCSS('join');
+    }, 300);
   })
 
   $(document).on('click', '.back', function() {
@@ -188,7 +190,8 @@ $(function() {
     $(this).parent().fadeOut(300);
     setTimeout(function(){
       $(self).parent().prev().fadeIn(300).removeClass('hide');
-    }, 299);
+      modalCSS('join');
+    }, 300);
   });
 
   /* END SIGN UP SHOW/HIDE SECTIONS */
