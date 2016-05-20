@@ -65,22 +65,25 @@ $(function() {
     // *confirm pw* if something has been entered in both fields
     if (password && pw_confirm) {
 
-      // if passwords match and matching error message is hidden, unhide
+      // if passwords match and matching error message is hidden, show err
       if (password == pw_confirm && !($('.invalid-password').hasClass('hide'))) {
         $('.invalid-password').addClass('hide');
+        clickableNextButton(self);
         // if passwords don't match and matching error message is hidden, show
       } else if (password != pw_confirm && $('.invalid-password').hasClass('hide')) {
         $('.invalid-password').removeClass('hide');
+        clickableNextButton(self);
       }
-      // *pw 8+ characters* if password is is <8 characters and length error message is hidden, unhide
+      // *pw 8+ characters* if password is is <8 characters and length error message is hidden, show err
       if ((password.length < 8 || pw_confirm.length < 8) && $('.invalid-length').hasClass('hide')) {
         $('.invalid-length').removeClass('hide');
-        // if password is 8+ characters and length error message is shown, hide
+        clickableNextButton(self);
+        // if password is 8+ characters and length error message is shown, hide err
       } else if ((password.length >= 8 && pw_confirm.length >= 8) && (!$('.invalid-password').hasClass('hide'))) {
         $('.invalid-length').addClass('hide');
+        clickableNextButton(self);
       }
     }
-    clickableNextButton(self);
   };
 
   // check if entered e-mail is valid and available
@@ -99,7 +102,6 @@ $(function() {
     // if it's valid
     if (regex.test(userInput)) {
       $(`.invalid-${field}`).addClass('hide');
-      clickableNextButton(self);
     } else {
       $(`.invalid-${field}`).removeClass('hide');
       // hide .invalid-taken msg if .invalid-email msg is shown
