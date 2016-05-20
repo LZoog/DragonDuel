@@ -105,13 +105,16 @@ $(function() {
     } else {
       $(`.invalid-${field}`).removeClass('hide');
       // hide .invalid-taken msg if .invalid-email msg is shown
-      if (!($(self).next().hasClass('hide'))) {
-        $(self).next().addClass('hide');
+      if (!($(self).siblings('.invalid-taken').hasClass('hide'))) {
+        $(self).siblings('.invalid-taken').addClass('hide');
       }
       clickableNextButton(self);
       // no need to run AJAX if invalid, so return
       return;
     }
+
+    // show loading... text
+    $(self).siblings('.checking-email').removeClass('hide');
 
     $.ajax({
       url: '/registered',
@@ -122,13 +125,16 @@ $(function() {
     .done(function(users) {
       for (var i = 0; i < users.length; i++) {
         if (users[i].local[field] == userInput) {
-          // if entered username matches UN in DB, display error
+          //if entered username matches UN in DB, display error
           $(self).next().removeClass('hide');
           break;
         } else {
+          // ensure error is hidden
           $(self).next().addClass('hide');
         }
       }
+      // remove loading... text
+      $(self).siblings('.checking-email').addClass('hide');
       clickableNextButton(self);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
