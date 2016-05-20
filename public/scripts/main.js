@@ -49,14 +49,14 @@ $(function() {
   /* SIGN UP VALIDATIONS */
   // must use on blur/this.next like this because it is in a modal
   $(document).on('blur', '#password', function() {
-    var pw_confirm = $(this).next().next().val();
+    var pw_confirm = $(this).siblings('#password-confirm').val();
     var password = $(this).val();
     // this for clickableNextButton()
     pwCheck(password, pw_confirm, this);
   });
 
   $(document).on('blur', '#password-confirm', function() {
-    var password = $(this).prev().prev().val();
+    var password = $(this).siblings('#password').val();
     var pw_confirm = $(this).val();
     pwCheck(password, pw_confirm, this);
   });
@@ -105,16 +105,19 @@ $(function() {
     } else {
       $(`.invalid-${field}`).removeClass('hide');
       // hide .invalid-taken msg if .invalid-email msg is shown
-      if (!($(self).siblings('.invalid-taken').hasClass('hide'))) {
-        $(self).siblings('.invalid-taken').addClass('hide');
+      if (!($(self).siblings(`.invalid-${field}-taken`).hasClass('hide'))) {
+        $(self).siblings(`.invalid-${field}-taken`).addClass('hide');
       }
       clickableNextButton(self);
       // no need to run AJAX if invalid, so return
       return;
     }
 
-    // show loading... text
-    $(self).siblings('.checking-email').removeClass('hide');
+    // hide .invalid-taken if it's shown, show loading... text
+    // if (!($(self).siblings(`invalid-${field}-taken`).hasClass('hide'))) {
+      $(self).siblings(`.invalid-${field}-taken`).addClass('hide');
+    // }
+    $(self).siblings(`.checking-${field}`).removeClass('hide');
 
     $.ajax({
       url: '/registered',
@@ -125,16 +128,13 @@ $(function() {
     .done(function(users) {
       for (var i = 0; i < users.length; i++) {
         if (users[i].local[field] == userInput) {
-          //if entered username matches UN in DB, display error
-          $(self).next().removeClass('hide');
+          //if entered text matches email or UN in DB, display error
+          $(self).siblings(`.invalid-${field}-taken`).removeClass('hide');
           break;
-        } else {
-          // ensure error is hidden
-          $(self).next().addClass('hide');
         }
       }
       // remove loading... text
-      $(self).siblings('.checking-email').addClass('hide');
+      $(self).siblings(`.checking-${field}`).addClass('hide');
       clickableNextButton(self);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
