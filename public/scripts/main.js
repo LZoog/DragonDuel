@@ -165,21 +165,30 @@ $(function() {
   /* SIGN UP SHOW/HIDE SECTIONS */
   $(document).on('click', '.next', function() {
     // all fields have input + no err msgs (there are 6 possible err msgs)
-    if ($(this).siblings('#email').val() && $(this).siblings('#password').val() && $(this).siblings('#password-confirm').val() && $(this).siblings('#username').val() && $(this).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6) {
+    // if ($(this).siblings('#email').val() && $(this).siblings('#password').val() && $(this).siblings('#password-confirm').val() && $(this).siblings('#username').val() && $(this).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6) {
       // hide this div and show the next one
-      $(this).parent().addClass('hide');
-      $(this).parent().next().removeClass('hide');
-    }
+      $(this).parent().fadeOut(300);
+      var self = this;
+      setTimeout(function(){
+        $(self).parent().next().fadeIn(300).removeClass('hide');
+      }, 299);
+    // }
   });
 
   $(document).on('click', 'input[type="radio"]:not(.last)', function() {
-    $(this).parent().parent().addClass('hide');
-    $(this).parent().parent().next().removeClass('hide');
+    var self = this;
+    $(this).parent().parent().fadeOut(300);
+    setTimeout(function(){
+      $(self).parent().parent().next().fadeIn(300).removeClass('hide');
+    }, 299);
   })
 
   $(document).on('click', '.back', function() {
-    $(this).parent().addClass('hide');
-    $(this).parent().prev().removeClass('hide');
+    var self = this;
+    $(this).parent().fadeOut(300);
+    setTimeout(function(){
+      $(self).parent().prev().fadeIn(300).removeClass('hide');
+    }, 299);
   });
 
   /* END SIGN UP SHOW/HIDE SECTIONS */

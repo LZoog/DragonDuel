@@ -52,6 +52,13 @@ $blue-black: #021215;
   }
 }
 
+@mixin fade($name, $time, $direction) {
+  -webkit-animation: $name $time $direction; /* Safari 4+ */
+  -moz-animation: $name $time $direction; /* Fx 5+ */
+  -o-animation: $name $time $direction; /* Opera 12+ */
+  animation: $name $time $direction; /* IE 10+, Fx 29+ */
+}
+
 html, body {
   min-height: 100%;
   height: 100%;
@@ -158,6 +165,13 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
   }
 }
 
+.fadeOut {
+  @include fade(fadeOut, 1s);
+}
+
+.fadeIn {
+  @include fade(fadeOut, 1s, reverse);
+}
 
 label img {
   height: 200px;
@@ -530,3 +544,21 @@ a#userShow {
 	right: 10px;
 }
 //*** END AVGRUND MODAL ***//
+
+//*** ANIMATION KEYFRAMES ***//
+@-webkit-keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-moz-keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-o-keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
