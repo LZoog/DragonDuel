@@ -14,10 +14,11 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.DB_CONN_DRAGON_DUEL);
 
-var app = express();
-var http = require('http').Server(app);
-http.listen(3000);
-var io = require('socket.io')(http);
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+server.listen(3000);
+
 
 app.set('socketio', io);
 
