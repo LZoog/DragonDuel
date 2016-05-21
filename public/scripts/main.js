@@ -202,17 +202,10 @@ $(function() {
     console.log('Client connected!');
   });
 
-  socket.on('test', function(data) {
-    console.log(data);
-  });
-
   // a new user entered the battlefield or went up/down a level
   socket.on('newUser', function(user) {
     var currentLevel = $('.current-level').val();
     var currentPower = $('.your-power').val();
-
-    console.log(currentLevel);
-    console.log(user.level);
 
     if (user.level == currentLevel) {
       var newUser = (
@@ -233,15 +226,13 @@ $(function() {
 
   // User removed from battlefield because they lost on level 1
   socket.on('removeFromField', function(username) {
-    //on header
-    var currentUsername = $('#current-username').val();
+    var currentUsername = $('#current-username2').val();
 
     console.log('first currentUsername', currentUsername);
 
     if (currentUsername == username) {
-      window.location.replace(`/users/${username}`);
+     window.location.replace(`/users/${username}`);
     }
-    // }
   });
 
   // User left battlefield manually /**OR user lost & is moved down a level
@@ -273,7 +264,7 @@ $(function() {
     var connUsername = $(this).siblings('.conn-username').val();
     var yourPower = $(this).siblings('.your-power').val();
     var connPower = $(this).siblings('.conn-power').val();
-    //for 2nd ajax
+    //for ajaxGetLevel()
     var currentLevel = $(this).siblings('.current-level').val();
 
     $.ajax({
@@ -286,41 +277,42 @@ $(function() {
       }
     })
     .done(function(status) {
-
-      console.log(status);
       if (status == 'win' || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
         console.log('inside loop');
-        $.ajax({
-          url: '/duel/update',
-          method: 'GET',
-          data: {},
-          dataType: 'json'
-        })
-        .done(function(data) {
-          $('#connected').empty();
-          data.users.forEach(function(user){
-            console.log(user);
-            $('#connected').prepend(`<div class="conn-user">
-                  <form action="/duel" method="post">
-                    <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
-                    <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
-                    <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
-                    <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
-                    <input type="submit" class="duel-user ${user.local.color}" value="" />
-                  <a href="/users/${user.local.username}">@${user.local.username}</a>
-                  </form>
-                </div>`);
-          })
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-          console.log('Battlefield POST ajax failed',jqXHR, textStatus, errorThrown);
-        })
+        ajaxGetLevel();
       }
     })
-    //for first AJAX
     .fail(function(jqXHR, textStatus, errorThrown) {
       console.log('Battlefield GET ajax failed',jqXHR, textStatus, errorThrown);
     })
   });
+
+  function ajaxGetLevel() {
+    $.ajax({
+      url: '/duel/update',
+      method: 'GET',
+      data: {},
+      dataType: 'json'
+    })
+    .done(function(data) {
+      $('#connected').empty();
+      data.users.forEach(function(user){
+        console.log(user);
+        $('#connected').prepend(`<div class="conn-user">
+              <form action="/duel" method="post">
+                <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
+                <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+                <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+                <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+                <input type="submit" class="duel-user ${user.local.color}" value="" />
+              <a href="/users/${user.local.username}">@${user.local.username}</a>
+              </form>
+            </div>`);
+      })
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      console.log('Battlefield POST ajax failed',jqXHR, textStatus, errorThrown);
+    })
+  };
 
 });

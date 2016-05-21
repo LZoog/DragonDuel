@@ -24,7 +24,7 @@ var returnRouter = function(io) {
     User.find({ 'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.level local.power local.color', function(err, users) {
       if (err) console.log(err);
 
-      res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
+      res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users});
 
       //then set battlefield to true for current user, emit event to all except sender
       if (currentUser.battlefield == false) {
@@ -133,15 +133,16 @@ var returnRouter = function(io) {
           if (currentLevel == 1) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              socket.broadcast.emit('removeFromField', connUsername)
+              console.log(socket);
+              socket.broadcast.emit('removeFromField', connUsername);
               res.send('win');
             });
           } else {
-            //find opposing user & make them go down a level
+            // opponent is on level 2+, find & make them go down a level
             var downLevel = currentLevel - 1;
-            User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
+            User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, {new: true}, function(err, user) {
               if (err) console.log(err);
-              io.sockets.emit('newUser', user.local);
+              socket.broadcast.emit('newUser', user.local);
               //io.sockets.emit('getLevel', user.local.username);
               res.send('win');
             });
