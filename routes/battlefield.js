@@ -126,24 +126,14 @@ var returnRouter = function(io) {
         var upLevel = currentLevel + 1;
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, {new: true}, function(err, user) {
           if (err) console.log(err);
-          //test this
-          console.log('updated user, about to emit');
-          console.log('user.local',user.local);
-          //fix this, is not sending correct user.local.level
-
-          socket.broadcast.emit('test', 'testing biatch');
+          // emit level up to other users
           socket.broadcast.emit('newUser', user.local);
 
           // if opponent is on level 1, remove them from battlefield
           if (currentLevel == 1) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              console.log('connUsername',connUsername);
-              console.log('currentUser.username',currentUser.username);
-                console.log('before emit');
-                /* setTimeout(function(){*/
-                io.sockets.emit('removeFromField', connUsername)
-              /*}, 2000);*/
+              socket.broadcast.emit('removeFromField', connUsername)
               res.send('win');
             });
           } else {
