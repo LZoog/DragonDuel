@@ -3,10 +3,6 @@ var router = express.Router();
 var passport = require("passport");
 var User = require('../models/user');
 
-// var app = express();
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
-
 var returnRouter = function(io) {
 
   function authenticatedUser(req, res, next) {
