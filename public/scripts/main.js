@@ -257,13 +257,13 @@ $(function() {
   // User removed from battlefield because they lost on level 1
   socket.on('removeFromField', function(username) {
     //on header
-    // var currentUsername = $('#current-username').val();
-    //
-    // console.log('first currentUsername', currentUsername);
-    //
-    // if (currentUsername == username) {
+    var currentUsername = $('#current-username').val();
+
+    console.log('first currentUsername', currentUsername);
+
+    if (currentUsername == username) {
       window.location.replace(`/users/${username}`);
-    // }
+    }
     // }
   });
 

@@ -12,10 +12,11 @@ var returnRouter = function(io) {
   }
 
   /* GET battlefield */
+  var socket;
   router.get('/', authenticatedUser, function(req, res, next) {
 
-    io.on('connection', function(socket){
-    socket.emit('test');
+    io.on('connection', function(client){
+      socket = client;
     });
 
     var currentUser = req.user.local;
@@ -26,10 +27,11 @@ var returnRouter = function(io) {
       //then set battlefield to true for current user, emit event to all connected
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
         if (err) console.log(err);
+        console.log(socket, 'YOU ARE FUCKING AWESOME');
           res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
           setTimeout(function(){io.sockets.emit('newUser', user.local)}, 200);
+          setTimeout(function(){socket.emit('test', 'YOU ARE FUCKING AWESOME')}, 500);
       });
-    });
     });
   });
 
