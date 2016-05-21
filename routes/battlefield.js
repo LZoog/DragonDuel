@@ -13,6 +13,11 @@ var returnRouter = function(io) {
 
   /* GET battlefield */
   router.get('/', authenticatedUser, function(req, res, next) {
+
+    io.on('connection', function(socket){
+    socket.emit('test');
+    });
+
     var currentUser = req.user.local;
     //find all users in the battlefield & on the same level
     User.find({ 'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.level local.power local.color', function(err, users) {
@@ -24,6 +29,7 @@ var returnRouter = function(io) {
           res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
           setTimeout(function(){io.sockets.emit('newUser', user.local)}, 200);
       });
+    });
     });
   });
 
@@ -146,9 +152,7 @@ var returnRouter = function(io) {
             });
           }
         });
-
       }
-
 
       function lose() {
         console.log('got to lose()');
@@ -204,7 +208,6 @@ var returnRouter = function(io) {
           })
         }
       };
-
     }
   });
   return router;

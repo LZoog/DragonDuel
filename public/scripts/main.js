@@ -202,6 +202,10 @@ $(function() {
     console.log('Client connected!');
   });
 
+  socket.on('test', function(data) {
+    console.log(data);
+  });
+
   // New user joined battlefield
   socket.on('newUser', function(user) {
     var currentLevel = $('.current-level').val();
@@ -253,13 +257,13 @@ $(function() {
   // User removed from battlefield because they lost on level 1
   socket.on('removeFromField', function(username) {
     //on header
-    var currentUsername = $('#current-username').val();
-
-    console.log('first currentUsername', currentUsername);
-
-    if (currentUsername == username) {
+    // var currentUsername = $('#current-username').val();
+    //
+    // console.log('first currentUsername', currentUsername);
+    //
+    // if (currentUsername == username) {
       window.location.replace(`/users/${username}`);
-    }
+    // }
     // }
   });
 
