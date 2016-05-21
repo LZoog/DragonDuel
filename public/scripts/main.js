@@ -201,6 +201,7 @@ $(function() {
   socket.on('connect', function() {
     console.log('Client connected!');
   });
+
   // New user joined battlefield
   socket.on('newUser', function(user) {
     var currentLevel = $('.current-level').val();
