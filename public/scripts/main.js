@@ -206,10 +206,13 @@ $(function() {
     console.log(data);
   });
 
-  // a new user entered the battlefield
+  // a new user entered the battlefield or went up/down a level
   socket.on('newUser', function(user) {
     var currentLevel = $('.current-level').val();
     var currentPower = $('.your-power').val();
+
+    console.log(currentLevel);
+    console.log(user.level);
 
     if (user.level == currentLevel) {
       var newUser = (
@@ -241,11 +244,9 @@ $(function() {
     // }
   });
 
-  // User left battlefield manually OR user lost & is moved down a level
+  // User left battlefield manually /**OR user lost & is moved down a level
   socket.on('leftField', function(user) {
     var currentLevel = $('.current-level').val();
-    console.log('currentLevel',currentLevel);
-    console.log('user.level', user.level);
     if (currentLevel == user.level) {
       $(`input[value='${user.username}']`).parent().parent().remove();
     }
