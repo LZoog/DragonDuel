@@ -24,14 +24,15 @@ var returnRouter = function(io) {
     User.find({ 'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.level local.power local.color', function(err, users) {
       if (err) console.log(err);
 
-      //then set battlefield to true for current user, emit event to all connected
-      User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
-        if (err) console.log(err);
-        console.log(socket, 'YOU ARE FUCKING AWESOME');
-          res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
-          setTimeout(function(){io.sockets.emit('newUser', user.local)}, 200);
-          setTimeout(function(){socket.emit('test', 'YOU ARE FUCKING AWESOME')}, 500);
-      });
+      res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users, req: req});
+
+      //then set battlefield to true for current user, emit event to all except sender
+      if (currentUser.battlefield == false) {
+        User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
+          if (err) console.log(err);
+            socket.broadcast.emit('newUser', user.local);
+        });
+      }
     });
   });
 

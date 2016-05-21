@@ -206,38 +206,12 @@ $(function() {
     console.log(data);
   });
 
-  // New user joined battlefield
+  // a new user entered the battlefield
   socket.on('newUser', function(user) {
     var currentLevel = $('.current-level').val();
     var currentPower = $('.your-power').val();
-    //on header
-    var currentUsername = $('#current-username').val();
 
-    console.log('currentUsername', currentUsername);
-
-    function userNotOnField() {
-      var usersOnField = [];
-      $('.conn-username').each(function() {
-        usersOnField.push(($(this).val()));
-      });
-
-      console.log('usersOnField',usersOnField);
-
-      if (usersOnField.length !== 0) {
-       for (var i = 0; i < usersOnField.length; i++) {
-          if (usersOnField[i] == user.username) {
-            return false;
-          }
-        }
-        //after for loop
-        return true;
-      } else {
-        return true;
-      }
-    };
-
-    //only append if the user is not already on the field, new user's level matches yours, and it is not you
-    if (userNotOnField() && user.level == currentLevel && user.username != currentUsername) {
+    if (user.level == currentLevel) {
       var newUser = (
       `<div class="conn-user">
         <form action="/duel" method="post">
