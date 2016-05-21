@@ -133,8 +133,8 @@ var returnRouter = function(io) {
           if (currentLevel == 1) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              console.log(socket);
-              socket.broadcast.emit('removeFromField', connUsername);
+              // socket.broadcast.emit not working here
+              io.sockets.emit('removeFromField', connUsername);
               res.send('win');
             });
           } else {
@@ -143,7 +143,7 @@ var returnRouter = function(io) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, {new: true}, function(err, user) {
               if (err) console.log(err);
               socket.broadcast.emit('newUser', user.local);
-              //io.sockets.emit('getLevel', user.local.username);
+              io.sockets.emit('getLevel', user.local.username);
               res.send('win');
             });
           }
@@ -157,14 +157,17 @@ var returnRouter = function(io) {
         if (currentLevel == 1) {
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
             if (err) console.log(err);
-            io.sockets.emit('removeFromField', currentUser.username);
-            io.sockets.emit('leftField', user.local);
+            socket.emit('removeFromField', currentUser.username);
+            socket.broadcast.emit('leftField', user.local);
             res.send('lose');
           });
         } else {
-          //otherwise you go down a level
+          // if you're level 2+ you go down a level
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, function(err, user) {
             if (err) console.log(err);
+            // remove user from level they were on
+            io.sockets.emit('leftField', user.local);
+            // add user to level -1
             io.sockets.emit('newUser', user.local);
             res.send('lose');
           });

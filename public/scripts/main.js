@@ -224,18 +224,16 @@ $(function() {
     }
   });
 
-  // User removed from battlefield because they lost on level 1
+  // user removed from battlefield because they lost on level 1
   socket.on('removeFromField', function(username) {
-    var currentUsername = $('#current-username2').val();
-
-    console.log('first currentUsername', currentUsername);
+    var currentUsername = $('#current-username').val();
 
     if (currentUsername == username) {
      window.location.replace(`/users/${username}`);
     }
   });
 
-  // User left battlefield manually /**OR user lost & is moved down a level
+  // user left battlefield manually or user lost & is moved down a level
   socket.on('leftField', function(user) {
     var currentLevel = $('.current-level').val();
     if (currentLevel == user.level) {
@@ -243,13 +241,13 @@ $(function() {
     }
   });
 
-  // socket.on('getLevel', function(username) {
-  //   //on header
-  //   var currentUsername = $('#current-username').val();
-  //   if (currentUsername == username) {
-  //     ajaxGetLevel();
-  //   }
-  // });
+  // user lost; load new level
+  socket.on('getLevel', function(username) {
+    var currentUsername = $('#current-username').val();
+    if (currentUsername == username) {
+      ajaxGetLevel();
+    }
+  });
   /* END OF SOCKET.IO */
 
 
