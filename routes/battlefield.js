@@ -168,7 +168,7 @@ var returnRouter = function(io) {
             // remove user from level they were on
             io.sockets.emit('leftField', user.local);
             // add user to level -1
-            io.sockets.emit('newUser', user.local);
+            socket.broadcast.emit('newUser', user.local);
             res.send('lose');
           });
         }
