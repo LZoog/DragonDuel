@@ -54,16 +54,12 @@ var returnRouter = function(io) {
     if (req.body.leave) {
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
         if (err) console.log(err);
-         socket.broadcast.emit('leftField', user.local);
+         socket.broadcast.emit('removeFromField', user.local);
       });
       res.redirect(`/users/${currentUser.username}`);
 
       /* Else, user has clicked on another user & will win, lose, or tie */
     } else {
-      console.log(req.body);
-      console.log('.connUsername', req.body.connUsername);
-      console.log('.username', req.body.username);
-      console.log('.level', req.body.level);
       var connUsername = req.body.connUsername || req.body.username;
       var yourPower = req.body.yourPower;
       var connPower = req.body.connPower;
@@ -120,21 +116,20 @@ var returnRouter = function(io) {
       }
 
       function win() {
-        console.log('got to win()');
-
         //you go up a level
         var upLevel = currentLevel + 1;
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, {new: true}, function(err, user) {
           if (err) console.log(err);
           // emit level up to other users
+          // *WORKS*
           socket.broadcast.emit('newUser', user.local);
 
           // if opponent is on level 1, remove them from battlefield
           if (currentLevel == 1) {
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              // socket.broadcast.emit not working here
-              io.sockets.emit('removeFromField', connUsername);
+              // *WORKS*
+              socket.broadcast.emit('sendToUL', connUsername);
               res.send('win');
             });
           } else {
@@ -145,6 +140,7 @@ var returnRouter = function(io) {
               socket.broadcast.emit('newUser', user.local);
               io.sockets.emit('getLevel', user.local.username);
               res.send('win');
+              return;
             });
           }
         });
@@ -157,17 +153,19 @@ var returnRouter = function(io) {
         if (currentLevel == 1) {
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
             if (err) console.log(err);
-            socket.emit('removeFromField', currentUser.username);
-            socket.broadcast.emit('leftField', user.local);
+            socket.emit('sendToUL', currentUser.username);
+            socket.broadcast.emit('removeFromField', user.local);
             res.send('lose');
           });
         } else {
           // if you're level 2+ you go down a level
-          User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, function(err, user) {
+          User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, {new: true}, function(err, user) {
             if (err) console.log(err);
-            // remove user from level they were on
-            io.sockets.emit('leftField', user.local);
-            // add user to level -1
+            // remove user from level they were on for other users
+            socket.broadcast.emit('removeFromField', user.local);
+            // load new level
+            io.sockets.emit('getLevel', user.local.username);
+            // add user to level -1 for other users
             socket.broadcast.emit('newUser', user.local);
             res.send('lose');
           });
@@ -181,11 +179,11 @@ var returnRouter = function(io) {
           //current user
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
             if (err) console.log(err);
-            io.sockets.emit('removeFromField', currentUser.username);
+            io.sockets.emit('sendToUL', currentUser.username);
             //opponent
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              io.sockets.emit('removeFromField', connUsername);
+              io.sockets.emit('sendToUL', connUsername);
               res.send('tie');
             });
           });
@@ -195,12 +193,12 @@ var returnRouter = function(io) {
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, function(err, user) {
             if (err) console.log(err);
             io.sockets.emit('newUser', user.local);
-            io.sockets.emit('leftField', user.local);
+            io.sockets.emit('removeFromField', user.local);
             //opponent
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, function(err, user) {
               if (err) console.log(err);
               io.sockets.emit('newUser', user.local);
-              io.sockets.emit('leftField', user.local);
+              io.sockets.emit('removeFromField', user.local);
               //io.sockets.emit('getLevel', user.local.username);
               res.send('tie');
             });

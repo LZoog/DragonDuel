@@ -225,7 +225,7 @@ $(function() {
   });
 
   // user removed from battlefield because they lost on level 1
-  socket.on('removeFromField', function(username) {
+  socket.on('sendToUL', function(username) {
     var currentUsername = $('#current-username').val();
 
     if (currentUsername == username) {
@@ -234,7 +234,7 @@ $(function() {
   });
 
   // user left battlefield manually or user lost & is moved down a level
-  socket.on('leftField', function(user) {
+  socket.on('removeFromField', function(user) {
     var currentLevel = $('.current-level').val();
     if (currentLevel == user.level) {
       $(`input[value='${user.username}']`).parent().parent().remove();
