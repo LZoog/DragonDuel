@@ -233,15 +233,16 @@ $(function() {
     }
   });
 
-  // user left battlefield manually or user lost & is moved down a level
+  // user left the battlefield or moved up/down a level
   socket.on('removeFromField', function(user) {
     var currentLevel = $('.current-level').val();
+
     if (currentLevel == user.level) {
       $(`input[value='${user.username}']`).parent().parent().remove();
     }
   });
 
-  // user lost; load new level
+  // level changed; load new level
   socket.on('getLevel', function(username) {
     var currentUsername = $('#current-username').val();
     if (currentUsername == username) {

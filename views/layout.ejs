@@ -111,9 +111,6 @@
     <header>
     <% if(global.currentUser){ %>
       <a href="/duel/" id="duel" class="hide">battlefield☠️</a>
-      <!-- input for websockets, remove if you can get socket.broadcast to work -->
-      <input type="hidden" id="current-username" value="<%=req.user.local.username%>" />
-
       <a href="/users/<%=req.user.local.username%>" id="userShow">@<%= req.user.local.username %></a>
       <a href="/logout" id="logout-btn">Log out</a>
     <% } else { %>
