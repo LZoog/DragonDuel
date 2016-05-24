@@ -17,6 +17,7 @@ var returnRouter = function(io) {
 
     io.on('connection', function(client){
       socket = client;
+      socket.emit('username', req.user.local.username);
     });
 
     var currentUser = req.user.local;

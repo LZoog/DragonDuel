@@ -198,8 +198,12 @@ $(function() {
 
   /* SOCKET IO */
   var socket = io();
-  socket.on('connect', function() {
+  var currentUsername;
+  socket.on('connection', function() {
     console.log('Client connected!');
+    socket.on('username', function(un) {
+      currentUsername = un;
+    })
   });
 
   // a new user entered the battlefield or went up/down a level
@@ -226,8 +230,6 @@ $(function() {
 
   // user removed from battlefield because they lost on level 1
   socket.on('sendToUL', function(username) {
-    var currentUsername = $('#current-username').val();
-
     if (currentUsername == username) {
      window.location.replace(`/users/${username}`);
     }
@@ -244,7 +246,6 @@ $(function() {
 
   // level changed; load new level
   socket.on('getLevel', function(username) {
-    var currentUsername = $('#current-username').val();
     if (currentUsername == username) {
       ajaxGetLevel();
     }
