@@ -305,7 +305,8 @@ a#userShow {
     text-align: center;
     position: relative;
     top: 34.5%;
-    font-size: 1.3em; }
+    font-size: 1.3em;
+    text-shadow: 1px 1px 1px black; }
   .dragon-town h3 {
     text-transform: uppercase;
     text-align: center;
