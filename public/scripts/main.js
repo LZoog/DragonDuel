@@ -255,6 +255,7 @@ $(function() {
 
   // user removed from battlefield because they lost on level 1
   socket.on('sendToUL', function(username) {
+    var currentUsername = $('#current-username').val();
     if (currentUsername == username) {
      window.location.replace(`/users/${username}`);
     }
