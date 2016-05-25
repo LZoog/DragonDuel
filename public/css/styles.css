@@ -82,6 +82,9 @@ label > input:checked + img {
   /* (RADIO CHECKED) IMAGE STYLES */
   border: 2px solid #f00; }
 
+.form-control {
+  margin: 5px; }
+
 .next {
   border: 1px solid black;
   padding: 10px;
@@ -89,10 +92,44 @@ label > input:checked + img {
   background: grey;
   color: white;
   text-shadow: 1px 1px 1px black;
-  float: right;
-  display: inline-block; }
+  float: right; }
   .next.clickable {
     background: #50c44b; }
+    .next.clickable:hover {
+      cursor: pointer; }
+
+.back {
+  border: 1px solid #13313d;
+  padding: 10px;
+  border-radius: 10px;
+  width: 45px; }
+  .back:hover {
+    cursor: pointer; }
+
+div[class^="q"]:not(.q00) {
+  text-align: center; }
+
+.quest {
+  display: block; }
+
+.q4 label {
+  position: relative; }
+
+.q4 label span {
+  position: absolute;
+  top: 0;
+  left: 33%; }
+
+.fate {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background: none; }
+  .fate:hover {
+    cursor: pointer; }
 
 .fadeOut {
   -webkit-animation: fadeOut 1s "";

@@ -47,7 +47,7 @@
           <span class="invalid-length hide">Must be 8+ characters.</span>
           <br>
           <label for="username">Username</label>
-          <input type="text" name="username" id="username" required />
+          <input class="form-control" type="text" name="username" id="username" required />
           <span class="checking-username hide">checking...</span>
           <span class="invalid-username-taken hide">unavailable</span>
           <span class="invalid-username hide">Usernames can only contain letters and numbers.</span>
@@ -57,19 +57,19 @@
 
         <div class="q0 hide">
           <p class="back">BACK</p>
-          <label for="gender">Gender</label>
+          <label for="gender" class="quest">Gender Selection</label>
           <label><input type="radio" name="gender" value="m" required /><img src="/img/join/m.png" alt="Male" /></label>
           <label><input type="radio" name="gender" value="f" /><img src="/img/join/f.png" alt="Female" /></label>
         </div>
         <div class="q1 hide">
           <p class="back">BACK</p>
-          <label for="question1">You prefer the...</label>
+          <label for="question1" class="quest">You prefer the...</label>
           <label><input type="radio" name="q1" value="sun" required /><img src="/img/join/sun.png" alt="Sun" /></label>
           <label><input type="radio" name="q1" value="moon" /><img src="/img/join/moon.png" alt="Moon" /></label>
         </div>
         <div class="q2 hide">
           <p class="back">BACK</p>
-          <label for="question2">Which mythological creature do you most relate to?</label>
+          <label for="question2" class="quest">Which mythological creature do you most relate to?</label>
           <label><input type="radio" name="q2" value="fairy" required /><img src="/img/join/fairy.png" alt="Fairy" /></label>
           <label><input type="radio" name="q2" value="mermaid" /><img src="/img/join/mermaid.png" alt="Mermaid" /></label>
           <label><input type="radio" name="q2" value="phoenix" /><img src="/img/join/phoenix.png" alt="Phoenix" /></label>
@@ -77,28 +77,28 @@
         </div>
         <div class="q3 hide">
           <p class="back">BACK</p>
-          <label for="question3">The precious gem that best describes you is the...</label>
-          <label><input type="radio" name="q3" value="opal" required /><img src="/img/join/opal.png" alt="Opal" /></label> Opal
-          <label><input type="radio" name="q3" value="ruby" /><img src="/img/join/ruby.png" alt="Ruby" /></label> Ruby
-          <label><input type="radio" name="q3" value="diamond" /><img src="/img/join/diamond.png" alt="Diamond" /></label> Diamond
-          <label><input type="radio" name="q3" value="onyx" /><img src="/img/join/onyx.png" alt="Onyx" /></label> Onyx
-          <label><input type="radio" name="q3" value="pearl" /><img src="/img/join/pearl.png" alt="Pearl" /></label> Pearl
+          <label for="question3" class="quest">The precious gem that best describes you is the...</label>
+          <label><input type="radio" name="q3" value="opal" required /><img src="/img/join/opal.png" alt="Opal" /></label>
+          <label><input type="radio" name="q3" value="ruby" /><img src="/img/join/ruby.png" alt="Ruby" /></label>
+          <label><input type="radio" name="q3" value="diamond" /><img src="/img/join/diamond.png" alt="Diamond" /></label>
+          <label><input type="radio" name="q3" value="onyx" /><img src="/img/join/onyx.png" alt="Onyx" /></label>
+          <label><input type="radio" name="q3" value="pearl" /><img src="/img/join/pearl.png" alt="Pearl" /></label>
         </div>
         <div class="q4 hide">
           <p class="back">BACK</p>
-          <label for="question4">You can have one and only one.</label>
-          <label><input type="radio" name="q4" value="money" required /><img src="/img/join/money.png" alt="Money" /></label>
-          <label><input type="radio" name="q4" value="power" /><img src="/img/join/power.png" alt="Power" /></label>
-          <label><input type="radio" name="q4" value="fame" /><img src="/img/join/fame.png" alt="Fame" /></label>
-          <label><input type="radio" name="q4" value="achievement" /><img src="/img/join/achievement.png" alt="Achievement" /></label>
-          <label><input type="radio" name="q4" value="vanity" /><img src="/img/join/vanity.png" alt="Vanity" /></label>
+          <label for="question4" class="quest">You can have one and only one.</label>
+          <label><input type="radio" name="q4" value="money" required /><img src="/img/join/money.png" alt="Money" /><span>Money</span></label>
+          <label><input type="radio" name="q4" value="power" /><img src="/img/join/power.png" alt="Power" /><span>Power</span></label>
+          <label><input type="radio" name="q4" value="fame" /><img src="/img/join/fame.png" alt="Fame" /><span>Fame</span></label><br>
+          <label><input type="radio" name="q4" value="achievement" /><img src="/img/join/achievement.png" alt="Achievement" /><span>Achievement</span></label>
+          <label><input type="radio" name="q4" value="vanity" /><img src="/img/join/vanity.png" alt="Vanity" /><span>Vanity</span></label>
         </div>
         <div class="q5 hide">
           <p class="back">BACK</p>
-          <label for="question5">Would you choose to live forever?</label>
+          <label for="question5" class="quest">Would you choose to live forever?</label>
           <label><input type="radio" name="q5" value="yes" class="last" required /><img src="/img/join/yes.png" alt="Yes" /></label>
           <label><input type="radio" name="q5" value="no" class="last" /><img src="/img/join/no.png" alt="No" /></label>
-          <input class="btn btn-default" type="submit" value="determine your fate">
+          <input class="btn btn-default fate" type="submit" value="DETERMINE YOUR FATE">
         </div>
       </form>
     </section>

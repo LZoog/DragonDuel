@@ -14,14 +14,6 @@ var returnRouter = function(io) {
   /* GET battlefield */
   router.get('/', authenticatedUser, function(req, res, next) {
 
-<<<<<<< HEAD
-    io.on('connection', function(client){
-      socket = client;
-      socket.emit('username', req.user.local.username);
-    });
-
-=======
->>>>>>> socketbugs
     var currentUser = req.user.local;
     //find all users in the battlefield & on the same level
     User.find({ 'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.level local.power local.color', function(err, users) {

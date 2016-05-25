@@ -150,6 +150,10 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
   border:2px solid #f00;
 }
 
+.form-control {
+  margin: 5px;
+}
+
 .next {
   border:1px solid black;
   padding: 10px;
@@ -158,10 +162,56 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
   color: white;
   text-shadow: 1px 1px 1px black;
   float: right;
-  display: inline-block;
 
   &.clickable {
     background: #50c44b;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.back {
+  border: 1px solid $blue-dark;
+  padding: 10px;
+  border-radius: 10px;
+  width: 45px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+div[class^="q"]:not(.q00) {
+  text-align: center;
+}
+
+.quest {
+  display: block;
+}
+
+.q4 label {
+  position: relative;
+}
+
+.q4 label span {
+  position: absolute;
+  top: 0;
+  left: 33%;
+}
+
+.fate {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background: none;
+
+  &:hover {
+    cursor: pointer;
   }
 }
 

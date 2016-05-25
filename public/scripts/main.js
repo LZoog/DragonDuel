@@ -114,9 +114,9 @@ $(function() {
     }
 
     // hide .invalid-taken if it's shown, show loading... text
-    // if (!($(self).siblings(`invalid-${field}-taken`).hasClass('hide'))) {
+    if (!($(self).siblings(`invalid-${field}-taken`).hasClass('hide'))) {
       $(self).siblings(`.invalid-${field}-taken`).addClass('hide');
-    // }
+    }
     $(self).siblings(`.checking-${field}`).removeClass('hide');
 
     $.ajax({
@@ -151,13 +151,13 @@ $(function() {
         validCount++;
       }
     }
-    if (validCount == 3 && $(self).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6 && !($('.next').hasClass('clickable'))) {
-      console.log('add class clickable');
+    // if (validCount == 3 && $(self).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6 && !($('.next').hasClass('clickable'))) {
+    //   console.log('add class clickable');
       $(self).siblings('.next').addClass('clickable');
-    } else if ($('.next').hasClass('clickable')) {
-      console.log('remove class clickable');
-      $(self).siblings('.next').removeClass('clickable');
-    }
+    // } else if ($('.next').hasClass('clickable')) {
+    //   console.log('remove class clickable');
+    //   $(self).siblings('.next').removeClass('clickable');
+    // }
   };
   /* END SIGN UP VALIDATIONS */
 
@@ -171,7 +171,7 @@ $(function() {
       var self = this;
       setTimeout(function(){
         $(self).parent().next().fadeIn(300).removeClass('hide');
-        modalCSS('join');
+        setTimeout(function(){modalCSS('join')}, 50);
       }, 300);
     // }
   });
@@ -181,7 +181,7 @@ $(function() {
     $(this).parent().parent().fadeOut(300);
     setTimeout(function(){
       $(self).parent().parent().next().fadeIn(300).removeClass('hide');
-      modalCSS('join');
+      setTimeout(function(){modalCSS('join')}, 50);
     }, 300);
   })
 
@@ -190,7 +190,7 @@ $(function() {
     $(this).parent().fadeOut(300);
     setTimeout(function(){
       $(self).parent().prev().fadeIn(300).removeClass('hide');
-      modalCSS('join');
+      setTimeout(function(){modalCSS('join')}, 50);
     }, 300);
   });
 
