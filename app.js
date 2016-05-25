@@ -39,7 +39,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(ejsLayouts);
 
-
 //AUTHENTICATION
 //we want every view to automatically use flash
 app.use(flash());
@@ -61,6 +60,7 @@ app.use(methodOverride(function(request, response) {
 // Custom middleware to allow global access to currentUser variable
 app.use(function(req, res, next) {
   global.currentUser = req.user;
+  res.locals.req = req;
   next();
 });
 
