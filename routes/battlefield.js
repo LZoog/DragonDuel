@@ -175,20 +175,20 @@ var returnRouter = function(io) {
         if (currentLevel == 1) {
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
             if (err) console.log(err);
-            socket.emit('sendToUL', currentUser.username);
-            socket.broadcast.emit('removeFromField', user.local);
-            res.send('lose');
+            io.emit('sendToUL', currentUser.username);
+            io.emit('removeFromField', user.local);
+            res.end();
           });
         } else {
           // if you're level 2+ you go down a level
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': downLevel }, {new: true}, function(err, user) {
             if (err) console.log(err);
             // remove user from level they were on for other users
-            socket.broadcast.emit('removeFromField', user.local);
+            io.emit('removeFromField', user.local);
             // load new level
-            io.sockets.emit('getLevel', user.local.username);
+            io.emit('getLevel', user.local.username);
             // add user to level -1 for other users
-            socket.broadcast.emit('newUser', user.local);
+            io.emit('newUser', user.local);
             res.send('lose');
           });
         }
@@ -196,17 +196,17 @@ var returnRouter = function(io) {
 
       function tie() {
         console.log('got to tie()');
-        // if you're on level 1 both you and your opponent are removed from the field
+        // if user & opponent are on level 1, both are removed from the field
         if (currentLevel == 1) {
-          //current user
+          // user
           User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
             if (err) console.log(err);
-            io.sockets.emit('sendToUL', currentUser.username);
+            io.emit('sendToUL', currentUser.username);
             //opponent
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              io.sockets.emit('sendToUL', connUsername);
-              res.send('tie');
+              io.emit('sendToUL', connUsername);
+              res.end();
             });
           });
         } else {
