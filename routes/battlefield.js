@@ -131,23 +131,26 @@ var returnRouter = function(io) {
               // remove opponent from level for other users {✓}
               io.emit('removeFromField', user.local);
               console.log(currentUser);
-              res.send('win');
 
-              // send new level back to client-side
-              // User.find({'local.battlefield': true, 'local.level': upLevel, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color local.level', function(err, users) {
-              //   if (err) console.log(err);
-              //   console.log(users);
-              //   res.json({users: users, power: currentUser.power});
-              })
+              // get new user level
+              User.find({'local.battlefield': true, 'local.level': upLevel, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color local.level', function(err, users) {
+                if (err) console.log(err);
+                console.log(users);
+                res.json({users: users, power: currentUser.power});
+              });
+            })
           } else {
             // opponent is on level 2+, find & make them go down a level
             var downLevel = currentLevel - 1;
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, {new: true}, function(err, user) {
               if (err) console.log(err);
-              // show user on new level for other users
-              socket.broadcast.emit('newUser', user.local);
-              // load new level for user
-              socket.broadcast.emit('getLevel', user.local.username);
+              // show opponent on new level for other users
+              io.emit('newUser', user.local);
+              // load new level for opponent
+              //io.emit('getLevel', user.local.username);
+              // remove opponent from level for other users (sending data from before doc update)✓
+              io.emit('removeFromField', { level: currentLevel, username: connUsername });
+              // get new level for user
               res.send('win');
             });
           }
