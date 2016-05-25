@@ -151,13 +151,13 @@ $(function() {
         validCount++;
       }
     }
-    // if (validCount == 3 && $(self).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6 && !($('.next').hasClass('clickable'))) {
+    if (validCount == 3 && $(self).siblings('span[class^="invalid"].hide').not('.invalid-form').length == 6 && !($('.next').hasClass('clickable'))) {
     //   console.log('add class clickable');
       $(self).siblings('.next').addClass('clickable');
-    // } else if ($('.next').hasClass('clickable')) {
-    //   console.log('remove class clickable');
-    //   $(self).siblings('.next').removeClass('clickable');
-    // }
+    } else if ($('.next').hasClass('clickable')) {
+      console.log('remove class clickable');
+      $(self).siblings('.next').removeClass('clickable');
+    }
   };
   /* END SIGN UP VALIDATIONS */
 

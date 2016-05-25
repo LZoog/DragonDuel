@@ -9,6 +9,7 @@
     <title>Dragonduel | Node.JS App</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/styles.css" type="text/css" />
   </head>
   <body>
@@ -17,14 +18,14 @@
       <h2>Login</h2>
       <form method="post" action="/login">
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="login-email">Email: </label>
           <input class="form-control" type="text" name="email" id="email-login">
         </div>
         <div class="form-group">
-          <label for="email">Password</label>
+          <label for="email">Password: </label>
           <input class="form-control" type="password" name="password" id="password-login">
         </div>
-        <input class="btn btn-default" type="submit">
+        <input class="btn btn-default submit" type="submit">
       </form>
     </section>
 
@@ -32,21 +33,21 @@
       <form method="post" action="/signup">
         <div class="q00">
           <h2>Join Us</h2>
-          <label for="email">Email</label>
+          <label for="email">Email: </label>
           <input class="form-control" type="text" name="email" id="email" required />
           <span class="checking-email hide">checking...</span>
           <span class="invalid-email-taken hide">unavailable</span>
           <span class="invalid-email hide">Please enter a valid e-mail.</span>
           <br>
-          <label for="password">Password</label>
-          <input class="form-control" type="password" name="password" id="password" required />
+          <label for="password">Password: </label>
+          <input class="form-control pw" type="password" name="password" id="password" required />
           <!-- if DOM order input -> label -> input is changed, must update password validation in main.js -->
-          <label for="confirm-password">Confirm password</label>
-          <input class="form-control" type="password" id="password-confirm" required />
+          <label for="confirm-password">Confirm: </label>
+          <input class="form-control pw" type="password" id="password-confirm" required />
           <span class="invalid-password hide">Passwords don't match!</span>
           <span class="invalid-length hide">Must be 8+ characters.</span>
           <br>
-          <label for="username">Username</label>
+          <label for="username">Username: </label>
           <input class="form-control" type="text" name="username" id="username" required />
           <span class="checking-username hide">checking...</span>
           <span class="invalid-username-taken hide">unavailable</span>
@@ -57,7 +58,7 @@
 
         <div class="q0 hide">
           <p class="back">BACK</p>
-          <label for="gender" class="quest">Gender Selection</label>
+          <label for="gender" class="quest">Select Your Gender</label>
           <label><input type="radio" name="gender" value="m" required /><img src="/img/join/m.png" alt="Male" /></label>
           <label><input type="radio" name="gender" value="f" /><img src="/img/join/f.png" alt="Female" /></label>
         </div>
@@ -71,7 +72,7 @@
           <p class="back">BACK</p>
           <label for="question2" class="quest">Which mythological creature do you most relate to?</label>
           <label><input type="radio" name="q2" value="fairy" required /><img src="/img/join/fairy.png" alt="Fairy" /></label>
-          <label><input type="radio" name="q2" value="mermaid" /><img src="/img/join/mermaid.png" alt="Mermaid" /></label>
+          <label><input type="radio" name="q2" value="mermaid" /><img src="/img/join/mermaid.png" alt="Mermaid" /></label><br>
           <label><input type="radio" name="q2" value="phoenix" /><img src="/img/join/phoenix.png" alt="Phoenix" /></label>
           <label><input type="radio" name="q2" value="unicorn" /><img src="/img/join/unicorn.png" alt="Unicorn" /></label>
         </div>
