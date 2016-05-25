@@ -269,37 +269,29 @@ $(function() {
   });
 
   // level changed; load new level
-  socket.on('getLevel', function(username) {
+  socket.on('getLevel', function(data) {
+    console.log('getLevel', data);
     var currentUsername = $('#current-username').val();
-    if (currentUsername == username) {
-      $.ajax({
-        url: '/duel/update',
-        method: 'GET',
-        data: {},
-        dataType: 'json'
+    console.log('data.username', data.username);
+    console.log('currentUsername', currentUsername);
+    //if (currentUsername == data.username) {
+      console.log('inside if');
+      $('#connected').empty();
+      console.log(data.users);
+      data.users.forEach(function(user){
+        console.log(user);
+        $('#connected').prepend(`<div class="conn-user">
+              <form action="/duel" method="post">
+                <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
+                <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+                <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+                <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+                <input type="submit" class="duel-user ${user.local.color}" value="" />
+              <a href="/users/${user.local.username}">@${user.local.username}</a>
+              </form>
+            </div>`);
       })
-      .done(function(data) {
-        console.log('done ajaxgetlevel');
-        $('#connected').empty();
-        console.log(data.users);
-        data.users.forEach(function(user){
-          console.log(user);
-          $('#connected').prepend(`<div class="conn-user">
-                <form action="/duel" method="post">
-                  <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
-                  <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
-                  <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
-                  <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
-                  <input type="submit" class="duel-user ${user.local.color}" value="" />
-                <a href="/users/${user.local.username}">@${user.local.username}</a>
-                </form>
-              </div>`);
-        })
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        console.log('Battlefield POST ajax failed',jqXHR, textStatus, errorThrown);
-      })
-    }
+    //}
   });
   /* END OF SOCKET.IO */
 

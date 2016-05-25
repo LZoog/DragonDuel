@@ -132,7 +132,7 @@ var returnRouter = function(io) {
               io.emit('removeFromField', user.local);
               console.log(currentUser);
 
-              // get new user level
+              // get new user level {✓}
               User.find({'local.battlefield': true, 'local.level': upLevel, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color local.level', function(err, users) {
                 if (err) console.log(err);
                 console.log(users);
@@ -144,14 +144,25 @@ var returnRouter = function(io) {
             var downLevel = currentLevel - 1;
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.level': downLevel }, {new: true}, function(err, user) {
               if (err) console.log(err);
-              // show opponent on new level for other users
+              // show opponent on new level for other users{✓}
               io.emit('newUser', user.local);
-              // load new level for opponent
-              //io.emit('getLevel', user.local.username);
-              // remove opponent from level for other users (sending data from before doc update)✓
+              // remove opponent from level for other users (sending data from before doc update){✓}
               io.emit('removeFromField', { level: currentLevel, username: connUsername });
-              // get new level for user
-              res.send('win');
+
+              //get new opponent's level
+              User.find({'local.battlefield': true, 'local.level': downLevel, 'local.username': {$ne: connUsername} }, 'local.username local.power local.color local.level', function(err, usersOpp) {
+                if (err) console.log(err);
+                console.log('opponents level', usersOpp);
+                // does not work
+                io.emit('getLevel', {users: usersOpp, power: currentUser.power, username: connUsername});
+
+                // get new user level
+                User.find({'local.battlefield': true, 'local.level': upLevel, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color local.level', function(err, users) {
+                  if (err) console.log(err);
+                  console.log('new user level', users);
+                  res.json({users: users, power: currentUser.power});
+                });
+              });
             });
           }
         });
