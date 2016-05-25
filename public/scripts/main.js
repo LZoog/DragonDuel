@@ -311,10 +311,6 @@ $(function() {
     var yourPower = $(this).siblings('.your-power').val();
     var connPower = $(this).siblings('.conn-power').val();
 
-    console.log(connUsername);
-    console.log(yourPower);
-    console.log(connPower);
-
     $.ajax({
       url: '/duel',
       method: 'POST',
