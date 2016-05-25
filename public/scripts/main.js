@@ -204,25 +204,50 @@ $(function() {
 
   // a new user entered the battlefield or went up/down a level
   socket.on('newUser', function(user) {
-    var currentLevel = $('.current-level').val();
-    var currentPower = $('.your-power').val();
+      var currentLevel = $('.current-level').val();
+      var currentPower = $('.your-power').val();
+      var currentUsername = $('#current-username').val();
 
-    if (user.level == currentLevel) {
-      var newUser = (
-      `<div class="conn-user">
-        <form action="/duel" method="post">
-          <input type="hidden" class="current-level" name="level" value="${user.level}" />
-          <input type="hidden" class="your-power" name="yourPower" value="${currentPower}" />
-          <input type="hidden" class="conn-power" name="connPower" value="${user.power}" />
-          <input type="hidden" class="conn-username" name="username" value="${user.username}" />
-          <input type="submit" class="duel-user ${user.color}" value="" />
-        <a href="/users/${user.username}">@${user.username}</a>
-        </form>
-      </div>`
-      );
-      $('#new-user').prepend(newUser);
-    }
-  });
+      console.log('currentUsername', currentUsername);
+
+      function userNotOnField() {
+        var usersOnField = [];
+        $('.conn-username').each(function() {
+          usersOnField.push(($(this).val()));
+        });
+
+        console.log('usersOnField',usersOnField);
+
+        if (usersOnField.length !== 0) {
+         for (var i = 0; i < usersOnField.length; i++) {
+            if (usersOnField[i] == user.username) {
+              return false;
+            }
+          }
+          //after for loop
+          return true;
+        } else {
+          return true;
+        }
+      };
+
+      //only append if the user is not already on the field, new user's level matches yours, and it is not you
+      if (userNotOnField() && user.level == currentLevel && user.username != currentUsername) {
+        var newUser = (
+        `<div class="conn-user">
+          <form action="/duel" method="post">
+            <input type="hidden" class="current-level" name="level" value="${user.level}" />
+            <input type="hidden" class="your-power" name="yourPower" value="${currentPower}" />
+            <input type="hidden" class="conn-power" name="connPower" value="${user.power}" />
+            <input type="hidden" class="conn-username" name="username" value="${user.username}" />
+            <input type="submit" class="duel-user ${user.color}" value="" />
+          <a href="/users/${user.username}">@${user.username}</a>
+          </form>
+        </div>`
+        );
+        $('#new-user').prepend(newUser);
+      }
+    });
 
   // user removed from battlefield because they lost on level 1
   socket.on('sendToUL', function(username) {
@@ -235,9 +260,10 @@ $(function() {
 
   // user left the battlefield or moved up/down a level
   socket.on('removeFromField', function(user) {
+    console.log(user);
     var currentLevel = $('.current-level').val();
 
-    if (currentLevel == user.level) {
+    if (currentLevel == user.level && $(`input[value='${user.username}']`)) {
       $(`input[value='${user.username}']`).parent().parent().remove();
     }
   });
@@ -246,7 +272,33 @@ $(function() {
   socket.on('getLevel', function(username) {
     var currentUsername = $('#current-username').val();
     if (currentUsername == username) {
-      ajaxGetLevel();
+      $.ajax({
+        url: '/duel/update',
+        method: 'GET',
+        data: {},
+        dataType: 'json'
+      })
+      .done(function(data) {
+        console.log('done ajaxgetlevel');
+        $('#connected').empty();
+        console.log(data.users);
+        data.users.forEach(function(user){
+          console.log(user);
+          $('#connected').prepend(`<div class="conn-user">
+                <form action="/duel" method="post">
+                  <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
+                  <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+                  <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+                  <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+                  <input type="submit" class="duel-user ${user.local.color}" value="" />
+                <a href="/users/${user.local.username}">@${user.local.username}</a>
+                </form>
+              </div>`);
+        })
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.log('Battlefield POST ajax failed',jqXHR, textStatus, errorThrown);
+      })
     }
   });
   /* END OF SOCKET.IO */
@@ -263,8 +315,6 @@ $(function() {
     var connUsername = $(this).siblings('.conn-username').val();
     var yourPower = $(this).siblings('.your-power').val();
     var connPower = $(this).siblings('.conn-power').val();
-    //for ajaxGetLevel()
-    var currentLevel = $(this).siblings('.current-level').val();
 
     $.ajax({
       url: '/duel',
@@ -278,12 +328,78 @@ $(function() {
     .done(function(status) {
       if (status == 'win' || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
         console.log('inside loop');
-        ajaxGetLevel();
+
+        $.ajax({
+          url: '/duel/update',
+          method: 'GET',
+          data: {},
+          dataType: 'json'
+        })
+        .done(function(data) {
+          console.log('done SECOND ajaxgetlevel');
+          console.log(data);
+          $('#connected').empty();
+          console.log(data.users);
+          data.users.forEach(function(user){
+            console.log(user);
+            $('#connected').prepend(`<div class="conn-user">
+                  <form action="/duel" method="post">
+                    <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
+                    <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+                    <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+                    <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+                    <input type="submit" class="duel-user ${user.local.color}" value="" />
+                  <a href="/users/${user.local.username}">@${user.local.username}</a>
+                  </form>
+                </div>`);
+          })
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          console.log('Battlefield GET ajax failed',jqXHR, textStatus, errorThrown);
+        })
       }
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
-      console.log('Battlefield GET ajax failed',jqXHR, textStatus, errorThrown);
+      console.log('Battlefield POST ajax failed',jqXHR, textStatus, errorThrown);
     })
+
+
+      // if (status == 'win' || (status == 'lose' && currentLevel > 1) || (status == 'tie' && currentLevel > 1)) {
+      //   console.log('inside loop');
+      //
+      //   $.ajax({
+      //     url: '/duel/update',
+      //     method: 'GET',
+      //     data: {},
+      //     dataType: 'json'
+      //   })
+      //   .done(function(data) {
+      //     console.log('done SECOND ajaxgetlevel');
+      //     console.log(data);
+      //     $('#connected').empty();
+      //     console.log(data.users);
+      //     data.users.forEach(function(user){
+      //       console.log(user);
+      //       $('#connected').prepend(`<div class="conn-user">
+      //             <form action="/duel" method="post">
+      //               <input type="hidden" class="current-level" name="level" value="${user.local.level}" />
+      //               <input type="hidden" class="your-power" name="yourPower" value="${data.power}" />
+      //               <input type="hidden" class="conn-power" name="connPower" value="${user.local.power}" />
+      //               <input type="hidden" class="conn-username" name="username" value="${user.local.username}" />
+      //               <input type="submit" class="duel-user ${user.local.color}" value="" />
+      //             <a href="/users/${user.local.username}">@${user.local.username}</a>
+      //             </form>
+      //           </div>`);
+      //     })
+      //   })
+      //   .fail(function(jqXHR, textStatus, errorThrown) {
+      //     console.log('Battlefield GET ajax failed',jqXHR, textStatus, errorThrown);
+      //   })
+      // }
+    // })
+    // .fail(function(jqXHR, textStatus, errorThrown) {
+    //   console.log('Battlefield GET ajax failed',jqXHR, textStatus, errorThrown);
+    // })
   });
 
   function ajaxGetLevel() {
@@ -294,7 +410,9 @@ $(function() {
       dataType: 'json'
     })
     .done(function(data) {
+      console.log('done ajaxgetlevel');
       $('#connected').empty();
+      console.log(data.users);
       data.users.forEach(function(user){
         console.log(user);
         $('#connected').prepend(`<div class="conn-user">

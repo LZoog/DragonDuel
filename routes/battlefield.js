@@ -12,25 +12,20 @@ var returnRouter = function(io) {
   }
 
   /* GET battlefield */
-  var socket;
   router.get('/', authenticatedUser, function(req, res, next) {
-
-    io.on('connection', function(client){
-      socket = client;
-    });
 
     var currentUser = req.user.local;
     //find all users in the battlefield & on the same level
     User.find({ 'local.battlefield': true, 'local.level': currentUser.level, 'local.username': {$ne: currentUser.username} }, 'local.username local.level local.power local.color', function(err, users) {
       if (err) console.log(err);
 
-      res.render('battlefield', {req: req, link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users});
+      res.render('battlefield', {link: 'no', level: currentUser.level, power: currentUser.power, username: currentUser.username, users: users});
 
-      //then set battlefield to true for current user, emit event to all except sender
+      //then set battlefield to true for current user, emit event
       if (currentUser.battlefield == false) {
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': true }, function(err, user) {
           if (err) console.log(err);
-            socket.broadcast.emit('newUser', user.local);
+            setTimeout(function(){io.sockets.emit('newUser', user.local)}, 200);
         });
       }
     });
@@ -54,7 +49,7 @@ var returnRouter = function(io) {
     if (req.body.leave) {
       User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.battlefield': false }, function(err, user) {
         if (err) console.log(err);
-         socket.broadcast.emit('removeFromField', user.local);
+         io.emit('removeFromField', user.local);
       });
       res.redirect(`/users/${currentUser.username}`);
 
@@ -116,26 +111,34 @@ var returnRouter = function(io) {
       }
 
       function win() {
-        //you go up a level
+        // user goes up a level
         var upLevel = currentLevel + 1;
-        // remove user from level for other users
-        socket.broadcast.emit('removeFromField', currentUser);
+        // remove user from level for other users {✓}
+        setTimeout(function(){io.emit('removeFromField', currentUser)}, 500);
 
         User.findOneAndUpdate({ 'local.username': currentUser.username }, { 'local.level': upLevel }, {new: true}, function(err, user) {
           if (err) console.log(err);
-          // add user to new level for other users
-          socket.broadcast.emit('newUser', user.local);
+          // add user to new level for other users {✓}
+          io.emit('newUser', user.local);
 
-          // if opponent is on level 1, remove them from battlefield
+          // if opponent is on level 1
           if (currentLevel == 1) {
+            // set opponent battlefield to false
             User.findOneAndUpdate({ 'local.username': connUsername }, { 'local.battlefield': false }, function(err, user) {
               if (err) console.log(err);
-              // send user to UL
-              socket.broadcast.emit('sendToUL', connUsername);
-              // remove user from level for other users
-              socket.broadcast.emit('removeFromField', user.local);
+              // send opponent to UL {✓}
+              io.emit('sendToUL', connUsername);
+              // remove opponent from level for other users {✓}
+              io.emit('removeFromField', user.local);
+              console.log(currentUser);
               res.send('win');
-            });
+
+              // send new level back to client-side
+              // User.find({'local.battlefield': true, 'local.level': upLevel, 'local.username': {$ne: currentUser.username} }, 'local.username local.power local.color local.level', function(err, users) {
+              //   if (err) console.log(err);
+              //   console.log(users);
+              //   res.json({users: users, power: currentUser.power});
+              })
           } else {
             // opponent is on level 2+, find & make them go down a level
             var downLevel = currentLevel - 1;
