@@ -112,7 +112,7 @@ label[for=login-email] {
   text-shadow: 1px 1px 1px black;
   float: right;
   position: relative;
-  top: 50px; }
+  top: 20px; }
   .next.clickable {
     background: #50c44b; }
     .next.clickable:hover {
